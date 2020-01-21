@@ -78,7 +78,7 @@
     <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelLocator.cs" />
     <Compile Include="ValuesConverters\BaseValueConverter.cs" />
-    <Compile Include="ValuesConverters\ViewValueConverter.cs" />
+    <Compile Include="ValuesConverters\EnumToViewValueConverter.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

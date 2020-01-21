@@ -16,6 +16,6 @@
         WindowStartupLocation="CenterScreen">
     
     <Frame x:Name="frame" 
-           Content="{Binding ApplicationViewModel.CurrentView, Source={x:Static infrastructure:ViewModelLocator.Instance}, Converter={valueConverters:ViewValueConverter}, UpdateSourceTrigger=PropertyChanged}"
+           Content="{Binding ApplicationViewModel.CurrentView, Source={x:Static infrastructure:ViewModelLocator.Instance}, Converter={valueConverters:EnumToViewValueConverter}, UpdateSourceTrigger=PropertyChanged}"
            NavigationUIVisibility="Hidden"/>
 </Window>

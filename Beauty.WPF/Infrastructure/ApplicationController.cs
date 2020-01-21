@@ -1,4 +1,5 @@
-﻿using Beauty.WPF.ViewModels;
+﻿using Beauty.Core.Infrastructure;
+using Beauty.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace Beauty.WPF.Infrastructure
                 return NinjectContainer.Get<ApplicationViewModel>();
             }
         }
+
+        public static LoginDetails LoginDetails { get; set; }
     }
 }

@@ -11,12 +11,17 @@ using System.Collections.ObjectModel;
 using Beauty.Data.Models;
 using Beauty.Data.Interfaces;
 using Beauty.Data.UnitOfWorks;
+using Beauty.Core.Interfaces;
+using Beauty.Core.Services;
+using Beauty.Core.Infrastructure;
 
 namespace Beauty.WPF.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMessageService messageService;
+        private readonly ILoginService loginService;
 
         private ICollection<Worker> workers;
         private Worker selectedWorker;
@@ -54,8 +59,15 @@ namespace Beauty.WPF.ViewModels
         public LoginViewModel()
         {
             unitOfWork = new UnitOfWork();
+            messageService = new MessageService();
+            loginService = new LoginService(unitOfWork);
 
-            LoginCommand = new ParameterizedCommand(LoginCommandExecuteAsync, (parameter) => SelectedWorker != null && !string.IsNullOrEmpty(parameter as string));
+            LoginCommand = new ParameterizedCommand(LoginCommandExecuteAsync,
+                (parameter) =>
+                {
+                    var password = parameter as string;
+                    return SelectedWorker != null && !string.IsNullOrEmpty(password);
+                });
 
             Task.Factory.StartNew(SetupPropertiesAsync);
         }
@@ -68,9 +80,21 @@ namespace Beauty.WPF.ViewModels
 
         public async void LoginCommandExecuteAsync(object parameter)
         {
-            /* Авторизация */
+            var password = parameter as string;
+            var result = await loginService.LoginAsync(SelectedWorker, password);
 
-            ApplicationController.ApplicationViewModel.GoToView(ApplicationViews.MainView);
+            if (!result.IsFailed)
+            {
+                ApplicationController.LoginDetails = result as LoginDetails;
+                ApplicationController.ApplicationViewModel.GoToView(ApplicationViews.MainView);
+            }
+            else
+            {
+                var message = "Вы ввели неверный пароль\n" +
+                    "Повторите попытку снова или сообщите об этой ошибке администратору";
+
+                messageService.ShowError(message);
+            }
         }
     }
 }

@@ -15,19 +15,19 @@ namespace Beauty.Core.Services
             MessageBox.Show(message, title, MessageBoxButton.OK, icon);
         }
 
-        public void ShowInformation(string title, string message)
+        public void ShowInformation(string message)
         {
-            ShowMessage(title, message, MessageBoxImage.Information);
+            ShowMessage("Информация", message, MessageBoxImage.Information);
         }
 
-        public void ShowError(string title, string message)
+        public void ShowError(string message)
         {
-            ShowMessage(title, message, MessageBoxImage.Error);
+            ShowMessage("Ошибка", message, MessageBoxImage.Error);
         }
 
-        public void ShowExclamation(string title, string message)
+        public void ShowExclamation(string message)
         {
-            ShowMessage(title, message, MessageBoxImage.Exclamation);
+            ShowMessage("Предупреждение", message, MessageBoxImage.Exclamation);
         }
 
         public void ShowQuestion(string title, string message)

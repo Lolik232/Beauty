@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace Beauty.WPF.ValuesConverters
 {
-    public class ViewValueConverter : BaseValueConverter<ViewValueConverter>
+    public class EnumToViewValueConverter : BaseValueConverter<EnumToViewValueConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
