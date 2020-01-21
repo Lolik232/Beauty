@@ -1,0 +1,63 @@
+﻿<Page x:Class="Beauty.WPF.Views.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Beauty.WPF.Views"
+        xmlns:viewModels="clr-namespace:Beauty.WPF.ViewModels" 
+        mc:Ignorable="d">
+    
+    <Page.DataContext>
+        <viewModels:LoginViewModel/>
+    </Page.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <!--<ProgressBar Grid.Row="0" Grid.Column="0" IsManipulationEnabled="{Binding IsDataLoaded, UpdateSourceTrigger=PropertyChanged}"/>-->
+        <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Вход в систему" Style="{DynamicResource PrimaryTextBlockStyle}" VerticalAlignment="Bottom"/>
+            <ComboBox x:Name="administratorsComboBox" Grid.Row="2" Grid.Column="0" SelectedIndex="0" VerticalAlignment="Center" Style="{DynamicResource DefaultComboBoxStyle}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock FontSize="16" Style="{DynamicResource PrimaryTextBlockStyle}"/>
+                            <TextBlock FontSize="14" Style="{DynamicResource DefaultTextBlockStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource DefaultTextBoxStyle}" VerticalAlignment="Center"/>
+            <Button Grid.Row="6" Grid.Column="0" Content="Войти" Command="{Binding LoginCommand}" Style="{DynamicResource PrimaryButtonStyle}" VerticalAlignment="Center" IsDefault="True"/>
+            <StackPanel Grid.Row="10" Grid.Column="0" Orientation="Vertical" Margin="0,0,0,20" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <TextBlock Style="{DynamicResource AnnotationTextBlockStyle}">
+                    <Hyperlink Style="{DynamicResource DefaultHyperLinkStyle}">
+                        <Run Text="Восстановить доступ"/>
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Text="Версия приложения: 1.0.0.0" Style="{DynamicResource AnnotationTextBlockStyle}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
