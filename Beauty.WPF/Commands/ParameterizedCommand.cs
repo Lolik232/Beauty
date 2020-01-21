@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Beauty.WPF.Commands
 {
-    public sealed class ParameterizedCommand : BaseCommand
+    public class ParameterizedCommand : BaseCommand
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;

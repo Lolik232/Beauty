@@ -8,67 +8,65 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Beauty.WPF.Infrastructure;
 using System.Collections.ObjectModel;
+using Beauty.Data.Models;
+using Beauty.Data.Interfaces;
+using Beauty.Data.UnitOfWorks;
 
 namespace Beauty.WPF.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private ObservableCollection<WorkerViewModel> workersViewModels;
-        private WorkerViewModel selectedWorkerViewModel;
-        private string password;
+        private readonly IUnitOfWork unitOfWork;
 
-        public ObservableCollection<WorkerViewModel> WorkersViewModels
+        private ICollection<Worker> workers;
+        private Worker selectedWorker;
+
+        public ICollection<Worker> Workers
         {
             get
             {
-                return workersViewModels;
+                return workers;
             }
 
             set
             {
-                workersViewModels = value;
-                OnPropertyChanged(nameof(WorkersViewModels));
+                workers = value;
+                OnPropertyChanged(nameof(Workers));
             }
         }
 
-        public WorkerViewModel SelectedWorkerViewModel
+        public Worker SelectedWorker
         {
             get
             {
-                return selectedWorkerViewModel;
+                return selectedWorker;
             }
 
             set
             {
-                selectedWorkerViewModel = value;
-                OnPropertyChanged(nameof(SelectedWorkerViewModel));
-            }
-        }
-
-        public string Password
-        {
-            get
-            {
-                return password;
-            }
-
-            set
-            {
-                password = value;
-                OnPropertyChanged(nameof(Password));
+                selectedWorker = value;
+                OnPropertyChanged(nameof(SelectedWorker));
             }
         }
 
         public ICommand LoginCommand { get; }
-        public Predicate<object> LoginCondition { get; }
 
         public LoginViewModel()
         {
-            LoginCondition = (NullableParameter) => SelectedWorkerViewModel != null && !string.IsNullOrEmpty(Password); 
-            LoginCommand = new RelayCommand(LoginAction, LoginCondition);
+            unitOfWork = new UnitOfWork();
+
+            LoginCommand = new ParameterizedCommand(LoginCommandExecuteAsync, (parameter) => SelectedWorker != null && !string.IsNullOrEmpty(parameter as string));
+
+            Task.Factory.StartNew(SetupPropertiesAsync);
         }
 
-        public void LoginAction()
+        public async void SetupPropertiesAsync()
+        {
+            var workers = await unitOfWork.Workers.FindAdministratorsAsync();
+            Workers = new ObservableCollection<Worker>(workers);
+        }
+
+        public async void LoginCommandExecuteAsync(object parameter)
         {
             /* Авторизация */
 

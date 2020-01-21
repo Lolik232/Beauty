@@ -7,23 +7,23 @@ using System.Windows.Input;
 
 namespace Beauty.WPF.Commands
 {
-    public sealed class RelayCommand : BaseCommand
+    public class RelayCommand : BaseCommand
     {
         private Action execute;
-        private Predicate<object> canExecute;
+        private bool canExecute;
 
-        public RelayCommand(Action execute, Predicate<object> canExecute = null)
+        public RelayCommand(Action execute, bool canExecute = true)
         {
             this.execute = execute;
             this.canExecute = canExecute;
         }
 
-        public override bool CanExecute(object parameter)
+        public override bool CanExecute(object parameter = null)
         {
-            return canExecute is null || canExecute(parameter);
+            return canExecute;
         }
 
-        public override void Execute(object parameter)
+        public override void Execute(object parameter = null)
         {
             execute();
         }
