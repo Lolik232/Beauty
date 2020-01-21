@@ -11,24 +11,8 @@ namespace Beauty.WPF.ViewModels
 {
     public sealed class WorkerViewModel : BaseViewModel
     {
-        private int id;
         private string fullname;
         private string positions;
-        private string password;
-
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
-
-            set
-            {
-                id = value;
-                OnPropertyChanged(nameof(Id));
-            }
-        }
 
         public string Fullname
         {
@@ -55,20 +39,6 @@ namespace Beauty.WPF.ViewModels
             {
                 positions = value;
                 OnPropertyChanged(nameof(Positions));
-            }
-        }
-
-        public string Password
-        {
-            get
-            {
-                return password;
-            }
-
-            set
-            {
-                password = value;
-                OnPropertyChanged(nameof(Password));
             }
         }
     }

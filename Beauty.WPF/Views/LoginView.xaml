@@ -38,24 +38,19 @@
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Вход в систему" Style="{DynamicResource PrimaryTextBlockStyle}" VerticalAlignment="Bottom"/>
-            <ComboBox x:Name="administratorsComboBox" Grid.Row="2" Grid.Column="0" SelectedIndex="0" VerticalAlignment="Center" Style="{DynamicResource DefaultComboBoxStyle}">
+            <ComboBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding WorkersViewModels, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedWorkerViewModel, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0" VerticalAlignment="Center" Style="{DynamicResource DefaultComboBoxStyle}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="16" Style="{DynamicResource PrimaryTextBlockStyle}"/>
-                            <TextBlock FontSize="14" Style="{DynamicResource DefaultTextBlockStyle}"/>
+                            <TextBlock FontSize="16" Text="{Binding Fullname}" Style="{DynamicResource PrimaryTextBlockStyle}"/>
+                            <TextBlock FontSize="14" Text="{Binding Positions}" Style="{DynamicResource DefaultTextBlockStyle}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource DefaultTextBoxStyle}" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="4" Grid.Column="0" Text="{Binding Password}" Style="{DynamicResource DefaultTextBoxStyle}" VerticalAlignment="Center"/>
             <Button Grid.Row="6" Grid.Column="0" Content="Войти" Command="{Binding LoginCommand}" Style="{DynamicResource PrimaryButtonStyle}" VerticalAlignment="Center" IsDefault="True"/>
             <StackPanel Grid.Row="10" Grid.Column="0" Orientation="Vertical" Margin="0,0,0,20" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <TextBlock Style="{DynamicResource AnnotationTextBlockStyle}">
-                    <Hyperlink Style="{DynamicResource DefaultHyperLinkStyle}">
-                        <Run Text="Восстановить доступ"/>
-                    </Hyperlink>
-                </TextBlock>
                 <TextBlock Text="Версия приложения: 1.0.0.0" Style="{DynamicResource AnnotationTextBlockStyle}"/>
             </StackPanel>
         </Grid>
