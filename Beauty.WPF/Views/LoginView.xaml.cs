@@ -1,10 +1,12 @@
 ﻿using Beauty.Core.Interfaces;
 using Beauty.Data;
 using Beauty.Data.Interfaces;
+using Beauty.WPF.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,8 +23,16 @@ namespace Beauty.WPF.Views
     /// <summary>
     /// Логика взаимодействия для LoginView.xaml
     /// </summary>
-    public partial class LoginView : Page
+    public partial class LoginView : Page, ILoginView
     {
+        public SecureString SecurePassword
+        {
+            get
+            {
+                return PasswordBox.SecurePassword;
+            }
+        }
+
         public LoginView()
         {
             InitializeComponent();

@@ -5,22 +5,22 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--Buttons-->
+                <!--Buttons--><!--
                 <ResourceDictionary Source="Styles/DefaultButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/PrimaryButtonStyle.xaml"/>
-                <!--TextBlocks-->
+                --><!--TextBlocks--><!--
                 <ResourceDictionary Source="Styles/DefaultTextBlockStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ProgressBarTextBlockStyle.xaml"/>
                 <ResourceDictionary Source="Styles/AnnotationTextBlockStyle.xaml"/>
                 <ResourceDictionary Source="Styles/PrimaryTextBlockStyle.xaml"/>
-                <!--TextBoxes-->
+                --><!--TextBoxes--><!--
                 <ResourceDictionary Source="Styles/DefaultTextBoxStyle.xaml"/>
-                <!--HyperLinks-->
+                --><!--HyperLinks--><!--
                 <ResourceDictionary Source="Styles/DefaultHyperLinkStyle.xaml"/>
-                <!--ComboBoxes-->
+                --><!--ComboBoxes--><!--
                 <ResourceDictionary Source="Styles/DefaultComboBoxStyle.xaml"/>
-                <!--ProgressBars-->
-                <ResourceDictionary Source="Styles/DefaultProgressBarStyle.xaml"/>
+                --><!--ProgressBars--><!--
+                <ResourceDictionary Source="Styles/DefaultProgressBarStyle.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

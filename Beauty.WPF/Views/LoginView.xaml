@@ -1,58 +1,112 @@
-﻿<Page x:Class="Beauty.WPF.Views.LoginView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Beauty.WPF.Views"
-        xmlns:viewModels="clr-namespace:Beauty.WPF.ViewModels" 
-        mc:Ignorable="d">
-    
+﻿<Page x:Name="View" 
+      x:Class="Beauty.WPF.Views.LoginView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:Beauty.WPF.Views"
+      xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
+      xmlns:ViewModels="clr-namespace:Beauty.WPF.ViewModels" 
+      mc:Ignorable="d">
+
     <Page.DataContext>
-        <viewModels:LoginViewModel/>
+        <ViewModels:LoginViewModel/>
     </Page.DataContext>
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <!--<ProgressBar Grid.Row="0" Grid.Column="0" IsManipulationEnabled="{Binding IsDataLoaded, UpdateSourceTrigger=PropertyChanged}"/>-->
-        <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+
+        <Grid Grid.Row="0"
+              Grid.Column="0"
+              Visibility="{Binding IsDataLoaded, UpdateSourceTrigger=PropertyChanged, Converter={ValueConverters:BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <ProgressBar Foreground="Orange"
+                         Background="Transparent"
+                         IsIndeterminate="True"/>
+
+            <TextBlock Grid.Column="0" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       Text="Загрузка данных..."/>
+        </Grid>
+
+        <Grid Grid.Row="1" 
+              Grid.Column="0"
+              HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/> <!--0-->
+                <RowDefinition Height="20"/> <!--1-->
+                <RowDefinition Height="20"/> <!--2-->
+                <RowDefinition Height="32"/> <!--3-->
+                <RowDefinition Height="15"/> <!--4-->
+                <RowDefinition Height="20"/> <!--5-->
+                <RowDefinition Height="32"/> <!--6-->
+                <RowDefinition Height="30"/> <!--7-->
+                <RowDefinition Height="32"/> <!--8-->
+                <RowDefinition Height="15"/> <!--9-->
+                <RowDefinition Height="*"/> <!--10-->
+                <RowDefinition Height="15"/> <!--11-->
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Вход в систему" Style="{DynamicResource PrimaryTextBlockStyle}" VerticalAlignment="Bottom"/>
-            <ComboBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Workers, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding SelectedWorker, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0" VerticalAlignment="Center" Style="{DynamicResource DefaultComboBoxStyle}">
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0" 
+                       FontSize="18"
+                       VerticalAlignment="Bottom"
+                       Text="Вход в систему"/>
+
+            <TextBlock Grid.Row="2" 
+                       Grid.Column="0"
+                       Text="Пользователь"/>
+
+            <ComboBox Grid.Row="3" 
+                      Grid.Column="0" 
+                      ItemsSource="{Binding Workers}" 
+                      SelectedItem="{Binding SelectedWorker}"
+                      SelectedIndex="0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock FontSize="16" Text="{Binding Firstname}" Style="{DynamicResource PrimaryTextBlockStyle}"/>
-                            <!--<TextBlock FontSize="14" Text="{Binding Positions}" Style="{DynamicResource DefaultTextBlockStyle}"/>-->
-                        </StackPanel>
+                        <Label Content="{Binding Firstname}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBox x:Name="passwordTextBox" Grid.Row="4" Grid.Column="0" Style="{DynamicResource DefaultTextBoxStyle}" VerticalAlignment="Center"/>
-            <Button Grid.Row="6" Grid.Column="0" Content="Войти" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=passwordTextBox, Path=Text}" Style="{DynamicResource PrimaryButtonStyle}" VerticalAlignment="Center" IsDefault="True"/>
-            <StackPanel Grid.Row="10" Grid.Column="0" Orientation="Vertical" Margin="0,0,0,20" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <TextBlock Text="Версия приложения: 1.0.0.0" Style="{DynamicResource AnnotationTextBlockStyle}"/>
-            </StackPanel>
+
+            <TextBlock Grid.Row="5" 
+                       Grid.Column="0"
+                       Text="Пароль"/>
+
+            <PasswordBox x:Name="PasswordBox"
+                         Grid.Row="6"
+                         Grid.Column="0"
+                         VerticalContentAlignment="Center"/>
+
+            <TextBlock Grid.Row="7" 
+                       Grid.Column="0"
+                       Foreground="Red"
+                       VerticalAlignment="Center"
+                       Text="{Binding ErrorMessage}"
+                       Visibility="{Binding IsHasErrors, Converter={ValueConverters:BoolToVisibilityConverter}}"/>
+            
+            <Button Grid.Row="8" 
+                    Grid.Column="0" 
+                    IsDefault="True"
+                    Command="{Binding LoginCommand}" 
+                    CommandParameter="{Binding ElementName=View}"
+                    Content="Войти"/>
+
+            <TextBlock Grid.Row="10"
+                       Grid.Column="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"
+                       Text="Версия приложения: 1.0.0.0"/>
         </Grid>
     </Grid>
 </Page>
