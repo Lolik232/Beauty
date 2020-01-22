@@ -6,12 +6,18 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:Beauty.WPF.Views"
       xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
-      xmlns:ViewModels="clr-namespace:Beauty.WPF.ViewModels" 
+      xmlns:ViewModels="clr-namespace:Beauty.WPF.ViewModels"
       mc:Ignorable="d">
 
     <Page.DataContext>
         <ViewModels:LoginViewModel/>
     </Page.DataContext>
+
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard Storyboard="{StaticResource SmoothTransitionStoryboard}"/>
+        </EventTrigger>
+    </Page.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -19,39 +25,97 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"
-              Grid.Column="0"
-              Visibility="{Binding IsDataLoaded, UpdateSourceTrigger=PropertyChanged, Converter={ValueConverters:BoolToVisibilityConverter}}">
+        <Grid x:Name="ProgressBarGrid" 
+              Grid.Row="0"
+              Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="24"/>
             </Grid.RowDefinitions>
 
-            <ProgressBar Foreground="Orange"
-                         Background="Transparent"
-                         IsIndeterminate="True"/>
+            <Grid.Resources>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsDataLoading, UpdateSourceTrigger=PropertyChanged}" 
+                                     Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource SmoothTransitionStoryboard}"/>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
 
-            <TextBlock Grid.Column="0" 
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center"
-                       Text="Загрузка данных..."/>
+                        <DataTrigger Binding="{Binding IsDataLoading, UpdateSourceTrigger=PropertyChanged}" 
+                                     Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource BackSmoothTransitionStoryboard}"/>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+
+            <ProgressBar Grid.Row="0" 
+                         Background="Orange"
+                         BorderThickness="0"/>
+
+            <Grid Grid.Row="0"
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Viewbox Grid.Column="0"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Width="16"
+                         Height="16">
+                    <Canvas Width="24"
+                            Height="24">
+                        <Path Fill="{Binding ElementName=ProgressBarText, Path=Foreground}" 
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"
+                              Data="M12,3A9,9 0 0,0 3,12H0L4,16L8,12H5A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19C10.5,19 9.09,18.5 7.94,17.7L6.5,19.14C8.04,20.3 9.94,21 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3M14,12A2,2 0 0,0 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12Z">
+                            <Path.RenderTransform>
+                                <RotateTransform x:Name="RotatingElement"
+                                                 CenterX="12"
+                                                 CenterY="12"/>
+                            </Path.RenderTransform>
+                            <Path.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard Storyboard="{StaticResource SpinnerStoryboard}"
+                                                     Storyboard.TargetName="RotatingElement"/>
+                                </EventTrigger>
+                            </Path.Triggers>
+                        </Path>
+                    </Canvas>
+                </Viewbox>
+
+                <TextBlock x:Name="ProgressBarText" 
+                           Grid.Column="1"
+                           Foreground="White"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           Text="Загрузка данных..."/>
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="1" 
               Grid.Column="0"
               HorizontalAlignment="Center">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/> <!--0-->
-                <RowDefinition Height="20"/> <!--1-->
-                <RowDefinition Height="20"/> <!--2-->
-                <RowDefinition Height="32"/> <!--3-->
-                <RowDefinition Height="15"/> <!--4-->
-                <RowDefinition Height="20"/> <!--5-->
-                <RowDefinition Height="32"/> <!--6-->
-                <RowDefinition Height="30"/> <!--7-->
-                <RowDefinition Height="32"/> <!--8-->
-                <RowDefinition Height="15"/> <!--9-->
-                <RowDefinition Height="*"/> <!--10-->
-                <RowDefinition Height="15"/> <!--11-->
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
@@ -70,7 +134,7 @@
             <ComboBox Grid.Row="3" 
                       Grid.Column="0" 
                       ItemsSource="{Binding Workers}" 
-                      SelectedItem="{Binding SelectedWorker}"
+                      SelectedItem="{Binding SelectedWorker, UpdateSourceTrigger=PropertyChanged}"
                       SelectedIndex="0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -86,15 +150,31 @@
             <PasswordBox x:Name="PasswordBox"
                          Grid.Row="6"
                          Grid.Column="0"
-                         VerticalContentAlignment="Center"/>
+                         FontSize="16"
+                         VerticalContentAlignment="Center"
+                         PasswordChar="•"/>
 
             <TextBlock Grid.Row="7" 
                        Grid.Column="0"
                        Foreground="Red"
                        VerticalAlignment="Center"
-                       Text="{Binding ErrorMessage}"
-                       Visibility="{Binding IsHasErrors, Converter={ValueConverters:BoolToVisibilityConverter}}"/>
-            
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       Text="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}"
+                       Visibility="{Binding HasErrors, UpdateSourceTrigger=PropertyChanged, Converter={ValueConverters:BoolToVisibilityConverter}}">
+                <TextBlock.Resources>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HasErrors, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource SmoothTransitionStoryboard}"/>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Resources>
+            </TextBlock>
+
             <Button Grid.Row="8" 
                     Grid.Column="0" 
                     IsDefault="True"

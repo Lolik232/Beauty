@@ -11,6 +11,7 @@ namespace Beauty.WPF.Commands
     {
         private Action execute;
         private bool canExecute;
+        private Predicate<object> predicateCanExecute;
 
         public RelayCommand(Action execute, bool canExecute = true)
         {
@@ -18,9 +19,15 @@ namespace Beauty.WPF.Commands
             this.canExecute = canExecute;
         }
 
+        public RelayCommand(Action execute, Predicate<object> canExecute = null)
+        {
+            this.execute = execute;
+            this.predicateCanExecute = canExecute;
+        }
+
         public override bool CanExecute(object parameter = null)
         {
-            return canExecute;
+            return canExecute || (predicateCanExecute is null || predicateCanExecute(parameter));
         }
 
         public override void Execute(object parameter = null)

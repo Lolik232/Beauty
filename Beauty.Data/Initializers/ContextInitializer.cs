@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Beauty.Data.Initializers
 {
-    //public class ContextInitializer : DropCreateDatabaseIfModelChanges<BaseContext>
-    public class ContextInitializer : DropCreateDatabaseAlways<Context>
+    public class ContextInitializer : DropCreateDatabaseIfModelChanges<Context>
+    //public class ContextInitializer : DropCreateDatabaseAlways<Context>
     {
         protected override void Seed(Context context)
         {

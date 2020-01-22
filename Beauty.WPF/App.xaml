@@ -5,6 +5,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!--Storyboards-->
+                <ResourceDictionary Source="Resources/Storyboards/SpinnerStoryboard.xaml"/>
+                <ResourceDictionary Source="Resources/Storyboards/SmoothTransitionStoryboard.xaml"/>
+                <ResourceDictionary Source="Resources/Storyboards/BackSmoothTransitionStoryboard.xaml"/>
+
                 <!--Buttons--><!--
                 <ResourceDictionary Source="Styles/DefaultButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/PrimaryButtonStyle.xaml"/>

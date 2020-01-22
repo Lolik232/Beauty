@@ -25,22 +25,15 @@ namespace Beauty.WPF.ViewModels
         private readonly IMessageService messageService;
         private readonly ILoginService loginService;
 
-        private bool isDataLoaded;
         private ICollection<Worker> workers;
         private Worker selectedWorker;
         private string errorMessage;
 
-        public bool IsDataLoaded
-        { 
+        public bool IsDataLoading
+        {
             get
             {
-                return isDataLoaded;
-            }
-            
-            set
-            {
-                isDataLoaded = value;
-                OnPropertyChanged(nameof(IsDataLoaded));
+                return Workers is null || Workers.Count.Equals(0);
             }
         }
 
@@ -54,8 +47,8 @@ namespace Beauty.WPF.ViewModels
             set
             {
                 workers = value;
-                IsDataLoaded = true;
                 OnPropertyChanged(nameof(Workers));
+                OnPropertyChanged(nameof(IsDataLoading));
             }
         }
 
@@ -73,8 +66,8 @@ namespace Beauty.WPF.ViewModels
             }
         }
 
-        public string ErrorMessage 
-        { 
+        public string ErrorMessage
+        {
             get
             {
                 return errorMessage;
@@ -84,14 +77,15 @@ namespace Beauty.WPF.ViewModels
             {
                 errorMessage = value;
                 OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(HasErrors));
             }
         }
 
-        public bool IsHasErrors
+        public bool HasErrors
         {
             get
             {
-                return ErrorMessage != null;
+                return !string.IsNullOrWhiteSpace(ErrorMessage);
             }
         }
 
@@ -103,24 +97,26 @@ namespace Beauty.WPF.ViewModels
             messageService = new MessageService();
             loginService = new LoginService(unitOfWork);
 
-            LoginCommand = new ParameterizedCommand(LoginCommandExecuteAsync, LoginCommandCanExecute);
+            LoginCommand = new ParameterizedCommand
+            (
+                LoginAsync,
+                (parameter) =>
+                {
+                    var password = (parameter as ILoginView)?.SecurePassword;
+                    return SelectedWorker != null && !password.Length.Equals(0);
+                }
+            );
 
-            Task.Factory.StartNew(SetupPropertiesAsync);
+            Task.Factory.StartNew(LoadPropertiesAsync);
         }
 
-        public async void SetupPropertiesAsync()
+        public async void LoadPropertiesAsync()
         {
             var workers = await unitOfWork.Workers.FindAdministratorsAsync();
             Workers = new ObservableCollection<Worker>(workers);
         }
 
-        public bool LoginCommandCanExecute(object parameter)
-        {
-            var password = (parameter as ILoginView)?.SecurePassword;
-            return SelectedWorker != null && !password.Length.Equals(0);
-        }
-
-        public async void LoginCommandExecuteAsync(object parameter)
+        public async void LoginAsync(object parameter)
         {
             var securePassword = (parameter as ILoginView)?.SecurePassword;
             var password = securePassword.Unsecure();
@@ -134,7 +130,7 @@ namespace Beauty.WPF.ViewModels
             }
             else
             {
-                ErrorMessage = "Вы ввели неверный пароль";
+                ErrorMessage = "Вы ввели неверный пароль. Пожалуйста, повторите попытку ввода снова";
             }
         }
     }

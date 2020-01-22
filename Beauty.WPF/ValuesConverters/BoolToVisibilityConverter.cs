@@ -12,12 +12,22 @@ namespace Beauty.WPF.ValuesConverters
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? Visibility.Hidden : Visibility.Visible; 
+            return (bool)value ? Visibility.Visible : Visibility.Hidden; 
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            switch ((Visibility)value)
+            {
+                case Visibility.Visible:
+                    return true;
+
+                case Visibility.Hidden:
+                    return false;
+
+                default:
+                    return false;
+            }
         }
     }
 }
