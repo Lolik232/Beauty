@@ -8,7 +8,8 @@
       xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
       xmlns:Infrastructure="clr-namespace:Beauty.WPF.Infrastructure"
       mc:Ignorable="d"
-      d:DesignHeight="720"
-      d:DesignWidth="1280">
+      Background="{StaticResource WhiteColor}"
+      d:DesignWidth="1280"
+      d:DesignHeight="720">
 
 </Page>

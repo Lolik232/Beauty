@@ -2,6 +2,7 @@
 using Beauty.Data;
 using Beauty.Data.Interfaces;
 using Beauty.WPF.Interfaces;
+using Beauty.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -23,7 +24,7 @@ namespace Beauty.WPF.Views
     /// <summary>
     /// Логика взаимодействия для LoginView.xaml
     /// </summary>
-    public partial class LoginView : Page, ILoginView
+    public partial class LoginView : BaseView<LoginViewModel>, ICollectionable, ISecurable
     {
         public bool HasItems
         {
@@ -38,6 +39,14 @@ namespace Beauty.WPF.Views
             get
             {
                 return PasswordBox.SecurePassword;
+            }
+        }
+
+        public bool IsPasswordEmpty
+        {
+            get
+            {
+                return SecurePassword.Length.Equals(0);
             }
         }
 

@@ -19,7 +19,7 @@ namespace Beauty.WPF.ViewModels
                 return currentView;
             }
 
-            set
+            private set
             {
                 currentView = value;
                 OnPropertyChanged(nameof(CurrentView));
@@ -30,7 +30,7 @@ namespace Beauty.WPF.ViewModels
 
         public ApplicationViewModel()
         {
-            CurrentView = ApplicationViews.LoginView;
+            GoToView(ApplicationViews.LoginView);
         }
 
         public void GoToView(ApplicationViews view)

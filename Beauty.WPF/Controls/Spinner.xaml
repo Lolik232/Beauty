@@ -22,16 +22,14 @@
                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
                           VerticalAlignment="{TemplateBinding VerticalAlignment}"
                           Data="{StaticResource LoadingBarIcon}"
-                          Style="{StaticResource SpinningPathStyle}">
-
-                    </Path>
+                          Style="{StaticResource SpinningPathStyle}"/>
 
                 </Canvas>
 
             </Viewbox>
 
         </ControlTemplate>
-        
+
     </UserControl.Template>
-    
+
 </UserControl>

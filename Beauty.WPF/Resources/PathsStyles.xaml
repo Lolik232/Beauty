@@ -23,39 +23,39 @@
            BasedOn="{StaticResource BasePathStyle}">
 
         <Style.Resources>
-            
+
             <Storyboard x:Key="SpinningStoryboard">
-                
+
                 <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                  From="0"
                                  To="360"
                                  Duration="0:0:0.5"
                                  RepeatBehavior="Forever"/>
-                
+
             </Storyboard>
-            
+
         </Style.Resources>
 
         <Style.Triggers>
-            
+
             <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsVisible}" 
                          Value="True">
-                
+
                 <DataTrigger.EnterActions>
 
-                    <BeginStoryboard Name="SpinningAction" 
+                    <BeginStoryboard x:Name="SpinningAction" 
                                      Storyboard="{StaticResource SpinningStoryboard}" />
-                    
+
                 </DataTrigger.EnterActions>
-                
+
                 <DataTrigger.ExitActions>
 
                     <RemoveStoryboard BeginStoryboardName="SpinningAction" />
-                    
+
                 </DataTrigger.ExitActions>
-                
+
             </DataTrigger>
-            
+
         </Style.Triggers>
 
     </Style>

@@ -67,14 +67,15 @@ namespace Beauty.WPF.ViewModels
                 LoginAsync,
                 (parameter) =>
                 {
-                    var view = parameter as ILoginView;
+                    var collectionSettings = parameter as ICollectionable;
+                    var securitySettings = parameter as ISecurable;
 
-                    if (view is null)
+                    if (collectionSettings is null && securitySettings is null)
                     {
                         return false;
                     }
 
-                    return view.HasItems && !view.SecurePassword.Length.Equals(0);
+                    return collectionSettings.HasItems && !securitySettings.IsPasswordEmpty;
                 }
             );
 
@@ -84,15 +85,20 @@ namespace Beauty.WPF.ViewModels
         public async void LoadPropertiesAsync()
         {
             var workers = await unitOfWork.Workers.FindAdministratorsAsync();
-
             Workers = new ObservableCollection<Worker>(workers);
         }
 
         public async void LoginAsync(object parameter)
         {
-            var securePassword = (parameter as ILoginView)?.SecurePassword;
-            var password = securePassword.Unsecure();
+            var view = parameter as IView;
+            var securitySettings = parameter as ISecurable;
 
+            if (view is null && securitySettings is null)
+            {
+                return;
+            }
+
+            var password = securitySettings.SecurePassword.Unsecure();
             var loginResult = await loginService.LoginAsync(SelectedWorker, password);
 
             if (!loginResult.IsFailed)
@@ -102,7 +108,7 @@ namespace Beauty.WPF.ViewModels
             }
             else
             {
-                Controller.MessageService.ShowError("Вы ввели неверный пароль. Пожалуйста, повторите попытку ввода снова");
+                Controller.MessageService.ShowError("Вы ввели неверный пароль. Пожалуйста, повторите попытку ввода");
             }
         }
     }

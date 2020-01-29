@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace Beauty.WPF.AttachedProperties
 {
-    public class ListenPasswordChangesProperty : BaseAttachedProperty<ListenPasswordChangesProperty, bool>
+    public class ListenPasswordChangesProperty : BaseProperty<ListenPasswordChangesProperty, bool>
     {
         public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -35,7 +35,7 @@ namespace Beauty.WPF.AttachedProperties
         }
     }
 
-    public class HasTextProperty : BaseAttachedProperty<HasTextProperty, bool>
+    public class HasTextProperty : BaseProperty<HasTextProperty, bool>
     {
         public static void SetValue(DependencyObject sender)
        {

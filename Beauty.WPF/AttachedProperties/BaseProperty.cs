@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Beauty.WPF.AttachedProperties
 {
-    public abstract class BaseAttachedProperty<TParent, TProperty> where TParent : new()
+    public abstract class BaseProperty<TParent, TProperty> where TParent : new()
     {
         public event Action<DependencyObject, DependencyPropertyChangedEventArgs> ValueChanged = (sender, e) => { };
 
@@ -24,7 +24,7 @@ namespace Beauty.WPF.AttachedProperties
         public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached(
             "Value",
             typeof(TProperty),
-            typeof(BaseAttachedProperty<TParent, TProperty>),
+            typeof(BaseProperty<TParent, TProperty>),
             MetadataProperty
         );
 
@@ -36,16 +36,16 @@ namespace Beauty.WPF.AttachedProperties
 
         private static void OnValuePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            (Instance as BaseAttachedProperty<TParent, TProperty>)?.OnValueChanged(dependencyObject, e);
+            (Instance as BaseProperty<TParent, TProperty>)?.OnValueChanged(dependencyObject, e);
 
-            (Instance as BaseAttachedProperty<TParent, TProperty>)?.ValueChanged(dependencyObject, e);
+            (Instance as BaseProperty<TParent, TProperty>)?.ValueChanged(dependencyObject, e);
         }
 
         private static object OnValuePropertyUpdated(DependencyObject dependencyObject, object value)
         {
-            (Instance as BaseAttachedProperty<TParent, TProperty>)?.OnValueUpdated(dependencyObject, value);
+            (Instance as BaseProperty<TParent, TProperty>)?.OnValueUpdated(dependencyObject, value);
 
-            (Instance as BaseAttachedProperty<TParent, TProperty>)?.ValueUpdated(dependencyObject, value);
+            (Instance as BaseProperty<TParent, TProperty>)?.ValueUpdated(dependencyObject, value);
 
             return value;
         }

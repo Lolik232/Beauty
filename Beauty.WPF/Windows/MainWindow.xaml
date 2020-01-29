@@ -31,10 +31,9 @@
                                      Visibility="Hidden"
                                      Content="Загрузка данных..."/>
 
-                <Frame x:Name="PageHost"
-                       Grid.Row="1"
-                       Content="{Binding ApplicationViewModel.CurrentView, Source={x:Static Infrastructure:ViewModelLocator.Instance}, Converter={ValueConverters:EnumToViewValueConverter}, UpdateSourceTrigger=PropertyChanged}"
-                       NavigationUIVisibility="Hidden"/>
+                <Controls:ViewHost Grid.Row="1"
+                                   DataContext="{Binding ApplicationViewModel.CurrentView, Source={x:Static Infrastructure:ViewModelLocator.Instance}, Converter={ValueConverters:EnumToViewValueConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                   CurrentView="{Binding}"/>
 
     </Grid>
 

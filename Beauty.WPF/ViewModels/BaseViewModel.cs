@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Beauty.WPF.ViewModels
 {
-    public abstract class BaseViewModel : IViewModel
+    public class BaseViewModel : IViewModel
     {
         public virtual event PropertyChangedEventHandler PropertyChanged;
 

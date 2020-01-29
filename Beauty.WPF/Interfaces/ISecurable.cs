@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Beauty.WPF.Interfaces
 {
-    public interface ILoginView
+    public interface ISecurable
     {
-        bool HasItems { get; }
         SecureString SecurePassword { get; }
+        bool IsPasswordEmpty { get; }
     }
 }

@@ -1,28 +1,22 @@
-﻿<Page x:Name="View" 
-      x:Class="Beauty.WPF.Views.LoginView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:local="clr-namespace:Beauty.WPF.Views"
-      xmlns:ViewModels="clr-namespace:Beauty.WPF.ViewModels"
-      xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties"
-      xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
-      xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
-      mc:Ignorable="d"
-      Background="{StaticResource WhiteColor}"
-      d:DesignWidth="1280"
-      d:DesignHeight="720">
-
-    <Page.DataContext>
-
-        <ViewModels:LoginViewModel/>
-
-    </Page.DataContext>
+﻿<local:BaseView x:Name="View"
+                x:Class="Beauty.WPF.Views.LoginView"
+                x:TypeArguments="ViewModels:LoginViewModel" 
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:Beauty.WPF.Views"
+                xmlns:ViewModels="clr-namespace:Beauty.WPF.ViewModels"
+                xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
+                xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
+                mc:Ignorable="d"
+                Background="{StaticResource WhiteColor}"
+                d:DesignWidth="1280"
+                d:DesignHeight="720">
 
     <Grid Grid.Row="1" 
-              Grid.Column="0"
-              HorizontalAlignment="Center">
+          Grid.Column="0"
+          HorizontalAlignment="Center">
 
         <Grid.RowDefinitions>
 
@@ -99,10 +93,10 @@
 
         <Controls:Spinner Grid.Row="3"
                           Grid.Column="0"
-                          Width="16"
-                          Height="16"
+                          Width="32"
+                          Height="32"
                           Visibility="{Binding ElementName=WorkersComboBox, Path=HasItems, Converter={ValueConverters:BooleanToVisibilityValueConverter}, ConverterParameter=Reverse}"
-                          Foreground="{Binding ElementName=WorkersComboBox, Path=Foreground}"/>
+                          Foreground="{StaticResource LightSlateGrayColor}"/>
 
         <PasswordBox x:Name="PasswordBox"
                      Tag="Пароль"
@@ -126,4 +120,4 @@
                    Text="Версия приложения: 1.0.0.0"/>
     </Grid>
 
-</Page>
+</local:BaseView>

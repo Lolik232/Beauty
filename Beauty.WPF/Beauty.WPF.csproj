@@ -69,18 +69,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
-    <Compile Include="AttachedProperties\PasswordBoxesAttachedProperties.cs" />
+    <Compile Include="AttachedProperties\BaseProperty.cs" />
+    <Compile Include="AttachedProperties\ClearNavigationHistoryProperty.cs" />
+    <Compile Include="AttachedProperties\PasswordBoxesProperties.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\ParameterizedCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Controls\ViewHost.xaml.cs">
+      <DependentUpon>ViewHost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Spinner.xaml.cs">
       <DependentUpon>Spinner.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Enums\ViewAnimations.cs" />
+    <Compile Include="Extensions\StoryboardExtensions.cs" />
+    <Compile Include="Extensions\ViewAnimationExtensions.cs" />
     <Compile Include="Infrastructure\Container.cs" />
     <Compile Include="Enums\ApplicationViews.cs" />
     <Compile Include="Infrastructure\Controller.cs" />
-    <Compile Include="Interfaces\ILoginView.cs" />
+    <Compile Include="Interfaces\ICollectionable.cs" />
+    <Compile Include="Interfaces\ISecurable.cs" />
+    <Compile Include="Interfaces\IView.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelLocator.cs" />
     <Compile Include="Controls\MainMenu.xaml.cs">
@@ -95,6 +104,7 @@
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="Views\BaseView.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -108,6 +118,10 @@
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\ViewHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Spinner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
