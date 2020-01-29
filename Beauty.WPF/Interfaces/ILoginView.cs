@@ -9,6 +9,7 @@ namespace Beauty.WPF.Interfaces
 {
     public interface ILoginView
     {
+        bool HasItems { get; }
         SecureString SecurePassword { get; }
     }
 }

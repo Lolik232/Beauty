@@ -17,24 +17,24 @@ namespace Beauty.Data.Repositories
             : base(context)
         { }
 
-        public async Task<ICollection<Position>> FindPositionsAsync(int? workerId)
+        public async Task<IEnumerable<Position>> FindPositionsAsync(int? workerId)
         {
             var positions = await context.WorkerPositions
-                .Include("Position")
-                .Where(WorkerPosition => WorkerPosition.WorkerId.Equals(workerId.Value))
-                .Select(WorkerPosition => WorkerPosition.Position)
-                .ToListAsync();
+                            .Include(WorkerPosition => WorkerPosition.Position)
+                            .Where(WorkerPosition => WorkerPosition.WorkerId.Equals(workerId.Value))
+                            .Select(WorkerPosition => WorkerPosition.Position)
+                            .ToListAsync();
 
             return positions;
         }
 
-        public async Task<ICollection<Worker>> FindAdministratorsAsync()
+        public async Task<IEnumerable<Worker>> FindAdministratorsAsync()
         {
             var administrators = await context.WorkerPositions
-                .Include("Worker")
-                .Where(WorkerPosition => WorkerPosition.PositionId.Equals(2))
-                .Select(WorkerPosition => WorkerPosition.Worker)
-                .ToListAsync();
+                                 .Include(WorkerPosition => WorkerPosition.Worker)
+                                 .Where(WorkerPosition => WorkerPosition.PositionId.Equals(2))
+                                 .Select(WorkerPosition => WorkerPosition.Worker)
+                                 .ToListAsync();
 
             return administrators;
         }

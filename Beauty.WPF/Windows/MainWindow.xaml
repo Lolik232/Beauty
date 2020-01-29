@@ -6,15 +6,38 @@
         xmlns:local="clr-namespace:Beauty.WPF.Windows"
         xmlns:Infrastructure="clr-namespace:Beauty.WPF.Infrastructure"
         xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
+        xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
         mc:Ignorable="d"
         Title="Система управления салоном красоты «Бьюти»"
         MinHeight="405" 
-        Height="480"
+        Height="720"
         MinWidth="380" 
-        Width="1080" 
+        Width="1280" 
         WindowStartupLocation="CenterScreen">
 
-    <Frame x:Name="MainFrame" 
-           Content="{Binding ApplicationViewModel.CurrentView, Source={x:Static Infrastructure:ViewModelLocator.Instance}, Converter={ValueConverters:EnumToViewValueConverter}, UpdateSourceTrigger=PropertyChanged}"
-           NavigationUIVisibility="Hidden"/>
+    <Grid>
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="Auto"/>
+
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+                <Controls:StateBar Grid.Row="0"
+                                     Background="{StaticResource OrangeColor}"
+                                     Foreground="{StaticResource WhiteColor}"
+                                     Visibility="Hidden"
+                                     Content="Загрузка данных..."/>
+
+                <Frame x:Name="PageHost"
+                       Grid.Row="1"
+                       Content="{Binding ApplicationViewModel.CurrentView, Source={x:Static Infrastructure:ViewModelLocator.Instance}, Converter={ValueConverters:EnumToViewValueConverter}, UpdateSourceTrigger=PropertyChanged}"
+                       NavigationUIVisibility="Hidden"/>
+
+    </Grid>
+
+
+
 </Window>

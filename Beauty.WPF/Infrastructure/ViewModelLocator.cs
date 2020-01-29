@@ -21,7 +21,7 @@ namespace Beauty.WPF.Infrastructure
         {
             get
             {
-                return ApplicationController.ApplicationViewModel;
+                return Controller.Application;
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Beauty.WPF
         {
             base.OnStartup(e);
 
-            NinjectContainer.Setup();
+            Container.Setup();
 
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();

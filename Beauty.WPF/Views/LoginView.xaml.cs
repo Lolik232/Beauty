@@ -25,6 +25,14 @@ namespace Beauty.WPF.Views
     /// </summary>
     public partial class LoginView : Page, ILoginView
     {
+        public bool HasItems
+        {
+            get
+            {
+                return WorkersComboBox.HasItems;
+            }
+        }
+
         public SecureString SecurePassword
         {
             get

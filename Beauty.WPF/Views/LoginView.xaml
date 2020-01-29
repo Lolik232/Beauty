@@ -5,188 +5,125 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:Beauty.WPF.Views"
-      xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
       xmlns:ViewModels="clr-namespace:Beauty.WPF.ViewModels"
-      mc:Ignorable="d">
+      xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties"
+      xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
+      xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
+      mc:Ignorable="d"
+      Background="{StaticResource WhiteColor}"
+      d:DesignWidth="1280"
+      d:DesignHeight="720">
 
     <Page.DataContext>
+
         <ViewModels:LoginViewModel/>
+
     </Page.DataContext>
 
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="Loaded">
-            <BeginStoryboard Storyboard="{StaticResource SmoothTransitionStoryboard}"/>
-        </EventTrigger>
-    </Page.Triggers>
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Grid x:Name="ProgressBarGrid" 
-              Grid.Row="0"
-              Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="24"/>
-            </Grid.RowDefinitions>
-
-            <Grid.Resources>
-                <Style TargetType="Grid">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsDataLoading, UpdateSourceTrigger=PropertyChanged}" 
-                                     Value="True">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource SmoothTransitionStoryboard}"/>
-                            </DataTrigger.EnterActions>
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding IsDataLoading, UpdateSourceTrigger=PropertyChanged}" 
-                                     Value="False">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource BackSmoothTransitionStoryboard}"/>
-                            </DataTrigger.EnterActions>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Resources>
-
-            <ProgressBar Grid.Row="0" 
-                         Background="Orange"
-                         BorderThickness="0"/>
-
-            <Grid Grid.Row="0"
-                  HorizontalAlignment="Center" 
-                  VerticalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Viewbox Grid.Column="0"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         Width="16"
-                         Height="16">
-                    <Canvas Width="24"
-                            Height="24">
-                        <Path Fill="{Binding ElementName=ProgressBarText, Path=Foreground}" 
-                              HorizontalAlignment="Center" 
-                              VerticalAlignment="Center"
-                              Data="M12,3A9,9 0 0,0 3,12H0L4,16L8,12H5A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19C10.5,19 9.09,18.5 7.94,17.7L6.5,19.14C8.04,20.3 9.94,21 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3M14,12A2,2 0 0,0 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12Z">
-                            <Path.RenderTransform>
-                                <RotateTransform x:Name="RotatingElement"
-                                                 CenterX="12"
-                                                 CenterY="12"/>
-                            </Path.RenderTransform>
-                            <Path.Triggers>
-                                <EventTrigger RoutedEvent="Loaded">
-                                    <BeginStoryboard Storyboard="{StaticResource SpinnerStoryboard}"
-                                                     Storyboard.TargetName="RotatingElement"/>
-                                </EventTrigger>
-                            </Path.Triggers>
-                        </Path>
-                    </Canvas>
-                </Viewbox>
-
-                <TextBlock x:Name="ProgressBarText" 
-                           Grid.Column="1"
-                           Foreground="White"
-                           FontWeight="SemiBold"
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center"
-                           Text="Загрузка данных..."/>
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="1" 
+    <Grid Grid.Row="1" 
               Grid.Column="0"
               HorizontalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="15"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
-            </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0"
-                       Grid.Column="0" 
-                       FontSize="18"
-                       VerticalAlignment="Bottom"
-                       Text="Вход в систему"/>
+        <Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="2" 
-                       Grid.Column="0"
-                       Text="Пользователь"/>
+            <!--0-->
+            <RowDefinition Height="*"/>
 
-            <ComboBox Grid.Row="3" 
-                      Grid.Column="0" 
-                      ItemsSource="{Binding Workers}" 
-                      SelectedItem="{Binding SelectedWorker, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedIndex="0">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <Label Content="{Binding Firstname}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <!--1-->
+            <RowDefinition Height="20"/>
 
-            <TextBlock Grid.Row="5" 
-                       Grid.Column="0"
-                       Text="Пароль"/>
+            <!--2-->
+            <RowDefinition Height="20"/>
 
-            <PasswordBox x:Name="PasswordBox"
-                         Grid.Row="6"
-                         Grid.Column="0"
-                         FontSize="16"
-                         VerticalContentAlignment="Center"
-                         PasswordChar="•"/>
+            <!--3-->
+            <RowDefinition Height="32"/>
 
-            <TextBlock Grid.Row="7" 
-                       Grid.Column="0"
-                       Foreground="Red"
-                       VerticalAlignment="Center"
-                       TextAlignment="Center"
-                       TextWrapping="Wrap"
-                       Text="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}"
-                       Visibility="{Binding HasErrors, UpdateSourceTrigger=PropertyChanged, Converter={ValueConverters:BoolToVisibilityConverter}}">
-                <TextBlock.Resources>
-                    <Style TargetType="TextBlock">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding HasErrors, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard Storyboard="{StaticResource SmoothTransitionStoryboard}"/>
-                                </DataTrigger.EnterActions>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Resources>
-            </TextBlock>
+            <!--4-->
+            <RowDefinition Height="15"/>
 
-            <Button Grid.Row="8" 
-                    Grid.Column="0" 
-                    IsDefault="True"
-                    Command="{Binding LoginCommand}" 
-                    CommandParameter="{Binding ElementName=View}"
-                    Content="Войти"/>
+            <!--5-->
+            <RowDefinition Height="32"/>
 
-            <TextBlock Grid.Row="10"
-                       Grid.Column="0"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Bottom"
-                       Text="Версия приложения: 1.0.0.0"/>
-        </Grid>
+            <!--6-->
+            <RowDefinition Height="25"/>
+
+            <!--7-->
+            <RowDefinition Height="32"/>
+
+            <!--8-->
+            <RowDefinition Height="15"/>
+
+            <!--9-->
+            <RowDefinition Height="*"/>
+
+            <!--10-->
+            <RowDefinition Height="15"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="250"/>
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0" 
+                   Style="{StaticResource LargeTextBlockStyle}"
+                   VerticalAlignment="Bottom"
+                   Text="Вход в систему"/>
+
+        <TextBlock Grid.Row="2" 
+                   Grid.Column="0"
+                   Text="Пользователь"/>
+
+        <ComboBox x:Name="WorkersComboBox" 
+                  Grid.Row="3" 
+                  Grid.Column="0"
+                  ItemsSource="{Binding Workers}"
+                  SelectedItem="{Binding SelectedWorker, UpdateSourceTrigger=PropertyChanged}"
+                  IsEnabled="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}"
+                  SelectedIndex="0">
+
+            <ComboBox.ItemTemplate>
+
+                <DataTemplate>
+
+                    <Label Content="{Binding Firstname}"/>
+
+                </DataTemplate>
+
+            </ComboBox.ItemTemplate>
+
+        </ComboBox>
+
+        <Controls:Spinner Grid.Row="3"
+                          Grid.Column="0"
+                          Width="16"
+                          Height="16"
+                          Visibility="{Binding ElementName=WorkersComboBox, Path=HasItems, Converter={ValueConverters:BooleanToVisibilityValueConverter}, ConverterParameter=Reverse}"
+                          Foreground="{Binding ElementName=WorkersComboBox, Path=Foreground}"/>
+
+        <PasswordBox x:Name="PasswordBox"
+                     Tag="Пароль"
+                     Grid.Row="5"
+                     Grid.Column="0"
+                     IsEnabled="{Binding ElementName=WorkersComboBox, Path=HasItems}"
+                     Style="{StaticResource HintedPasswordBoxStyle}"/>
+
+        <Button Grid.Row="7" 
+                Grid.Column="0" 
+                IsDefault="True"
+                Command="{Binding LoginCommand}" 
+                CommandParameter="{Binding ElementName=View}"
+                Content="Войти"/>
+
+        <TextBlock Grid.Row="9"
+                   Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Style="{StaticResource AnnotationTextBlockStyle}"
+                   Text="Версия приложения: 1.0.0.0"/>
     </Grid>
+
 </Page>

@@ -10,7 +10,7 @@ namespace Beauty.Data.Interfaces
 {
     public interface IWorkerRepository : IRepository<Worker>
     {
-        Task<ICollection<Position>> FindPositionsAsync(int? workerId);
-        Task<ICollection<Worker>> FindAdministratorsAsync();
+        Task<IEnumerable<Position>> FindPositionsAsync(int? workerId);
+        Task<IEnumerable<Worker>> FindAdministratorsAsync();
     }
 }

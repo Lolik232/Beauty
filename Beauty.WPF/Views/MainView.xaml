@@ -4,18 +4,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Beauty.WPF.Views"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800">
+      xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
+      xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
+      xmlns:Infrastructure="clr-namespace:Beauty.WPF.Infrastructure"
+      mc:Ignorable="d"
+      d:DesignHeight="720"
+      d:DesignWidth="1280">
 
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="Loaded">
-            <BeginStoryboard Storyboard="{StaticResource SmoothTransitionStoryboard}"/>
-        </EventTrigger>
-    </Page.Triggers>
-    
-    <Grid>
-        <Label Content="Hi!"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"/>
-    </Grid>
 </Page>

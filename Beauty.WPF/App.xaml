@@ -2,31 +2,38 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Beauty.WPF">
+    
     <Application.Resources>
+        
         <ResourceDictionary>
+            
             <ResourceDictionary.MergedDictionaries>
-                <!--Storyboards-->
-                <ResourceDictionary Source="Resources/Storyboards/SpinnerStoryboard.xaml"/>
-                <ResourceDictionary Source="Resources/Storyboards/SmoothTransitionStoryboard.xaml"/>
-                <ResourceDictionary Source="Resources/Storyboards/BackSmoothTransitionStoryboard.xaml"/>
+                
+                <!--Colors-->
+                <ResourceDictionary Source="Resources/Colors.xaml"/>
+                
+                <!--Font Sizes-->
+                <ResourceDictionary Source="Resources/FontSizes.xaml"/>
+                
+                <!--Vector Path Geometry Icons-->
+                <ResourceDictionary Source="Resources/PathGeometryIcons.xaml"/>
+                
+                <!--Buttons Styles-->
+                <ResourceDictionary Source="Resources/ButtonsStyles.xaml"/>
+                
+                <!--TextBlocks Styles-->
+                <ResourceDictionary Source="Resources/TextBlocksStyles.xaml"/>
+                
+                <!--TextBoxes Styles-->
+                <ResourceDictionary Source="Resources/BoxesStyles.xaml"/>
+                
+                <!--Paths Styles-->
+                <ResourceDictionary Source="Resources/PathsStyles.xaml"/>
 
-                <!--Buttons--><!--
-                <ResourceDictionary Source="Styles/DefaultButtonStyle.xaml"/>
-                <ResourceDictionary Source="Styles/PrimaryButtonStyle.xaml"/>
-                --><!--TextBlocks--><!--
-                <ResourceDictionary Source="Styles/DefaultTextBlockStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ProgressBarTextBlockStyle.xaml"/>
-                <ResourceDictionary Source="Styles/AnnotationTextBlockStyle.xaml"/>
-                <ResourceDictionary Source="Styles/PrimaryTextBlockStyle.xaml"/>
-                --><!--TextBoxes--><!--
-                <ResourceDictionary Source="Styles/DefaultTextBoxStyle.xaml"/>
-                --><!--HyperLinks--><!--
-                <ResourceDictionary Source="Styles/DefaultHyperLinkStyle.xaml"/>
-                --><!--ComboBoxes--><!--
-                <ResourceDictionary Source="Styles/DefaultComboBoxStyle.xaml"/>
-                --><!--ProgressBars--><!--
-                <ResourceDictionary Source="Styles/DefaultProgressBarStyle.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
+        
     </Application.Resources>
+    
 </Application>

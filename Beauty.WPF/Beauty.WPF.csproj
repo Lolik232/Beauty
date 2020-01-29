@@ -69,17 +69,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\PasswordBoxesAttachedProperties.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\ParameterizedCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Infrastructure\NinjectContainer.cs" />
+    <Compile Include="Controls\Spinner.xaml.cs">
+      <DependentUpon>Spinner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Container.cs" />
     <Compile Include="Enums\ApplicationViews.cs" />
-    <Compile Include="Infrastructure\ApplicationController.cs" />
+    <Compile Include="Infrastructure\Controller.cs" />
     <Compile Include="Interfaces\ILoginView.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelLocator.cs" />
+    <Compile Include="Controls\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StateBar.xaml.cs">
+      <DependentUpon>StateBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValuesConverters\BaseValueConverter.cs" />
-    <Compile Include="ValuesConverters\BoolToVisibilityConverter.cs" />
+    <Compile Include="ValuesConverters\BooleanToVisibilityValueConverter.cs" />
     <Compile Include="ValuesConverters\EnumToViewValueConverter.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -97,15 +108,43 @@
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Resources\Storyboards\BackSmoothTransitionStoryboard.xaml">
+    <Page Include="Controls\Spinner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Storyboards\SmoothTransitionStoryboard.xaml">
+    <Page Include="Resources\ButtonsStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Resources\Colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Storyboards\SpinnerStoryboard.xaml">
+    <Page Include="Controls\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StateBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\FontSizes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\PathGeometryIcons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\PathsStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\TextBlocksStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\BoxesStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,6 +198,7 @@
       <Name>Beauty.Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

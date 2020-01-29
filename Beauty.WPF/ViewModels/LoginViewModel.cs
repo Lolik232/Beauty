@@ -22,20 +22,10 @@ namespace Beauty.WPF.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly IMessageService messageService;
         private readonly ILoginService loginService;
 
         private ICollection<Worker> workers;
         private Worker selectedWorker;
-        private string errorMessage;
-
-        public bool IsDataLoading
-        {
-            get
-            {
-                return Workers is null || Workers.Count.Equals(0);
-            }
-        }
 
         public ICollection<Worker> Workers
         {
@@ -48,7 +38,6 @@ namespace Beauty.WPF.ViewModels
             {
                 workers = value;
                 OnPropertyChanged(nameof(Workers));
-                OnPropertyChanged(nameof(IsDataLoading));
             }
         }
 
@@ -66,35 +55,11 @@ namespace Beauty.WPF.ViewModels
             }
         }
 
-        public string ErrorMessage
-        {
-            get
-            {
-                return errorMessage;
-            }
-
-            set
-            {
-                errorMessage = value;
-                OnPropertyChanged(nameof(ErrorMessage));
-                OnPropertyChanged(nameof(HasErrors));
-            }
-        }
-
-        public bool HasErrors
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(ErrorMessage);
-            }
-        }
-
         public ICommand LoginCommand { get; }
 
         public LoginViewModel()
         {
             unitOfWork = new UnitOfWork();
-            messageService = new MessageService();
             loginService = new LoginService(unitOfWork);
 
             LoginCommand = new ParameterizedCommand
@@ -102,8 +67,14 @@ namespace Beauty.WPF.ViewModels
                 LoginAsync,
                 (parameter) =>
                 {
-                    var password = (parameter as ILoginView)?.SecurePassword;
-                    return SelectedWorker != null && !password.Length.Equals(0);
+                    var view = parameter as ILoginView;
+
+                    if (view is null)
+                    {
+                        return false;
+                    }
+
+                    return view.HasItems && !view.SecurePassword.Length.Equals(0);
                 }
             );
 
@@ -113,6 +84,7 @@ namespace Beauty.WPF.ViewModels
         public async void LoadPropertiesAsync()
         {
             var workers = await unitOfWork.Workers.FindAdministratorsAsync();
+
             Workers = new ObservableCollection<Worker>(workers);
         }
 
@@ -125,12 +97,12 @@ namespace Beauty.WPF.ViewModels
 
             if (!loginResult.IsFailed)
             {
-                ApplicationController.LoginDetails = loginResult as LoginDetails;
-                ApplicationController.ApplicationViewModel.GoToView(ApplicationViews.MainView);
+                Controller.Application.LoginDetails = loginResult as LoginDetails;
+                Controller.Application.GoToView(ApplicationViews.MainView);
             }
             else
             {
-                ErrorMessage = "Вы ввели неверный пароль. Пожалуйста, повторите попытку ввода снова";
+                Controller.MessageService.ShowError("Вы ввели неверный пароль. Пожалуйста, повторите попытку ввода снова");
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Beauty.WPF.Enums;
+﻿using Beauty.Core.Infrastructure;
+using Beauty.WPF.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace Beauty.WPF.ViewModels
                 OnPropertyChanged(nameof(CurrentView));
             }
         }
+
+        public LoginDetails LoginDetails { get; set; }
 
         public ApplicationViewModel()
         {

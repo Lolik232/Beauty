@@ -1,4 +1,6 @@
-﻿using Beauty.WPF.Interfaces;
+﻿using Beauty.Core.Interfaces;
+using Beauty.Core.Services;
+using Beauty.WPF.Interfaces;
 using Beauty.WPF.ViewModels;
 using Ninject;
 using System;
@@ -9,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Beauty.WPF.Infrastructure
 {
-    public static class NinjectContainer
+    public static class Container
     {
         public static IKernel Kernel { get; private set; } 
 
-        static NinjectContainer()
+        static Container()
         {
             Kernel = new StandardKernel();
         }
@@ -22,6 +24,9 @@ namespace Beauty.WPF.Infrastructure
         {
             var applicationViewModel = new ApplicationViewModel();
             Kernel.Bind<ApplicationViewModel>().ToConstant(applicationViewModel);
+
+            var messageService = new MessageService();
+            Kernel.Bind<IMessageService>().ToConstant(messageService);
         }
 
         public static TImplementation Get<TImplementation>()
