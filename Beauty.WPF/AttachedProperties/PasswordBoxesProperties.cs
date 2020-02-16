@@ -8,16 +8,16 @@ using System.Windows.Controls;
 
 namespace Beauty.WPF.AttachedProperties
 {
-    public class ListenPasswordChangesProperty : BaseProperty<ListenPasswordChangesProperty, bool>
+    public class ListenPasswordChangesProperty : BaseAttachedProperty<ListenPasswordChangesProperty, bool>
     {
         public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var passwordBox = sender as PasswordBox;
-
-            if (passwordBox is null)
+            if (sender is null)
             {
                 return;
             }
+
+            var passwordBox = sender as PasswordBox;
 
             passwordBox.PasswordChanged -= PasswordChanged;
 
@@ -35,10 +35,10 @@ namespace Beauty.WPF.AttachedProperties
         }
     }
 
-    public class HasTextProperty : BaseProperty<HasTextProperty, bool>
+    public class HasTextProperty : BaseAttachedProperty<HasTextProperty, bool>
     {
         public static void SetValue(DependencyObject sender)
-       {
+        {
             var passwordBox = sender as PasswordBox;
 
             SetValue(sender, passwordBox.SecurePassword.Length > 0);

@@ -1,12 +1,8 @@
 ﻿using Beauty.Core.Infrastructure;
 using Beauty.Core.Interfaces;
-using Beauty.Core.Services;
+using Beauty.Data.Interfaces;
 using Beauty.WPF.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Catel.Services;
 
 namespace Beauty.WPF.Infrastructure
 {
@@ -20,11 +16,29 @@ namespace Beauty.WPF.Infrastructure
             }
         }
 
+        public static IUnitOfWork UnitOfWork
+        {
+            get
+            {
+                return Container.Get<IUnitOfWork>();
+            }
+        }
+
+        public static LoginDetails LoginDetails { get; set; }
+
         public static IMessageService MessageService
         {
             get
             {
                 return Container.Get<IMessageService>();
+            }
+        }
+
+        public static ILoginService LoginService
+        {
+            get
+            {
+                return Container.Get<ILoginService>();
             }
         }
     }

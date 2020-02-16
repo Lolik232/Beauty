@@ -8,7 +8,8 @@ namespace Beauty.WPF.Enums
 {
     public enum ApplicationViews : int
     {
-        LoginView = 0,
-        MainView = 1,
+        None = 0,
+        LoginView = 1,
+        EnrollmentView = 2,
     }
 }

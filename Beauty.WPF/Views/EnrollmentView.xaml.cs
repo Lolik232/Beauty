@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Beauty.WPF.ViewModels;
+using Catel.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,16 +12,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Beauty.WPF.Windows
+namespace Beauty.WPF.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для EnrollmentView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EnrollmentView : BaseView
     {
-        public MainWindow()
+        public EnrollmentView()
         {
             InitializeComponent();
         }

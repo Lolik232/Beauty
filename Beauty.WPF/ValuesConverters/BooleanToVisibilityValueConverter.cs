@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Catel.MVVM.Converters;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 
 namespace Beauty.WPF.ValuesConverters
 {
-    public class BooleanToVisibilityValueConverter : BaseValueConverter<BooleanToVisibilityValueConverter>
+    [ValueConversion(typeof(object), typeof(object))]
+    public class BooleanToVisibilityValueConverter : ValueConverterBase
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object Convert(object value, Type targetType, object parameter)
         {
             var visibility = Visibility.Collapsed;
 
@@ -24,21 +23,6 @@ namespace Beauty.WPF.ValuesConverters
             }
 
             return visibility;
-        }
-
-        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            switch ((Visibility)value)
-            {
-                case Visibility.Visible:
-                    return true;
-
-                case Visibility.Hidden:
-                    return false;
-
-                default:
-                    return false;
-            }
         }
     }
 }

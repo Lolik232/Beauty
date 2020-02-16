@@ -9,27 +9,27 @@
              d:DesignHeight="20">
 
     <UserControl.Template>
-        
+
         <ControlTemplate TargetType="UserControl">
 
             <Border Background="{TemplateBinding Background}"
                     Height="25">
-                
+
                 <Grid HorizontalAlignment="Center" 
                       VerticalAlignment="Center">
-                    
+
                     <Grid.RowDefinitions>
-                        
+
                         <RowDefinition Height="Auto"/>
-                        
+
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        
+
                         <ColumnDefinition Width="21"/>
-                        
+
                         <ColumnDefinition Width="Auto"/>
-                        
+
                     </Grid.ColumnDefinitions>
 
                     <local:Spinner Grid.Column="0"
@@ -38,19 +38,19 @@
                                    Foreground="{TemplateBinding Foreground}"/>
 
                     <Border Grid.Column="1">
-                        
+
                         <ContentPresenter Content="{TemplateBinding Content}" 
                                           TextElement.Foreground="{TemplateBinding Foreground}"
                                           TextElement.FontWeight="SemiBold"/>
-                        
+
                     </Border>
-                    
+
                 </Grid>
-                
+
             </Border>
 
         </ControlTemplate>
-        
+
     </UserControl.Template>
 
 </UserControl>

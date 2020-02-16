@@ -1,31 +1,29 @@
-﻿using Beauty.WPF.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Beauty.WPF.Enums;
+using Beauty.WPF.Extensions;
+using Beauty.WPF.Views;
+using Catel.MVVM;
+using Catel.MVVM.Converters;
+using Catel.MVVM.Views;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Beauty.WPF.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для ViewHost.xaml
+    /// Элемент управления, описывающий постраничную навигацию
     /// </summary>
     public partial class ViewHost : UserControl
     {
-        public IView CurrentView
+        /// <summary>
+        /// Текущая страница, отображаемая в окне приложения
+        /// </summary>
+        public ApplicationViews CurrentView
         {
             get
             {
-                return (IView)GetValue(CurrentViewProperty);
+                return (ApplicationViews)GetValue(CurrentViewProperty);
             }
 
             set
@@ -34,37 +32,72 @@ namespace Beauty.WPF.Controls
             }
         }
 
-        public static readonly UIPropertyMetadata MetadataProperty = new UIPropertyMetadata(CurrentPagePropertyChanged);
-
+        /// <summary>
+        /// Свойство зависимости для <see cref="CurrentView"/>
+        /// </summary>
         public static readonly DependencyProperty CurrentViewProperty = DependencyProperty.Register(
-            nameof(CurrentView), 
-            typeof(IView), 
-            typeof(ViewHost), 
-            MetadataProperty
+           nameof(CurrentView),
+           typeof(ApplicationViews),
+           typeof(ViewHost),
+           new UIPropertyMetadata(default(ApplicationViews),
+               null,
+               OnViewChanged
+           )
         );
 
+        /// <summary>
+        /// Базовый конструктор
+        /// </summary>
         public ViewHost()
         {
             InitializeComponent();
         }
 
-        private static void CurrentPagePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// Событие, возникающее при изменении свойства <see cref="CurrentView"/>
+        /// </summary>
+        /// <param name="dependencyObject">Объект-родитель для дочерних элементов управления</param>
+        /// <param name="value">Новое значение для элемента управления</param>
+        /// <returns></returns>
+        private static object OnViewChanged(DependencyObject dependencyObject, object value)
         {
-            var previousViewFrame = (d as ViewHost).PreviousView;
-            var nextViewFrame = (d as ViewHost).NextView;
+            var newViewValue = (ApplicationViews)value;
 
-            var previousViewContent = nextViewFrame.Content;
-
-            nextViewFrame.Content = null;
-
-            previousViewFrame.Content = previousViewContent;
-
-            if (previousViewContent is IView previousView)
+            if (newViewValue.Equals(ApplicationViews.None))
             {
-                previousView.ShouldAnimateOut = true;
+                return value;
             }
 
-            nextViewFrame.Content = e.NewValue;
+            var currentViewModel = newViewValue.ToViewModel();
+
+            var viewModelToViewConverter = new ViewModelToViewConverter();
+            var currentView = (BaseView)viewModelToViewConverter.Convert(
+                currentViewModel, 
+                typeof(FrameworkElement), 
+                null, 
+                CultureInfo.CurrentCulture
+            );
+
+            var newViewControl = (dependencyObject as ViewHost).NewPage;
+            var oldViewControl = (dependencyObject as ViewHost).OldPage;
+
+            var oldViewContent = newViewControl.Content;
+            newViewControl.Content = null;
+            oldViewControl.Content = oldViewContent;
+
+            if (oldViewContent is BaseView oldView)
+            {
+                oldView.ShouldAnimateOut = true;
+
+                Task.Delay((int)(oldView.AnimationTime * 1000)).ContinueWith((t) =>
+                {
+                    Application.Current.Dispatcher.Invoke(() => oldViewControl.Content = null);
+                });
+            }
+
+            newViewControl.Content = currentView;
+
+            return value;
         }
     }
 }

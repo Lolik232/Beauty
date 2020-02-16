@@ -1,8 +1,4 @@
 ﻿using Beauty.WPF.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,7 +12,8 @@ namespace Beauty.WPF.Extensions
         {
             var storyboard = new Storyboard();
 
-            storyboard.AddSlideFromRight(animationTime, view.WindowWidth);
+            var contentControl = view.Parent as ContentControl;
+            storyboard.AddSlideFromRight(animationTime, contentControl.ActualWidth);
             storyboard.AddFadeIn(animationTime);
             storyboard.Begin(view);
 
@@ -30,7 +27,8 @@ namespace Beauty.WPF.Extensions
         {
             var storyboard = new Storyboard();
 
-            storyboard.AddSlideToLeft(animationTime, view.WindowWidth);
+            var contentControl = view.Parent as ContentControl;
+            storyboard.AddSlideToLeft(animationTime, contentControl.ActualWidth);
             storyboard.AddFadeOut(animationTime);
             storyboard.Begin(view);
 
