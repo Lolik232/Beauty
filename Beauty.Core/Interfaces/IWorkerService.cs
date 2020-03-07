@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Beauty.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,5 +8,7 @@ using System.Threading.Tasks;
 namespace Beauty.Core.Interfaces
 {
     public interface IWorkerService
-    { }
+    {
+        Task<IEnumerable<Worker>> GetAdministratorsAsync();
+    }
 }

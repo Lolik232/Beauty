@@ -40,7 +40,7 @@ namespace Beauty.WPF.AttachedProperties
         public static void SetValue(DependencyObject sender)
         {
             var passwordBox = sender as PasswordBox;
-
+            
             SetValue(sender, passwordBox.SecurePassword.Length > 0);
         }
     }

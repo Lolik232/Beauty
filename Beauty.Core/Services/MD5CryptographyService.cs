@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Beauty.Core.Services
 {
-    public class CryptographyService : ICryptographyService
+    public class MD5CryptographyService : ICryptographyService
     {
-        private readonly HashAlgorithm algorithm;
+        private readonly HashAlgorithm hashAlgorithm;
 
-        public CryptographyService()
+        public MD5CryptographyService()
         {
-            algorithm = MD5.Create();
+            hashAlgorithm = MD5.Create();
         }
 
-        public string ToMD5Hash(string value)
+        public string GetHash(string value)
         {
             var bytes = Encoding.UTF8.GetBytes(value);
-            var hash = algorithm.ComputeHash(bytes);
+            var hash = hashAlgorithm.ComputeHash(bytes);
 
             var stringBuilder = new StringBuilder();
             for (int i = 0; i < hash.Length; i++)

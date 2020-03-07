@@ -1,16 +1,15 @@
 ﻿<local:BaseView x:Name="View"
-                   x:Class="Beauty.WPF.Views.LoginView"
-                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:local="clr-namespace:Beauty.WPF.Views"
-                   xmlns:ViewModels="clr-namespace:Beauty.WPF.ViewModels"
-                   xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
-                   xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
-                   xmlns:Catel="http://schemas.catelproject.com"
-                   mc:Ignorable="d"
-                   Background="{StaticResource WhiteColor}">
+                x:Class="Beauty.WPF.Views.LoginView"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:Beauty.WPF.Views"
+                xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
+                xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
+                xmlns:Catel="http://schemas.catelproject.com"
+                mc:Ignorable="d"
+                Background="{StaticResource WhiteColor}">
 
     <Grid Grid.Row="1" 
           Grid.Column="0"
@@ -74,8 +73,7 @@
                   Grid.Column="0"
                   ItemsSource="{Binding Workers}"
                   SelectedItem="{Binding SelectedWorker, UpdateSourceTrigger=PropertyChanged}"
-                  IsEnabled="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}"
-                  SelectedIndex="0">
+                  IsEnabled="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}">
 
             <ComboBox.ItemTemplate>
 
@@ -93,7 +91,7 @@
                           Grid.Column="0"
                           Width="32"
                           Height="32"
-                          Visibility="{Binding ElementName=WorkersComboBox, Path=HasItems, Converter={ValueConverters:BooleanToVisibilityValueConverter}, ConverterParameter=Reverse}"
+                          Visibility="{Binding ElementName=WorkersComboBox, Path=HasItems, Converter={ValueConverters:BooleanToVisibilityValueConverter}}"
                           Foreground="{StaticResource LightSlateGrayColor}"/>
 
         <PasswordBox x:Name="PasswordBox"
@@ -108,6 +106,7 @@
                 IsDefault="True"
                 Command="{Binding LoginCommand}" 
                 CommandParameter="{Binding ElementName=View}"
+                IsEnabled="{Binding ElementName=WorkersComboBox, Path=HasItems}"
                 Content="Войти"/>
 
         <TextBlock Grid.Row="9"

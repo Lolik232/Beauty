@@ -10,6 +10,6 @@ namespace Beauty.WPF.Enums
     {
         None = 0,
         LoginView = 1,
-        EnrollmentView = 2,
+        EnrollmentsView = 2,
     }
 }

@@ -10,25 +10,25 @@
             <ResourceDictionary.MergedDictionaries>
                 
                 <!--Colors-->
-                <ResourceDictionary Source="Resources/Colors.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml"/>
                 
                 <!--Font Sizes-->
-                <ResourceDictionary Source="Resources/FontSizes.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/FontSizes.xaml"/>
                 
                 <!--Vector Path Geometry Icons-->
-                <ResourceDictionary Source="Resources/PathGeometryIcons.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/PathGeometryIcons.xaml"/>
                 
                 <!--Buttons Styles-->
-                <ResourceDictionary Source="Resources/ButtonsStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/ButtonsStyles.xaml"/>
                 
                 <!--TextBlocks Styles-->
-                <ResourceDictionary Source="Resources/TextBlocksStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/TextBlocksStyles.xaml"/>
                 
                 <!--TextBoxes Styles-->
-                <ResourceDictionary Source="Resources/BoxesStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/BoxesStyles.xaml"/>
                 
                 <!--Paths Styles-->
-                <ResourceDictionary Source="Resources/PathsStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/PathsStyles.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
             

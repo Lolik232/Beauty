@@ -1,6 +1,5 @@
 ﻿using Catel.MVVM.Converters;
 using System;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
@@ -11,18 +10,14 @@ namespace Beauty.WPF.ValuesConverters
     {
         protected override object Convert(object value, Type targetType, object parameter)
         {
-            var visibility = Visibility.Collapsed;
+            var condition = (bool)value;
 
             if (parameter is null)
             {
-                visibility = (bool)value ? Visibility.Visible : Visibility.Hidden;
-            }
-            else
-            {
-                visibility = (bool)value ? Visibility.Hidden : Visibility.Visible;
+                condition = !condition;
             }
 
-            return visibility;
+            return condition ? Visibility.Visible : Visibility.Hidden;
         }
     }
 }

@@ -15,12 +15,6 @@
               Width="1280" 
               WindowStartupLocation="CenterScreen">
 
-    <Catel:Window.Resources>
-
-        <Catel:ViewModelToViewConverter x:Key="ViewModelToViewConverter"/>
-
-    </Catel:Window.Resources>
-
     <Grid>
 
         <Grid.RowDefinitions>

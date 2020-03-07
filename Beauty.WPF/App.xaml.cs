@@ -1,14 +1,15 @@
 ﻿using Beauty.Core.Interfaces;
 using Beauty.Core.Services;
 using Beauty.Data.Interfaces;
+using Beauty.Data.Models;
 using Beauty.Data.UnitOfWorks;
-using Beauty.WPF.Infrastructure;
 using Beauty.WPF.ViewModels;
 using Beauty.WPF.Windows;
 using Catel.ApiCop;
 using Catel.ApiCop.Listeners;
 using Catel.IoC;
 using Catel.Logging;
+using System.Security.Cryptography;
 using System.Windows;
 
 namespace Beauty.WPF
@@ -35,7 +36,9 @@ namespace Beauty.WPF
 
             log.Info("Регистрация зависимостей");
             ServiceLocator.Default.RegisterType<IUnitOfWork, UnitOfWork>(RegistrationType.Transient);
+            ServiceLocator.Default.RegisterType<ICryptographyService, MD5CryptographyService>(RegistrationType.Transient);
             ServiceLocator.Default.RegisterType<ILoginService, LoginService>(RegistrationType.Transient);
+            ServiceLocator.Default.RegisterType<IWorkerService, WorkerService>(RegistrationType.Transient);
 
             log.Info("Вызов base.OnStartup(e)");
             base.OnStartup(e);
@@ -45,7 +48,8 @@ namespace Beauty.WPF
             Current.MainWindow.Show();
 
             log.Info("Регистрация модели представления главного окна приложения");
-            var applicationViewModel = (Current.MainWindow as ApplicationWindow).ViewModel as ApplicationViewModel;
+            var window = Current.MainWindow as ApplicationWindow;
+            var applicationViewModel = window.ViewModel as ApplicationViewModel;
             ServiceLocator.Default.RegisterInstance(applicationViewModel);
         }
 

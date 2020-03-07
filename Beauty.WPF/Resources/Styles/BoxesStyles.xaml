@@ -74,7 +74,7 @@
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    Padding="13,0"
                                    Style="{StaticResource AnnotationTextBlockStyle}"
-                                   Visibility="{TemplateBinding AttachedProperties:HasTextProperty.Value, Converter={ValueConverters:BooleanToVisibilityValueConverter}, ConverterParameter=Reverse}"/>
+                                   Visibility="{TemplateBinding AttachedProperties:HasTextProperty.Value, Converter={ValueConverters:BooleanToVisibilityValueConverter}}"/>
                    
                     </Grid>
 

@@ -32,6 +32,11 @@ namespace Beauty.WPF.Views
             {
                 return SecurePassword.Length.Equals(0);
             }
+
+            set
+            {
+                IsPasswordEmpty = value;
+            }
         }
 
         public LoginView()

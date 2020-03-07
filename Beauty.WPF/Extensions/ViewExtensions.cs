@@ -13,8 +13,8 @@ namespace Beauty.WPF.Extensions
                 case ApplicationViews.LoginView:
                     return new LoginViewModel();
 
-                case ApplicationViews.EnrollmentView:
-                    return new EnrollmentViewModel();
+                case ApplicationViews.EnrollmentsView:
+                    return new EnrollmentsViewModel();
 
                 default:
                     return null;

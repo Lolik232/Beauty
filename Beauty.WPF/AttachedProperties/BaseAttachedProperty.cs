@@ -8,20 +8,40 @@ using System.Windows;
 
 namespace Beauty.WPF.AttachedProperties
 {
+    /// <summary>
+    /// Базовый абстрактный класс для прикрепляемых свойств
+    /// </summary>
+    /// <typeparam name="TParent">Тип класса, представляющий прикрепляемое свойство</typeparam>
+    /// <typeparam name="TProperty">Тип прикрепляемого свойства</typeparam>
     public abstract class BaseAttachedProperty<TParent, TProperty> : IAttachedProperty where TParent : new()
     {
+        /// <summary>
+        /// Событие, возникающее при изменении значения <see cref="ValueProperty"/>
+        /// </summary>
         public event Action<DependencyObject, DependencyPropertyChangedEventArgs> ValueChanged = (sender, e) => { };
 
+        /// <summary>
+        /// Событие, возникающее при обновлении значения <see cref="ValueProperty"/>
+        /// </summary>
         public event Action<DependencyObject, object> ValueUpdated = (sender, value) => { };
 
+        /// <summary>
+        /// Экземпляр класса, представляющий прикрепляемое свойство
+        /// </summary>
         public static TParent Instance { get; private set; } = new TParent();
 
+        /// <summary>
+        /// Метаданные для <see cref="ValueProperty"/>
+        /// </summary>
         public static readonly UIPropertyMetadata MetadataProperty = new UIPropertyMetadata(
             default(TProperty),
             new PropertyChangedCallback(OnValuePropertyChanged),
             new CoerceValueCallback(OnValuePropertyUpdated)
         );
 
+        /// <summary>
+        /// Прикрепляемое свойство
+        /// </summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached(
             "Value",
             typeof(TProperty),
@@ -29,9 +49,19 @@ namespace Beauty.WPF.AttachedProperties
             MetadataProperty
         );
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">Объект, к которому привязано прикрепляемое свойство</param>
+        /// <param name="e"></param>
         public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         { }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="value"></param>
         public virtual void OnValueUpdated(DependencyObject sender, object value)
         { }
 

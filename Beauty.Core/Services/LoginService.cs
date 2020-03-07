@@ -3,10 +3,6 @@ using Beauty.Core.Interfaces;
 using Beauty.Data.Interfaces;
 using Beauty.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Beauty.Core.Services
@@ -16,18 +12,38 @@ namespace Beauty.Core.Services
         private readonly IUnitOfWork unitOfWork;
         private readonly ICryptographyService cryptographyService;
 
-        public LoginService(IUnitOfWork unitOfWork)
+        public LoginService(IUnitOfWork unitOfWork, ICryptographyService cryptographyService)
         {
             this.unitOfWork = unitOfWork;
-            cryptographyService = new CryptographyService();
+            this.cryptographyService = cryptographyService;
         }
 
-        public async Task<IOperationDetails> LoginAsync(Worker worker, string password)
+        public async Task<bool> LoginAsync(int workerId, string password)
         {
-            var passwordHash = cryptographyService.ToMD5Hash(password);
-            var isFailed = !worker.PasswordHash.Equals(passwordHash);
+            var session = Session.GetSession();
+            var worker = await unitOfWork.Workers.FindAsync(workerId);
 
-            return new LoginDetails(worker, DateTime.Now, isFailed);
+            var passwordHash = cryptographyService.GetHash(password);
+            var isAuthorized = worker.PasswordHash.Equals(passwordHash);
+
+            if (isAuthorized)
+            {
+                session.Worker = worker;
+                session.LoginDateTime = DateTime.Now;
+            }
+
+            return isAuthorized;
+        }
+
+        public void Logout()
+        {
+            var session = Session.GetSession();
+            
+            if (session.Worker != null)
+            {
+                session.Worker = null;
+                session.LogoutDateTime = DateTime.Now;
+            }
         }
     }
 }

@@ -8,6 +8,6 @@ namespace Beauty.Core.Interfaces
 {
     public interface ICryptographyService
     {
-        string ToMD5Hash(string value);
+        string GetHash(string value);
     }
 }

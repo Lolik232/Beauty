@@ -1,16 +1,11 @@
-﻿using Beauty.Core.Infrastructure;
-using Beauty.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
+﻿using Beauty.Data.Models;
 using System.Threading.Tasks;
 
 namespace Beauty.Core.Interfaces
 {
     public interface ILoginService
     {
-        Task<IOperationDetails> LoginAsync(Worker worker, string password);
+        Task<bool> LoginAsync(int userId, string password);
+        void Logout();
     }
 }

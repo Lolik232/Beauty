@@ -1,6 +1,4 @@
-﻿using Beauty.WPF.ViewModels;
-using Catel.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Beauty.WPF.Views
+namespace Beauty.WPF.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для EnrollmentView.xaml
+    /// Логика взаимодействия для LeftSideMenu.xaml
     /// </summary>
-    public partial class EnrollmentView : BaseView
+    public partial class LeftSideMenu
     {
-        public EnrollmentView()
+        public LeftSideMenu()
         {
             InitializeComponent();
         }

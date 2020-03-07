@@ -1,6 +1,6 @@
 ﻿using Beauty.Core.Infrastructure;
 using Beauty.Core.Interfaces;
-using Beauty.Data.Interfaces;
+using Beauty.Data.Models;
 using Beauty.WPF.ViewModels;
 using Catel.Services;
 
@@ -16,16 +16,6 @@ namespace Beauty.WPF.Infrastructure
             }
         }
 
-        public static IUnitOfWork UnitOfWork
-        {
-            get
-            {
-                return Container.Get<IUnitOfWork>();
-            }
-        }
-
-        public static LoginDetails LoginDetails { get; set; }
-
         public static IMessageService MessageService
         {
             get
@@ -39,6 +29,22 @@ namespace Beauty.WPF.Infrastructure
             get
             {
                 return Container.Get<ILoginService>();
+            }
+        }
+
+        public static IWorkerService WorkerService
+        {
+            get
+            {
+                return Container.Get<IWorkerService>();
+            }
+        }
+
+        public static Session Session
+        {
+            get
+            {
+                return Session.GetSession();
             }
         }
     }
