@@ -1,21 +1,17 @@
 ﻿using Beauty.Data.Contexts;
 using Beauty.Data.Interfaces;
-using Beauty.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Beauty.Data.Repositories
 {
-    public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel : class
+    public abstract class BaseStandartRepository<TModel> : IRepository<TModel> where TModel : class
     {
-        protected readonly Context context;
+        protected readonly StandartContext context;
 
-        public BaseRepository(Context context)
+        public BaseStandartRepository(StandartContext context)
         {
             this.context = context;
         }
@@ -23,6 +19,7 @@ namespace Beauty.Data.Repositories
         public virtual async Task<TModel> AddAsync(int? modelId)
         {
             var model = await FindAsync(modelId);
+
             return context.Set<TModel>().Add(model);
         }
 
@@ -62,6 +59,7 @@ namespace Beauty.Data.Repositories
         public virtual async Task RemoveAsync(int? modelId)
         {
             var model = await FindAsync(modelId);
+
             context.Set<TModel>().Remove(model);
         }
 

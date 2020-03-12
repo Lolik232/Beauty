@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Beauty.WPF.Windows
+﻿namespace Beauty.WPF.Windows
 {
     /// <summary>
     /// Логика взаимодействия для ApplicationWindow.xaml

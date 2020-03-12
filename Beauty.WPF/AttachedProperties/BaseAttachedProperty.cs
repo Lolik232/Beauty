@@ -1,9 +1,5 @@
 ﻿using Beauty.WPF.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Beauty.WPF.AttachedProperties
@@ -50,21 +46,26 @@ namespace Beauty.WPF.AttachedProperties
         );
 
         /// <summary>
-        /// 
+        /// Событие, возникающее при изменении значения <see cref="Instance"/>
         /// </summary>
         /// <param name="sender">Объект, к которому привязано прикрепляемое свойство</param>
-        /// <param name="e"></param>
+        /// <param name="e">Данные о различных изменениях свойств события</param>
         public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         { }
 
         /// <summary>
-        /// 
+        /// Событие, возникающее при обновлении значения <see cref="Instance"/>
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="value"></param>
+        /// <param name="sender">Объект, к которому привязано прикрепляемое свойство</param>
+        /// <param name="value">Новое значение для <see cref="Instance"/></param>
         public virtual void OnValueUpdated(DependencyObject sender, object value)
         { }
 
+        /// <summary>
+        /// Вызывает событие означающее изменения значения <see cref="Instance"/> 
+        /// </summary>
+        /// <param name="dependencyObject">Объект, к которому привязано прикрепляемое свойство</param>
+        /// <param name="e">Данные о различных изменениях свойств события</param>
         private static void OnValuePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             (Instance as BaseAttachedProperty<TParent, TProperty>)?.OnValueChanged(dependencyObject, e);
@@ -72,6 +73,11 @@ namespace Beauty.WPF.AttachedProperties
             (Instance as BaseAttachedProperty<TParent, TProperty>)?.ValueChanged(dependencyObject, e);
         }
 
+        /// <summary>
+        /// Вызывает событие означающее обновление значения <see cref="Instance"/> 
+        /// </summary>
+        /// <param name="dependencyObject">Объект, к которому привязано прикрепляемое свойство</param>
+        /// <param name="value">Новое значение для <see cref="Instance"/></param>
         private static object OnValuePropertyUpdated(DependencyObject dependencyObject, object value)
         {
             (Instance as BaseAttachedProperty<TParent, TProperty>)?.OnValueUpdated(dependencyObject, value);
@@ -81,8 +87,23 @@ namespace Beauty.WPF.AttachedProperties
             return value;
         }
 
-        public static TProperty GetValue(DependencyObject dependencyObject) => (TProperty)dependencyObject.GetValue(ValueProperty);
+        /// <summary>
+        /// Получает значение
+        /// </summary>
+        /// <param name="dependencyObject">Объект, к которому привязано прикрепляемое свойство</param>
+        public static TProperty GetValue(DependencyObject dependencyObject)
+        {
+            return (TProperty)dependencyObject.GetValue(ValueProperty);
+        }
 
-        public static void SetValue(DependencyObject dependencyObject, TProperty value) => dependencyObject.SetValue(ValueProperty, value);
+        /// <summary>
+        /// Устанавливает значение
+        /// </summary>
+        /// <param name="dependencyObject">Объект, к которому привязано прикрепляемое свойство</param>
+        /// <param name="value">Новое значение</param>
+        public static void SetValue(DependencyObject dependencyObject, TProperty value)
+        {
+            dependencyObject.SetValue(ValueProperty, value);
+        }
     }
 }

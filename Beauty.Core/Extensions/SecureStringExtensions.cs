@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beauty.Core.Extensions
 {
+    /// <summary>
+    /// Класс инкапсулирующий все методы расширения для <see cref="SecureString"/>
+    /// </summary>
     public static class SecureStringExtensions
     {
+        /// <summary>
+        /// Получает расшифрованные данные из <see cref="SecureString"/>
+        /// </summary>
+        /// <param name="secureString">Секретная строка</param>
         public static string Unsecure(this SecureString secureString)
         {
             if (secureString is null)

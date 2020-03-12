@@ -152,21 +152,20 @@
     <Compile Include="Infrastructure\Container.cs" />
     <Compile Include="Enums\ApplicationViews.cs" />
     <Compile Include="Infrastructure\Controller.cs" />
-    <Compile Include="Interfaces\ICollectionable.cs" />
     <Compile Include="Interfaces\ISecurable.cs" />
-    <Compile Include="Controls\LeftSideMenu.xaml.cs">
-      <DependentUpon>LeftSideMenu.xaml</DependentUpon>
+    <Compile Include="Controls\SideMenu.xaml.cs">
+      <DependentUpon>SideMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StateBar.xaml.cs">
       <DependentUpon>StateBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValuesConverters\BooleanToVisibilityValueConverter.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
-    <Compile Include="ViewModels\EnrollmentsViewModel.cs" />
+    <Compile Include="ViewModels\EnrollmentViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Views\BaseView.cs" />
-    <Compile Include="Views\EnrollmentsView.xaml.cs">
-      <DependentUpon>EnrollmentsView.xaml</DependentUpon>
+    <Compile Include="Views\EnrollmentView.xaml.cs">
+      <DependentUpon>EnrollmentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -194,7 +193,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\LeftSideMenu.xaml">
+    <Page Include="Controls\SideMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,7 +221,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EnrollmentsView.xaml">
+    <Page Include="Views\EnrollmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

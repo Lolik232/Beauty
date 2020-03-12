@@ -1,17 +1,21 @@
-﻿using Beauty.Core.Interfaces;
-using Beauty.Data.Models;
+﻿using Beauty.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beauty.Core.Infrastructure
 {
+    /// <summary>
+    /// Класс, представляющий текущую пользовательскую сессию
+    /// </summary>
     public class Session
     {
+        /// <summary>
+        /// Экземпляр сессии
+        /// </summary>
         private static Session session;
 
+        /// <summary>
+        /// Возвращает экземпляр сессии
+        /// </summary>
         public static Session GetSession()
         {
             if (session is null)
@@ -22,8 +26,19 @@ namespace Beauty.Core.Infrastructure
             return session;
         }
 
+        /// <summary>
+        /// Авторизовавшийся пользователь
+        /// </summary>
         public Worker Worker { get; internal set; }
+
+        /// <summary>
+        /// Дата и время входа в систему
+        /// </summary>
         public DateTime? LoginDateTime { get; internal set; }
+        
+        /// <summary>
+        /// Дата и время выхода из системы
+        /// </summary>
         public DateTime? LogoutDateTime { get; internal set; }
     }
 }

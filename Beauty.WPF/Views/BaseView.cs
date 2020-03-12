@@ -1,6 +1,5 @@
 ﻿using Beauty.WPF.Enums;
 using Beauty.WPF.Extensions;
-using Catel.Services;
 using Catel.Windows.Controls;
 using System.Threading.Tasks;
 using System.Windows;

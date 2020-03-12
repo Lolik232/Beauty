@@ -1,25 +1,20 @@
 ﻿using Beauty.Data.Initializers;
+using Beauty.Data.Interfaces;
 using Beauty.Data.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beauty.Data.Contexts
 {
-    public class Context : DbContext
+    public class StandartContext : DbContext, IContext
     {
-        static Context()
+        private readonly IDatabaseInitializer<StandartContext> contextInitializer;
+
+        public StandartContext(IDatabaseInitializer<StandartContext> contextInitializer, string connectionString) 
+            : base(connectionString)
         {
-            var contextInitializer = new ContextInitializer();
+            this.contextInitializer = contextInitializer;
             Database.SetInitializer(contextInitializer);
         }
-
-        public Context()
-            : base("BeautyDatabase")
-        { }
 
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Position> Positions { get; set; }

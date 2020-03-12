@@ -1,7 +1,6 @@
 ﻿using Beauty.Core.Infrastructure;
 using Beauty.Core.Interfaces;
 using Beauty.Data.Interfaces;
-using Beauty.Data.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -23,16 +22,21 @@ namespace Beauty.Core.Services
             var session = Session.GetSession();
             var worker = await unitOfWork.Workers.FindAsync(workerId);
 
-            var passwordHash = cryptographyService.GetHash(password);
-            var isAuthorized = worker.PasswordHash.Equals(passwordHash);
+            if (worker is null)
+            {
+                return false;
+            }
 
-            if (isAuthorized)
+            var passwordHash = cryptographyService.GetHash(password);
+            var isPasswordsEquals = worker.PasswordHash.Equals(passwordHash);
+
+            if (isPasswordsEquals)
             {
                 session.Worker = worker;
                 session.LoginDateTime = DateTime.Now;
             }
 
-            return isAuthorized;
+            return isPasswordsEquals;
         }
 
         public void Logout()

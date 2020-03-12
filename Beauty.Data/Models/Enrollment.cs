@@ -1,11 +1,4 @@
-﻿using Beauty.Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Beauty.Data.Models
+﻿namespace Beauty.Data.Models
 {
     /// <summary>
     /// Модель данных записи
@@ -18,14 +11,14 @@ namespace Beauty.Data.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Возвращает или задает имя клиента
-        /// </summary>
-        public string ClientFirstname { get; set; }
-
-        /// <summary>
         /// Возвращает или задает фамилию клиента
         /// </summary>
         public string ClientLastname { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает имя клиента
+        /// </summary>
+        public string ClientFirstname { get; set; }
 
         /// <summary>
         /// Возвращает или задает номер телефона клиента
@@ -33,7 +26,7 @@ namespace Beauty.Data.Models
         public string ClientPhoneNumber { get; set; }
 
         /// <summary>
-        /// Возвращает или задает примечение
+        /// Возвращает или задает примечание
         /// </summary>
         public string Description { get; set; }
         
@@ -44,7 +37,6 @@ namespace Beauty.Data.Models
 
         /// <summary>
         /// Возвращает или задает модель данных сотрудника, связанного с текущей записью
-        /// Данное свойство не обязательно для заполнения
         /// </summary>
         public Worker Worker { get; set; }
     }

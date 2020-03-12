@@ -1,19 +1,16 @@
-﻿using Beauty.Data.Interfaces;
+﻿using Beauty.Data.Contexts;
+using Beauty.Data.Interfaces;
 using Beauty.Data.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
-using Beauty.Data.Contexts;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Beauty.Data.Repositories
 {
-    public class WorkerRepository : BaseRepository<Worker>, IWorkerRepository
+    public class StandartWorkerRepository : BaseStandartRepository<Worker>, IWorkerRepository
     {
-        public WorkerRepository(Context context)
+        public StandartWorkerRepository(StandartContext context)
             : base(context)
         { }
 

@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Beauty.Core.Services
 {
-    public class WorkerService : IWorkerService
+    public class EnrollmentService : IEnrollmentService
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public WorkerService(IUnitOfWork unitOfWork)
+        public EnrollmentService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Worker>> GetAdministratorsAsync()
+        public async Task<IEnumerable<Enrollment>> GetRelevantEnrollmentsAsync()
         {
-            return await unitOfWork.Workers.FindAdministratorsAsync();
+            return await unitOfWork.Enrollments.FindRelevantEnrollmentsAsync();
         }
     }
 }

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Beauty.WPF.Enums
+﻿namespace Beauty.WPF.Enums
 {
     public enum ApplicationViews : int
     {
         None = 0,
         LoginView = 1,
-        EnrollmentsView = 2,
+        EnrollmentView = 2,
     }
 }

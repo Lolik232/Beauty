@@ -1,18 +1,14 @@
 ﻿using Beauty.Data.Contexts;
 using Beauty.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beauty.Data.Initializers
 {
     //public class ContextInitializer : DropCreateDatabaseIfModelChanges<Context>
-    public class ContextInitializer : DropCreateDatabaseAlways<Context>
+    public class ContextInitializer : DropCreateDatabaseAlways<StandartContext>
     {
-        protected override void Seed(Context context)
+        protected override void Seed(StandartContext context)
         {
             context.Positions.AddRange(new List<Position>()
             {

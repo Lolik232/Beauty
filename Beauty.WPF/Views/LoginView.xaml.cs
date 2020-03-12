@@ -1,5 +1,4 @@
 ﻿using Beauty.WPF.Interfaces;
-using Catel.Services;
 using System.Security;
 using System.Windows.Controls;
 
@@ -8,7 +7,7 @@ namespace Beauty.WPF.Views
     /// <summary>
     /// Логика взаимодействия для LoginView.xaml
     /// </summary>
-    public partial class LoginView : BaseView, ICollectionable, ISecurable
+    public partial class LoginView : BaseView, ISecurable
     {
         public bool HasItems
         {

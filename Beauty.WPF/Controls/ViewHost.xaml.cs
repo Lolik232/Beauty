@@ -1,10 +1,6 @@
 ﻿using Beauty.WPF.Enums;
 using Beauty.WPF.Extensions;
 using Beauty.WPF.Views;
-using Catel.MVVM;
-using Catel.MVVM.Converters;
-using Catel.MVVM.Views;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,24 +15,18 @@ namespace Beauty.WPF.Controls
         /// <summary>
         /// Текущая страница, отображаемая в окне приложения
         /// </summary>
-        public ApplicationViews CurrentView
+        public ApplicationViews View
         {
-            get
-            {
-                return (ApplicationViews)GetValue(CurrentViewProperty);
-            }
+            get => (ApplicationViews)GetValue(CurrentViewProperty);
 
-            set
-            {
-                SetValue(CurrentViewProperty, value);
-            }
+            set => SetValue(CurrentViewProperty, value);
         }
 
         /// <summary>
-        /// Свойство зависимости для <see cref="CurrentView"/>
+        /// Свойство зависимости для <see cref="View"/>
         /// </summary>
         public static readonly DependencyProperty CurrentViewProperty = DependencyProperty.Register(
-           nameof(CurrentView),
+           nameof(View),
            typeof(ApplicationViews),
            typeof(ViewHost),
            new UIPropertyMetadata(default(ApplicationViews),
@@ -54,7 +44,7 @@ namespace Beauty.WPF.Controls
         }
 
         /// <summary>
-        /// Событие, возникающее при изменении свойства <see cref="CurrentView"/>
+        /// Событие, возникающее при изменении свойства <see cref="View"/>
         /// </summary>
         /// <param name="dependencyObject">Объект-родитель для дочерних элементов управления</param>
         /// <param name="value">Новое значение для элемента управления</param>
@@ -68,18 +58,12 @@ namespace Beauty.WPF.Controls
                 return value;
             }
 
-            var currentViewModel = newViewValue.ToViewModel();
+            var currentView = newViewValue.ToView();
 
-            var viewModelToViewConverter = new ViewModelToViewConverter();
-            var currentView = (BaseView)viewModelToViewConverter.Convert(
-                currentViewModel, 
-                typeof(FrameworkElement), 
-                null, 
-                CultureInfo.CurrentCulture
-            );
+            var viewHost = dependencyObject as ViewHost;
 
-            var newViewControl = (dependencyObject as ViewHost).NewPage;
-            var oldViewControl = (dependencyObject as ViewHost).OldPage;
+            var oldViewControl = viewHost.OldView;
+            var newViewControl = viewHost.NewView;
 
             var oldViewContent = newViewControl.Content;
             newViewControl.Content = null;

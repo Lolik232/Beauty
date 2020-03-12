@@ -1,14 +1,17 @@
 ﻿using Beauty.Data.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Beauty.Core.Interfaces
 {
+    /// <summary>
+    /// Интерфейс сервиса для работы с пользователями
+    /// </summary>
     public interface IWorkerService
     {
+        /// <summary>
+        /// Возвращает список администраторов
+        /// </summary>
         Task<IEnumerable<Worker>> GetAdministratorsAsync();
     }
 }

@@ -33,7 +33,7 @@
                            Content="Загрузка данных..."/>
 
         <Controls:ViewHost Grid.Row="1"
-                           CurrentView="{Binding CurrentView}"/>
+                           View="{Binding CurrentView}"/>
 
     </Grid>
 

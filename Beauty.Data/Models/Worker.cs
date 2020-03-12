@@ -1,9 +1,4 @@
-﻿using Beauty.Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Beauty.Data.Models
 {
@@ -47,12 +42,12 @@ namespace Beauty.Data.Models
         /// <summary>
         /// Возвращает или задает список моделей данных должностей, связанных с сотрудником
         /// </summary>
-        public ICollection<WorkerPosition> WorkerPositions { get; set; }
+        public IEnumerable<WorkerPosition> WorkerPositions { get; set; }
 
         /// <summary>
         /// Возвращает или задает список моделей данных записей, связанных с сотрудником
         /// </summary>
-        public ICollection<Enrollment> Enrollments { get; set; }
+        public IEnumerable<Enrollment> Enrollments { get; set; }
 
         public Worker()
         {
