@@ -24,9 +24,6 @@
     <Style x:Key="BaseTextBoxStyle" 
            TargetType="TextBox">
 
-        <Setter Property="FontSize" 
-                Value="{StaticResource MiddleFontSize}"/>
-
         <Setter Property="VerticalContentAlignment" 
                 Value="Center"/>
 
@@ -41,11 +38,21 @@
 
     </Style>
 
+    <Style x:Key="BaseListBoxStyle"
+           TargetType="ListBox">
+
+        <Setter Property="BorderBrush" Value="Transparent"/>
+
+        <Setter Property="BorderThickness" Value="0"/>
+
+    </Style>
+
     <Style x:Key="HintedPasswordBoxStyle" 
            TargetType="PasswordBox" 
            BasedOn="{StaticResource BasePasswordBoxStyle}">
 
-        <Setter Property="AttachedProperties:ListenPasswordChangesProperty.Value" Value="True" />
+        <Setter Property="AttachedProperties:ListenPasswordChangesProperty.Value" 
+                Value="True" />
 
         <Setter Property="Template">
 
@@ -153,13 +160,16 @@
 
                                 <Style TargetType="{x:Type TextBlock}">
 
-                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Setter Property="Visibility" 
+                                            Value="Collapsed" />
 
                                     <Style.Triggers>
 
-                                        <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
+                                        <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" 
+                                                     Value="">
 
-                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="Visibility" 
+                                                    Value="Visible" />
 
                                         </DataTrigger>
 
@@ -175,21 +185,29 @@
 
                     <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsEnabled" Value="False">
+                        <Trigger Property="IsEnabled" 
+                                 Value="False">
 
-                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            <Setter Property="Opacity" 
+                                    TargetName="border" 
+                                    Value="0.56"/>
 
                         </Trigger>
 
-                        <Trigger Property="IsMouseOver" Value="True">
+                        <Trigger Property="IsMouseOver" 
+                                 Value="True">
 
-                            <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
+                            <Setter Property="BorderBrush" 
+                                    TargetName="border" 
+                                    Value="#FF7EB4EA"/>
 
                         </Trigger>
 
                         <Trigger Property="IsKeyboardFocused" Value="True">
 
-                            <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
+                            <Setter Property="BorderBrush" 
+                                    TargetName="border" 
+                                    Value="#FF569DE5"/>
 
                         </Trigger>
 
@@ -208,5 +226,8 @@
 
     <Style TargetType="TextBox" 
            BasedOn="{StaticResource BaseTextBoxStyle}"/>
+
+    <Style TargetType="ListBox"
+           BasedOn="{StaticResource BaseListBoxStyle}"/>
 
 </ResourceDictionary>

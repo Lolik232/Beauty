@@ -11,19 +11,19 @@
     </Style>
     
     <Style x:Key="LargeTextBlockStyle" 
-           TargetType="TextBlock" 
+           TargetType="TextBlock"
            BasedOn="{StaticResource BaseTextBlockStyle}">
         
-        <Setter Property="FontSize" 
+        <Setter Property="FontSize"
                 Value="{StaticResource LargeFontSize}"/>
         
     </Style>
 
     <Style x:Key="AnnotationTextBlockStyle" 
-           TargetType="TextBlock" 
+           TargetType="TextBlock"
            BasedOn="{StaticResource BaseTextBlockStyle}">
 
-        <Setter Property="Foreground" 
+        <Setter Property="Foreground"
                 Value="{StaticResource LightSlateGrayColor}"/>
         
     </Style>

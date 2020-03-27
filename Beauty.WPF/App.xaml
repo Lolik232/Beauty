@@ -2,33 +2,36 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Beauty.WPF">
-    
+
     <Application.Resources>
-        
+
         <ResourceDictionary>
-            
+
             <ResourceDictionary.MergedDictionaries>
-                
-                <!--Colors-->
+
+                <!--Словарь цветов-->
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml"/>
                 
-                <!--Font Sizes-->
+                <!--Словарь размеров-->
                 <ResourceDictionary Source="Resources/Styles/FontSizes.xaml"/>
                 
-                <!--Vector Path Geometry Icons-->
+                <!--Словарь векторных иконок-->
                 <ResourceDictionary Source="Resources/Styles/PathGeometryIcons.xaml"/>
                 
-                <!--Buttons Styles-->
+                <!--Словарь стилей для кнопок-->
                 <ResourceDictionary Source="Resources/Styles/ButtonsStyles.xaml"/>
                 
-                <!--TextBlocks Styles-->
+                <!--Словарь стилей для текстовых полей-->
                 <ResourceDictionary Source="Resources/Styles/TextBlocksStyles.xaml"/>
                 
-                <!--TextBoxes Styles-->
+                <!--Словарь стилей для элементов управления с пользовательским вводом-->
                 <ResourceDictionary Source="Resources/Styles/BoxesStyles.xaml"/>
                 
-                <!--Paths Styles-->
+                <!--Словарь путей для анимаций-->
                 <ResourceDictionary Source="Resources/Styles/PathsStyles.xaml"/>
+
+                <!--Словарь стилей для контейнеров-->
+                <ResourceDictionary Source="Resources/Styles/ContainersStyles.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
             

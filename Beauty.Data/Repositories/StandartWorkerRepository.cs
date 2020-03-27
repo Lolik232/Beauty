@@ -14,11 +14,11 @@ namespace Beauty.Data.Repositories
             : base(context)
         { }
 
-        public async Task<IEnumerable<Position>> FindPositionsAsync(int? workerId)
+        public async Task<IEnumerable<Position>> FindPositionsAsync(int workerId)
         {
             var positions = await context.WorkerPositions
                             .Include(WorkerPosition => WorkerPosition.Position)
-                            .Where(WorkerPosition => WorkerPosition.WorkerId.Equals(workerId.Value))
+                            .Where(WorkerPosition => WorkerPosition.WorkerId.Equals(workerId))
                             .Select(WorkerPosition => WorkerPosition.Position)
                             .ToListAsync();
 

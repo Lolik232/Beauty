@@ -26,4 +26,7 @@
     <SolidColorBrush x:Key="RedColor" 
                      Color="Red"/>
 
+    <SolidColorBrush x:Key="GreenColor"
+                     Color="#FF5EB65D"/>
+
 </ResourceDictionary>

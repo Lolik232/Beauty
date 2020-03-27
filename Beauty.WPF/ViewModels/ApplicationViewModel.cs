@@ -6,9 +6,9 @@ namespace Beauty.WPF.ViewModels
 {
     public class ApplicationViewModel : ViewModelBase
     {
-        public static Session Session => Session.GetSession();
-
         public override string Title => "Система управления салоном красоты «Бьюти»";
+
+        public static Session Session => Session.GetSession();
 
         public ApplicationViews CurrentView { get; private set; }
 

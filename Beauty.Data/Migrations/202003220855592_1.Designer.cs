@@ -6,14 +6,14 @@ namespace Beauty.Data.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.3.0")]
+    [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
     public sealed partial class _1 : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(_1));
         
         string IMigrationMetadata.Id
         {
-            get { return "201911271543360_1"; }
+            get { return "202003220855592_1"; }
         }
         
         string IMigrationMetadata.Source

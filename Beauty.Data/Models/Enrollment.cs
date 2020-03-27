@@ -1,4 +1,6 @@
-﻿namespace Beauty.Data.Models
+﻿using System.Collections.Generic;
+
+namespace Beauty.Data.Models
 {
     /// <summary>
     /// Модель данных записи
@@ -9,11 +11,6 @@
         /// Возвращает или задает идентификатор записи
         /// </summary>
         public int Id { get; set; }
-
-        /// <summary>
-        /// Возвращает или задает фамилию клиента
-        /// </summary>
-        public string ClientLastname { get; set; }
 
         /// <summary>
         /// Возвращает или задает имя клиента
@@ -39,5 +36,18 @@
         /// Возвращает или задает модель данных сотрудника, связанного с текущей записью
         /// </summary>
         public Worker Worker { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает список моделей данных записей, связанных с услугами
+        /// </summary>
+        public IEnumerable<EnrollmentService> EnrollmentServices { get; set; }
+
+        /// <summary>
+        /// Базовый конструктор
+        /// </summary>
+        public Enrollment()
+        {
+            EnrollmentServices = new List<EnrollmentService>();
+        }
     }
 }

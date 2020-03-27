@@ -13,7 +13,7 @@ namespace Beauty.Data.Interfaces
         /// Возвращает должности сотрудника
         /// </summary>
         /// <param name="workerId">Идентификатор сотрудника</param>
-        Task<IEnumerable<Position>> FindPositionsAsync(int? workerId);
+        Task<IEnumerable<Position>> FindPositionsAsync(int workerId);
 
         /// <summary>
         /// Возвращает список администраторов

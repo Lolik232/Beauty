@@ -14,15 +14,15 @@ namespace Beauty.WPF.Infrastructure
             ServiceLocator.Default.RegisterType<TImplementation>(registrationType);
         }
 
-        public static void RegisterType<TInterface, TImplementation>(RegistrationType registrationType = RegistrationType.Singleton)
+        public static void RegisterType<TInterface, TImplementation>(RegistrationType registrationType = RegistrationType.Singleton, bool registerIfAlreadyRegistered = true)
             where TImplementation : TInterface
         {
-            ServiceLocator.Default.RegisterType<TInterface, TImplementation>(registrationType);
+            ServiceLocator.Default.RegisterType<TInterface, TImplementation>(registrationType, registerIfAlreadyRegistered);
         }
 
-        public static TImplementation Get<TImplementation>()
+        public static TImplementation Get<TImplementation>(object tag = null)
         {
-            return ServiceLocator.Default.ResolveType<TImplementation>();
+            return ServiceLocator.Default.ResolveType<TImplementation>(tag);
         }
 
         public static void RemoveType<TImplementation>(object tag = null)

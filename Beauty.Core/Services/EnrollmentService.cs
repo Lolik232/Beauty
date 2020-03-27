@@ -19,5 +19,10 @@ namespace Beauty.Core.Services
         {
             return await unitOfWork.Enrollments.FindRelevantEnrollmentsAsync();
         }
+
+        public async Task<IEnumerable<Service>> GetEnrollmentServices(int enrollmentId)
+        {
+            return await unitOfWork.ServiceRepository.FindEnrollmentServicesAsync(enrollmentId);
+        }
     }
 }

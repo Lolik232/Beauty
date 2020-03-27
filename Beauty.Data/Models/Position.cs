@@ -22,6 +22,9 @@ namespace Beauty.Data.Models
         /// </summary>
         public IEnumerable<WorkerPosition> WorkerPositions { get; set; }
 
+        /// <summary>
+        /// Базовый конструктор
+        /// </summary>
         public Position()
         {
             WorkerPositions = new List<WorkerPosition>();

@@ -13,7 +13,7 @@ namespace Beauty.Data.Interfaces
         /// Добавляет модель данных в базу данных
         /// </summary>
         /// <param name="modelId">Идентификатор модели данных, которую необходимо добавить в базу данных</param>
-        Task<TModel> AddAsync(int? modelId);
+        Task<TModel> AddAsync(int modelId);
 
         /// <summary>
         /// Добавляет список моделей данных в базу данных
@@ -35,7 +35,7 @@ namespace Beauty.Data.Interfaces
         /// Возвращает модель данных из базы данных
         /// </summary>
         /// <param name="modelId">Идентификатор модели данных, которую необходимо вернуть</param>
-        Task<TModel> FindAsync(int? modelId);
+        Task<TModel> FindAsync(int modelId);
 
         /// <summary>
         /// Возвращает все модели данных из базы данных
@@ -46,7 +46,7 @@ namespace Beauty.Data.Interfaces
         /// Удаляет модель данных из базы данных
         /// </summary>
         /// <param name="modelId">Идентификатор модели данных, которую необходимо удалить</param>
-        Task RemoveAsync(int? modelId);
+        Task RemoveAsync(int modelId);
 
         /// <summary>
         /// Удаляет список моделей данных из базы данных

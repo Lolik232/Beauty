@@ -28,6 +28,11 @@ namespace Beauty.Data.Interfaces
         IWorkerPositionRepository WorkerPositions { get; }
 
         /// <summary>
+        /// Репозиторий сервисов, связанный с записями
+        /// </summary>
+        IServiceRepository ServiceRepository { get; }
+
+        /// <summary>
         /// Обновляет модель данных в базе данных
         /// </summary>
         /// <param name="model">Модель данных, которую необходимо обновить</param>

@@ -13,7 +13,7 @@ namespace Beauty.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202001140711251_2"; }
+            get { return "202003220931064_2"; }
         }
         
         string IMigrationMetadata.Source

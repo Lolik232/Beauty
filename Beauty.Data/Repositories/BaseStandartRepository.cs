@@ -16,7 +16,7 @@ namespace Beauty.Data.Repositories
             this.context = context;
         }
 
-        public virtual async Task<TModel> AddAsync(int? modelId)
+        public virtual async Task<TModel> AddAsync(int modelId)
         {
             var model = await FindAsync(modelId);
 
@@ -46,9 +46,9 @@ namespace Beauty.Data.Repositories
             return context.Set<TModel>().LastOrDefault();
         }
 
-        public virtual async Task<TModel> FindAsync(int? modelId)
+        public virtual async Task<TModel> FindAsync(int modelId)
         {
-            return await context.Set<TModel>().FindAsync(modelId.Value);
+            return await context.Set<TModel>().FindAsync(modelId);
         }
 
         public virtual async Task<IEnumerable<TModel>> FindAllAsync()
@@ -56,7 +56,7 @@ namespace Beauty.Data.Repositories
             return await context.Set<TModel>().ToListAsync();
         }
 
-        public virtual async Task RemoveAsync(int? modelId)
+        public virtual async Task RemoveAsync(int modelId)
         {
             var model = await FindAsync(modelId);
 

@@ -28,7 +28,9 @@ namespace Beauty.WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             #if DEBUG
+            {
                 LogManager.AddDebugListener();
+            }
             #endif
 
             log.Info("Запуск приложения");

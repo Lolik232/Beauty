@@ -1,5 +1,5 @@
-﻿using Beauty.Data.Contexts;
-using Beauty.Data.Initializers;
+﻿using Beauty.Data.ContextsFactories;
+using Beauty.Data.Contexts;
 using Beauty.Data.Interfaces;
 using Beauty.Data.Repositories;
 using System;
@@ -16,20 +16,20 @@ namespace Beauty.Data.UnitOfWorks
         public IPositionRepository Positions { get; }
         public IWorkerRepository Workers { get; }
         public IWorkerPositionRepository WorkerPositions { get; }
+        public IServiceRepository ServiceRepository { get; }
 
         public StandartUnitOfWork()
         {
-            var contextInitializer = new ContextInitializer();
-            var connectionString = "BeautyDatabase";
-
-            context = new StandartContext(contextInitializer, connectionString);
+            var contextFactory = new StandartContextFactory();
+            context = contextFactory.Create();
 
             Enrollments = new StandartEnrollmentRepository(context);
             Positions = new StandartPositionRepository(context);
             Workers = new StandartWorkerRepository(context);
             WorkerPositions = new StandartWorkerPositionRepository(context);
+            ServiceRepository = new StandartServiceRepository(context);
         }
-        
+
         public async Task UpdateAsync(object model)
         {
             context.Entry(model).State = EntityState.Modified;

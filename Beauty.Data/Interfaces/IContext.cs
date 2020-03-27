@@ -27,5 +27,15 @@ namespace Beauty.Data.Interfaces
         /// Набор сущностей должностей, связанных с сотрудниками
         /// </summary>
         DbSet<WorkerPosition> WorkerPositions { get; set; }
+
+        /// <summary>
+        /// Набор сущностей услуг
+        /// </summary>
+        DbSet<Service> Services { get; set; }
+
+        /// <summary>
+        /// Набор сущностей записей, связанных с услугами
+        /// </summary>
+        DbSet<EnrollmentService> EnrollmentServices { get; set; }
     }
 }

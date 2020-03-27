@@ -5,5 +5,40 @@
                 xmlns:local="clr-namespace:Beauty.WPF.Views"
                 xmlns:Catel="http://schemas.catelproject.com">
 
-    
+    <StackPanel Orientation="Vertical">
+
+        <Expander Header="Фильтрация и поиск">
+
+            <TextBox Height="32" 
+                     Tag="Поиск по имени клиента"
+                     Style="{StaticResource HintedTextBoxStyle}" />
+
+        </Expander>
+
+        <ListBox ItemsSource="{Binding Enrollments}">
+
+            <ListBox.ItemTemplate>
+
+                <DataTemplate>
+
+                    <StackPanel Orientation="Vertical">
+
+                        <TextBlock Text="{Binding Id, StringFormat='Заявка №{0}'}"/>
+
+                        <TextBlock Text="{Binding Description, StringFormat='Примечание к заявке: {0}'}"/>
+
+                        <TextBlock Text="{Binding ClientFirstname, StringFormat='Клиент: {0}'}"/>
+
+                        <TextBlock Text="{Binding ClientPhoneNumber, StringFormat='Номер телефона клиента: {0}'}"/>
+
+                    </StackPanel>
+
+                </DataTemplate>
+
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+    </StackPanel>
+
 </local:BaseView>
