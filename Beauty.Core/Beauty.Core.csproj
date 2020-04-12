@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\EnrollmentDTO.cs" />
+    <Compile Include="DTOs\WorkerDTO.cs" />
+    <Compile Include="Extensions\PositionsEnumerableExtensions.cs" />
     <Compile Include="Extensions\SecureStringExtensions.cs" />
     <Compile Include="Infrastructure\Session.cs" />
     <Compile Include="Interfaces\ICryptographyService.cs" />

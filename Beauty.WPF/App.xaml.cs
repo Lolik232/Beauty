@@ -29,7 +29,9 @@ namespace Beauty.WPF
         {
             #if DEBUG
             {
+                log.Info("Подключение логов Catel'a");
                 LogManager.AddDebugListener();
+                log.Info("Логи Catel'a успешно подключены");
             }
             #endif
 

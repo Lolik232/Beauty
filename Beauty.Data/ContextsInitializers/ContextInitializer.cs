@@ -1,12 +1,13 @@
 ﻿using Beauty.Data.Contexts;
 using Beauty.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 
 namespace Beauty.Data.ContextsInitializers
 {
-    public class ContextInitializer : DropCreateDatabaseIfModelChanges<StandartContext>
-    //public class ContextInitializer : DropCreateDatabaseAlways<StandartContext>
+    //public class ContextInitializer : DropCreateDatabaseIfModelChanges<StandartContext>
+    public class ContextInitializer : DropCreateDatabaseAlways<StandartContext>
     {
         protected override void Seed(StandartContext context)
         {
@@ -55,7 +56,262 @@ namespace Beauty.Data.ContextsInitializers
                 new Position()
                 {
                     Id = 9,
-                    Title = "Системный администратор"
+                    Title = "Разработчик"
+                }
+            });
+
+            context.Services.AddRange(new List<Service>()
+            {
+                new Service()
+                {
+                    Id = 1,
+                    Title = "Детская стрижка волос"
+                },
+                new Service()
+                {
+                    Id = 2,
+                    Title = "Мужская стрижка волос"
+                },
+                new Service()
+                {
+                    Id = 3,
+                    Title = "Женская стрижка волос"
+                },
+                new Service()
+                {
+                    Id = 4,
+                    Title = "Окрашивание волос"
+                },
+                new Service()
+                {
+                    Id = 5,
+                    Title = "Укладка волос"
+                },
+                new Service()
+                {
+                    Id = 6,
+                    Title = "Мелирование волос"
+                },
+                new Service()
+                {
+                    Id = 7,
+                    Title = "Маникюр"
+                },
+                new Service()
+                {
+                    Id = 8,
+                    Title = "Педикюр"
+                },
+                new Service()
+                {
+                    Id = 9,
+                    Title = "Снятие лака"
+                },
+                new Service()
+                {
+                    Id = 10,
+                    Title = "Покрытие лаком"
+                },
+                new Service()
+                {
+                    Id = 11,
+                    Title = "Покрытие лаком с дизайном"
+                },
+                new Service()
+                {
+                    Id = 12,
+                    Title = "Шугаринг до колена"
+                },
+                new Service()
+                {
+                    Id = 13,
+                    Title = "Полный шугаринг"
+                },
+                new Service()
+                {
+                    Id = 14,
+                    Title = "Шугаринг (бикини классическое)"
+                },
+                new Service()
+                {
+                    Id = 15,
+                    Title = "Шугаринг (бикини глубокое)"
+                },
+                new Service()
+                {
+                    Id = 16,
+                    Title = "Шугаринг (подмышки)"
+                },
+                new Service()
+                {
+                    Id = 17,
+                    Title = "Тридинг"
+                },
+                new Service()
+                {
+                    Id = 18,
+                    Title = "Уход за лицом"
+                },
+                new Service()
+                {
+                    Id = 19,
+                    Title = "Чистка лица"
+                },
+                new Service()
+                {
+                    Id = 20,
+                    Title = "Окрашивание бровей"
+                },
+                new Service()
+                {
+                    Id = 21,
+                    Title = "Коррекция бровей"
+                },
+                new Service()
+                {
+                    Id = 22,
+                    Title = "Массаж"
+                },
+                new Service()
+                {
+                    Id = 23,
+                    Title = "Плетение кос"
+                }
+            });
+
+            context.PositionServices.AddRange(new List<PositionService>()
+            {
+                new PositionService()
+                {
+                    Id = 1,
+                    PositionId = 3,
+                    ServiceId = 17
+                },
+                new PositionService()
+                {
+                    Id = 2,
+                    PositionId = 3,
+                    ServiceId = 18
+                },
+                new PositionService()
+                {
+                    Id = 3,
+                    PositionId = 3,
+                    ServiceId = 19
+                },
+                new PositionService()
+                {
+                    Id = 4,
+                    PositionId = 4,
+                    ServiceId = 1
+                },
+                new PositionService()
+                {
+                    Id = 5,
+                    PositionId = 4,
+                    ServiceId = 2
+                },
+                new PositionService()
+                {
+                    Id = 6,
+                    PositionId = 4,
+                    ServiceId = 3
+                },
+                new PositionService()
+                {
+                    Id = 7,
+                    PositionId = 4,
+                    ServiceId = 4
+                },
+                new PositionService()
+                {
+                    Id = 8,
+                    PositionId = 4,
+                    ServiceId = 5
+                },
+                new PositionService()
+                {
+                    Id = 9,
+                    PositionId = 4,
+                    ServiceId = 6
+                },
+                new PositionService()
+                {
+                    Id = 10,
+                    PositionId = 4,
+                    ServiceId = 23
+                },
+                new PositionService()
+                {
+                    Id = 11,
+                    PositionId = 5,
+                    ServiceId = 7
+                },
+                new PositionService()
+                {
+                    Id = 12,
+                    PositionId = 5,
+                    ServiceId = 8
+                },
+                new PositionService()
+                {
+                    Id = 13,
+                    PositionId = 5,
+                    ServiceId = 9
+                },
+                new PositionService()
+                {
+                    Id = 14,
+                    PositionId = 5,
+                    ServiceId = 10
+                },
+                new PositionService()
+                {
+                    Id = 15,
+                    PositionId = 5,
+                    ServiceId = 11
+                },
+                new PositionService()
+                {
+                    Id = 16,
+                    PositionId = 6,
+                    ServiceId = 12
+                },
+                new PositionService()
+                {
+                    Id = 17,
+                    PositionId = 6,
+                    ServiceId = 13
+                },
+                new PositionService()
+                {
+                    Id = 18,
+                    PositionId = 6,
+                    ServiceId = 14
+                },
+                new PositionService()
+                {
+                    Id = 19,
+                    PositionId = 6,
+                    ServiceId = 15
+                },
+                new PositionService()
+                {
+                    Id = 20,
+                    PositionId = 6,
+                    ServiceId = 16
+                },
+                new PositionService()
+                {
+                    Id = 21,
+                    PositionId = 7,
+                    ServiceId = 20
+                },
+                new PositionService()
+                {
+                    Id = 22,
+                    PositionId = 7,
+                    ServiceId = 21
                 }
             });
 
@@ -127,7 +383,7 @@ namespace Beauty.Data.ContextsInitializers
                 {
                     Id = 11,
                     Firstname = "Никита",
-                    PasswordHash = "21232f297a57a5a743894a0e4a801fc3"
+                    PasswordHash = "4c92c4dccb672f36108e1dcf467b6c98"
                 }
             });
 
@@ -266,122 +522,42 @@ namespace Beauty.Data.ContextsInitializers
             //    }
             //});
 
-            context.Services.AddRange(new List<Service>()
+            var dateTimeNow = DateTime.Now;
+            context.Enrollments.Add(new Enrollment()
             {
-                new Service()
+                Id = 1,
+                ClientFirstname = "Никита",
+                ClientPhoneNumber = "124512",
+                Description = "Описание",
+                DateTime = dateTimeNow,
+                CreationDateTime = dateTimeNow
+            });
+
+            context.EnrollmentWorkerServices.AddRange(new List<EnrollmentWorkerService>()
+            {
+                new EnrollmentWorkerService()
                 {
-                    Id = 1,
-                    Title = "Стрижка волос (детская)"
+                    EnrollmentId = 1,
+                    WorkerId = 4,
+                    ServiceId = 2
                 },
-                new Service()
+                new EnrollmentWorkerService()
                 {
-                    Id = 2,
-                    Title = "Стрижка волос (мужская)"
+                    EnrollmentId = 1,
+                    WorkerId = 4,
+                    ServiceId = 5
                 },
-                new Service()
+                new EnrollmentWorkerService()
                 {
-                    Id = 3,
-                    Title = "Стрижка волос (женская)"
+                    EnrollmentId = 1,
+                    WorkerId = 1,
+                    ServiceId = 17
                 },
-                new Service()
+                new EnrollmentWorkerService()
                 {
-                    Id = 4,
-                    Title = "Окрашивание волос"
-                },
-                new Service()
-                {
-                    Id = 5,
-                    Title = "Укладка волос"
-                },
-                new Service()
-                {
-                    Id = 6,
-                    Title = "Мелирование волос"
-                },
-                new Service()
-                {
-                    Id = 7,
-                    Title = "Маникюр"
-                },
-                new Service()
-                {
-                    Id = 8,
-                    Title = "Педикюр"
-                },
-                new Service()
-                {
-                    Id = 9,
-                    Title = "Снятие лака"
-                },
-                new Service()
-                {
-                    Id = 10,
-                    Title = "Покрытие лаком"
-                },
-                new Service()
-                {
-                    Id = 11,
-                    Title = "Покрытие лаком (с дизайном)"
-                },
-                new Service()
-                {
-                    Id = 12,
-                    Title = "Шугаринг (до колена)"
-                },
-                new Service()
-                {
-                    Id = 13,
-                    Title = "Шугаринг (полный)"
-                },
-                new Service()
-                {
-                    Id = 14,
-                    Title = "Шугаринг (бикини классическое)"
-                },
-                new Service()
-                {
-                    Id = 15,
-                    Title = "Шугаринг (бикини глубокое)"
-                },
-                new Service()
-                {
-                    Id = 16,
-                    Title = "Шугаринг (подмышки)"
-                },
-                new Service()
-                {
-                    Id = 17,
-                    Title = "Тридинг"
-                },
-                new Service()
-                {
-                    Id = 18,
-                    Title = "Уход за лицом"
-                },
-                new Service()
-                {
-                    Id = 19,
-                    Title = "Чистка лица"
-                },
-                new Service()
-                {
-                    Id = 20,
-                    Title = "Окрашивание бровей"
-                },
-                new Service()
-                {
-                    Id = 21,
-                    Title = "Коррекция бровей"
-                },
-                new Service()
-                {
-                    Id = 22,
-                    Title = "Массаж"
-                },
-                new Service()
-                {
-                    Id = 23,
-                    Title = "Плетение кос"
+                    EnrollmentId = 1,
+                    WorkerId = 4,
+                    ServiceId = 6
                 }
             });
 

@@ -9,15 +9,6 @@ namespace Beauty.Data.Interfaces
     /// </summary>
     public interface IWorkerRepository : IRepository<Worker>
     {
-        /// <summary>
-        /// Возвращает должности сотрудника
-        /// </summary>
-        /// <param name="workerId">Идентификатор сотрудника</param>
-        Task<IEnumerable<Position>> FindPositionsAsync(int workerId);
-
-        /// <summary>
-        /// Возвращает список администраторов
-        /// </summary>
-        Task<IEnumerable<Worker>> FindAdministratorsAsync();
+        Task<string> FindWorkerShortnameAsync(int workerId);
     }
 }

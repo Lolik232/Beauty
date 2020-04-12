@@ -7,6 +7,12 @@
 
     <StackPanel Orientation="Vertical">
 
+        <Button Width="150"
+                Height="32"
+                HorizontalAlignment="Left"
+                Margin="15"
+                Content="Добавить заявку" />
+
         <Expander Header="Фильтрация и поиск">
 
             <TextBox Height="32" 
@@ -15,7 +21,8 @@
 
         </Expander>
 
-        <ListBox ItemsSource="{Binding Enrollments}">
+        <ListBox ItemsSource="{Binding Enrollments}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
             <ListBox.ItemTemplate>
 
@@ -25,11 +32,43 @@
 
                         <TextBlock Text="{Binding Id, StringFormat='Заявка №{0}'}"/>
 
-                        <TextBlock Text="{Binding Description, StringFormat='Примечание к заявке: {0}'}"/>
+                        <!--<TextBlock Text="{Binding Description, StringFormat='Примечание к заявке: {0}'}"/>-->
 
                         <TextBlock Text="{Binding ClientFirstname, StringFormat='Клиент: {0}'}"/>
 
                         <TextBlock Text="{Binding ClientPhoneNumber, StringFormat='Номер телефона клиента: {0}'}"/>
+
+                        <ItemsControl ItemsSource="{Binding Services}">
+
+                            <ItemsControl.ItemsPanel>
+
+                                <ItemsPanelTemplate>
+
+                                    <WrapPanel Orientation="Horizontal"/>
+
+                                </ItemsPanelTemplate>
+
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+
+                                <DataTemplate>
+
+                                    <Border Padding="5"
+                                            Margin="5"
+                                            CornerRadius="5"
+                                            Background="{StaticResource LightSlateGrayColor}">
+
+                                        <TextBlock Text="{Binding}"
+                                                   Foreground="White" />
+
+                                    </Border>
+
+                                </DataTemplate>
+
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
 
                     </StackPanel>
 

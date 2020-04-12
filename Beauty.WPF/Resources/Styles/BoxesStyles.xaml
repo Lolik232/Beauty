@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Beauty.WPF.Resources"
                     xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
-                    xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties">
+                    xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties"
+                    xmlns:DTOs="clr-namespace:Beauty.Core.DTOs;assembly=Beauty.Core">
 
     <Style x:Key="BasePasswordBoxStyle"
            TargetType="PasswordBox">
@@ -220,6 +221,38 @@
         </Setter>
 
     </Style>
+
+    <DataTemplate x:Key="DefaultWorkersComboBoxItemTemlate"
+                  DataType="{x:Type DTOs:WorkerDTO}">
+
+        <StackPanel>
+
+            <Label Content="{Binding Shortname}"/>
+
+            <TextBlock Text="{Binding Positions}"
+                       Style="{StaticResource AnnotationTextBlockStyle}"
+                       Padding="5, 0, 5, 5"/>
+
+        </StackPanel>
+
+    </DataTemplate>
+
+    <DataTemplate x:Key="DefaultEnrollmentsListBoxItemTemlate"
+                  DataType="{x:Type DTOs:EnrollmentDTO}">
+
+        <StackPanel Orientation="Vertical">
+
+            <TextBlock Text="{Binding Id, StringFormat='Заявка №{0}'}"/>
+
+            <!--<TextBlock Text="{Binding Description, StringFormat='Примечание к заявке: {0}'}"/>-->
+
+            <TextBlock Text="{Binding ClientFirstname, StringFormat='Клиент: {0}'}"/>
+
+            <TextBlock Text="{Binding ClientPhoneNumber, StringFormat='Номер телефона клиента: {0}'}"/>
+
+        </StackPanel>
+
+    </DataTemplate>
 
     <Style TargetType="PasswordBox" 
            BasedOn="{StaticResource BasePasswordBoxStyle}"/>

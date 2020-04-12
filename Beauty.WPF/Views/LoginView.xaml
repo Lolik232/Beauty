@@ -66,26 +66,15 @@
 
         <TextBlock Grid.Row="2" 
                    Grid.Column="0"
-                   Text="Пользователь"/>
+                   Text="Сотрудник"/>
 
         <ComboBox x:Name="WorkersComboBox" 
                   Grid.Row="3" 
                   Grid.Column="0"
                   ItemsSource="{Binding Workers}"
                   SelectedItem="{Binding SelectedWorker, UpdateSourceTrigger=PropertyChanged}"
-                  IsEnabled="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}">
-
-            <ComboBox.ItemTemplate>
-
-                <DataTemplate>
-
-                    <Label Content="{Binding Firstname}"/>
-
-                </DataTemplate>
-
-            </ComboBox.ItemTemplate>
-
-        </ComboBox>
+                  IsEnabled="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}"
+                  ItemTemplate="{StaticResource DefaultWorkersComboBoxItemTemlate}"/>
 
         <Controls:Spinner Grid.Row="3"
                           Grid.Column="0"

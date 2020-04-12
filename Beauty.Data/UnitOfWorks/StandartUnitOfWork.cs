@@ -16,7 +16,9 @@ namespace Beauty.Data.UnitOfWorks
         public IPositionRepository Positions { get; }
         public IWorkerRepository Workers { get; }
         public IWorkerPositionRepository WorkerPositions { get; }
-        public IServiceRepository ServiceRepository { get; }
+        public IServiceRepository Services { get; }
+        public IEnrollmentWorkerServiceRepository EnrollmentWorkerServices { get; }
+        public IPositionServiceRepository PositionServices { get; set; }
 
         public StandartUnitOfWork()
         {
@@ -27,7 +29,9 @@ namespace Beauty.Data.UnitOfWorks
             Positions = new StandartPositionRepository(context);
             Workers = new StandartWorkerRepository(context);
             WorkerPositions = new StandartWorkerPositionRepository(context);
-            ServiceRepository = new StandartServiceRepository(context);
+            Services = new StandartServiceRepository(context);
+            EnrollmentWorkerServices = new StandartEnrollmentWorkerServiceRepository(context);
+            PositionServices = new StandartPositionServiceRepository(context);
         }
 
         public async Task UpdateAsync(object model)

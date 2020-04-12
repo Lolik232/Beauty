@@ -1,4 +1,5 @@
-﻿using Beauty.Core.Interfaces;
+﻿using Beauty.Core.DTOs;
+using Beauty.Core.Interfaces;
 using Beauty.Data.Models;
 using Catel.Logging;
 using Catel.MVVM;
@@ -17,8 +18,8 @@ namespace Beauty.WPF.ViewModels
         private readonly IEnrollmentService enrollmentService;
         private readonly IMessageService messageService;
 
-        public ICollection<Enrollment> Enrollments { get; set; }
-        public Enrollment SelectedEnrollment { get; set; }
+        public ICollection<EnrollmentDTO> Enrollments { get; set; }
+        public EnrollmentDTO SelectedEnrollment { get; set; }
 
         static EnrollmentViewModel()
         {
@@ -36,7 +37,7 @@ namespace Beauty.WPF.ViewModels
             await Task.Run(async () =>
             {
                 var enrollments = await enrollmentService.GetRelevantEnrollmentsAsync();
-                Enrollments = new ObservableCollection<Enrollment>(enrollments);
+                Enrollments = new ObservableCollection<EnrollmentDTO>(enrollments);
 
                 SelectedEnrollment = Enrollments.First();
             });

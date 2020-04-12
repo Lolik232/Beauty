@@ -14,26 +14,11 @@ namespace Beauty.Data.Repositories
             : base(context)
         { }
 
-        public async Task<IEnumerable<Position>> FindPositionsAsync(int workerId)
+        public async Task<string> FindWorkerShortnameAsync(int workerId)
         {
-            var positions = await context.WorkerPositions
-                            .Include(WorkerPosition => WorkerPosition.Position)
-                            .Where(WorkerPosition => WorkerPosition.WorkerId.Equals(workerId))
-                            .Select(WorkerPosition => WorkerPosition.Position)
-                            .ToListAsync();
+            var worker = await FindAsync(workerId);
 
-            return positions;
-        }
-
-        public async Task<IEnumerable<Worker>> FindAdministratorsAsync()
-        {
-            var administrators = await context.WorkerPositions
-                                 .Include(WorkerPosition => WorkerPosition.Worker)
-                                 .Where(WorkerPosition => WorkerPosition.PositionId.Equals(2))
-                                 .Select(WorkerPosition => WorkerPosition.Worker)
-                                 .ToListAsync();
-
-            return administrators;
+            return ($"{worker.Lastname} {worker.Firstname} {worker.Middlename}").Trim();
         }
     }
 }

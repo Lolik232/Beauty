@@ -1,4 +1,4 @@
-﻿using Beauty.Data.Models;
+﻿using Beauty.Core.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,6 +12,6 @@ namespace Beauty.Core.Interfaces
         /// <summary>
         /// Возвращает список актуальных записей
         /// </summary>
-        Task<IEnumerable<Enrollment>> GetRelevantEnrollmentsAsync();
+        Task<IEnumerable<EnrollmentDTO>> GetRelevantEnrollmentsAsync();
     }
 }

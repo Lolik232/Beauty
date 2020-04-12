@@ -56,21 +56,22 @@
     <Compile Include="ContextsInitializers\ContextInitializer.cs" />
     <Compile Include="Interfaces\IContext.cs" />
     <Compile Include="Interfaces\IEnrollmentRepository.cs" />
+    <Compile Include="Interfaces\IEnrollmentWorkerServiceRepository.cs" />
     <Compile Include="Interfaces\IPositionRepository.cs" />
+    <Compile Include="Interfaces\IPositionServiceRepository.cs" />
     <Compile Include="Interfaces\IServiceRepository.cs" />
     <Compile Include="Interfaces\IWorkerPositionRepository.cs" />
     <Compile Include="Interfaces\IWorkerRepository.cs" />
-    <Compile Include="Migrations\202003220855592_1.cs" />
-    <Compile Include="Migrations\202003220855592_1.designer.cs">
-      <DependentUpon>202003220855592_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003220931064_2.cs" />
-    <Compile Include="Migrations\202003220931064_2.designer.cs">
-      <DependentUpon>202003220931064_2.cs</DependentUpon>
+    <Compile Include="Migrations\202004120817045_1.cs" />
+    <Compile Include="Migrations\202004120817045_1.designer.cs">
+      <DependentUpon>202004120817045_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\EnrollmentService.cs" />
+    <Compile Include="Models\EnrollmentWorkerService.cs" />
+    <Compile Include="Models\PositionService.cs" />
     <Compile Include="Models\Service.cs" />
+    <Compile Include="Repositories\StandartEnrollmentWorkerServiceRepository.cs" />
+    <Compile Include="Repositories\StandartPositionServiceRepository.cs" />
     <Compile Include="Repositories\StandartServiceRepository.cs" />
     <Compile Include="Repositories\StandartWorkerPositionRepository.cs" />
     <Compile Include="UnitOfWorks\StandartUnitOfWork.cs" />
@@ -91,11 +92,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003220855592_1.resx">
-      <DependentUpon>202003220855592_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003220931064_2.resx">
-      <DependentUpon>202003220931064_2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004120817045_1.resx">
+      <DependentUpon>202004120817045_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

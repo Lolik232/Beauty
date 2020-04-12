@@ -20,14 +20,17 @@ namespace Beauty.Data.Models
         /// <summary>
         /// Возвращает или задает список моделей данных записей, связанных с услугами
         /// </summary>
-        public IEnumerable<EnrollmentService> EnrollmentServices { get; set; }
+        public IEnumerable<EnrollmentWorkerService> EnrollmentWorkerServices { get; set; }
+
+        public IEnumerable<PositionService> PositionServices { get; set; }
 
         /// <summary>
         /// Базовый конструктор
         /// </summary>
         public Service()
         {
-            EnrollmentServices = new List<EnrollmentService>();
+            EnrollmentWorkerServices = new List<EnrollmentWorkerService>();
+            PositionServices = new List<PositionService>();
         }
     }
 }

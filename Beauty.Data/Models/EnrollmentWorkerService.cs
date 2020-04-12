@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Beauty.Data.Models
 {
     /// <summary>
-    /// Модель данных конкретной записи и конкретной услуги
+    /// Модель данных конкретной записи и конкретной услуги, которую выполняет конкретный сотрудник
     /// </summary>
-    public class EnrollmentService
+    public class EnrollmentWorkerService
     {
         /// <summary>
         /// Возвращает или задает идентификатор текущего экземпляра
@@ -25,6 +25,16 @@ namespace Beauty.Data.Models
         /// Возвращает или задает запись
         /// </summary>
         public Enrollment Enrollment { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает идентификатор сотрудника
+        /// </summary>
+        public int WorkerId { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает сотрудника
+        /// </summary>
+        public Worker Worker { get; set; }
 
         /// <summary>
         /// Возвращает или задает идентификатор услуги

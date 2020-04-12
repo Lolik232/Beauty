@@ -9,9 +9,9 @@ namespace Beauty.Data.ContextsFactories
         public StandartContext Create()
         {
             var contextInitializer = new ContextInitializer();
-            var connectionString = "BeautyDatabase";
+            var connectionName = "BeautyDatabase";
 
-            return new StandartContext(contextInitializer, connectionString);
+            return new StandartContext(contextInitializer, connectionName);
         }
     }
 }

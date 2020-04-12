@@ -12,10 +12,5 @@ namespace Beauty.Data.Repositories
         public StandartServiceRepository(StandartContext context)
             : base(context)
         { }
-
-        public Task<IEnumerable<Service>> FindEnrollmentServicesAsync(int enrollmentId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

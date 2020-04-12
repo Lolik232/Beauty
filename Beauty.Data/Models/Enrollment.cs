@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Beauty.Data.Models
 {
@@ -26,28 +27,33 @@ namespace Beauty.Data.Models
         /// Возвращает или задает примечание
         /// </summary>
         public string Description { get; set; }
-        
-        /// <summary>
-        /// Возвращает или задает идентификатор сотрудника, связанного с текущей записью
-        /// </summary>
-        public int WorkerId { get; set; }
 
         /// <summary>
-        /// Возвращает или задает модель данных сотрудника, связанного с текущей записью
+        /// Возвращает или задает дату и время на которое записан клиент
         /// </summary>
-        public Worker Worker { get; set; }
+        public DateTime DateTime { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает дату и время создания заявки
+        /// </summary>
+        public DateTime CreationDateTime { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает дату редактирования заявки
+        /// </summary>
+        public DateTime? EditDateTime { get; set; }
 
         /// <summary>
         /// Возвращает или задает список моделей данных записей, связанных с услугами
         /// </summary>
-        public IEnumerable<EnrollmentService> EnrollmentServices { get; set; }
+        public IEnumerable<EnrollmentWorkerService> EnrollmentWorkerServices { get; set; }
 
         /// <summary>
         /// Базовый конструктор
         /// </summary>
         public Enrollment()
         {
-            EnrollmentServices = new List<EnrollmentService>();
+            EnrollmentWorkerServices = new List<EnrollmentWorkerService>();
         }
     }
 }

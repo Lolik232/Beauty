@@ -1,4 +1,5 @@
-﻿using Beauty.Core.Extensions;
+﻿using Beauty.Core.DTOs;
+using Beauty.Core.Extensions;
 using Beauty.Core.Interfaces;
 using Beauty.Data.Models;
 using Beauty.WPF.Enums;
@@ -22,8 +23,8 @@ namespace Beauty.WPF.ViewModels
         private readonly IWorkerService workerService;
         private readonly IMessageService messageService;
 
-        public ICollection<Worker> Workers { get; set; }
-        public Worker SelectedWorker { get; set; }
+        public ICollection<WorkerDTO> Workers { get; set; }
+        public WorkerDTO SelectedWorker { get; set; }
 
         public TaskCommand<object> LoginCommand { get; }
 
@@ -36,7 +37,9 @@ namespace Beauty.WPF.ViewModels
         {
             #if DEBUG
             {
+                log.Info("Подключение логов Catel'a");
                 LogManager.AddDebugListener();
+                log.Info("Логи Catel'a успешно подключены");
             }
             #endif
 
@@ -56,7 +59,7 @@ namespace Beauty.WPF.ViewModels
             await Task.Run(async () =>
             {
                 var workers = await workerService.GetAdministratorsAsync();
-                Workers = new ObservableCollection<Worker>(workers);
+                Workers = new ObservableCollection<WorkerDTO>(workers);
 
                 SelectedWorker = Workers.First();
             });

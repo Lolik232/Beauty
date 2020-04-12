@@ -49,6 +49,8 @@ namespace Beauty.Data.Models
         /// </summary>
         public IEnumerable<Enrollment> Enrollments { get; set; }
 
+        public IEnumerable<EnrollmentWorkerService> EnrollmentWorkerServices { get; set; }
+
         /// <summary>
         /// Базовый конструктор
         /// </summary>
@@ -56,6 +58,7 @@ namespace Beauty.Data.Models
         {
             WorkerPositions = new List<WorkerPosition>();
             Enrollments = new List<Enrollment>();
+            EnrollmentWorkerServices = new List<EnrollmentWorkerService>();
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace Beauty.Data.Interfaces
 {
     /// <summary>
-    /// Интерфейс класс, инкапсулирующего в себе работу с репозиториями
+    /// Интерфейс класса, инкапсулирующего в себе работу с репозиториями
     /// </summary>
     public interface IUnitOfWork
     {
@@ -28,9 +28,16 @@ namespace Beauty.Data.Interfaces
         IWorkerPositionRepository WorkerPositions { get; }
 
         /// <summary>
-        /// Репозиторий сервисов, связанный с записями
+        /// Репозиторий сервисов
         /// </summary>
-        IServiceRepository ServiceRepository { get; }
+        IServiceRepository Services { get; }
+
+        /// <summary>
+        /// Репозиторий записей, связанных с услугами
+        /// </summary>
+        IEnrollmentWorkerServiceRepository EnrollmentWorkerServices { get; }
+
+        IPositionServiceRepository PositionServices { get; set; }
 
         /// <summary>
         /// Обновляет модель данных в базе данных
