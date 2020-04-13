@@ -5,5 +5,6 @@
         None = 0,
         LoginView = 1,
         EnrollmentView = 2,
+        EnrollmentDetailsView = 3
     }
 }

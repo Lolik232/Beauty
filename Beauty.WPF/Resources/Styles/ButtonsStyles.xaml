@@ -4,7 +4,7 @@
 
     <Style x:Key="BaseButtonStyle" 
            TargetType="Button">
-        
+
         <Setter Property="Cursor" 
                 Value="Hand"/>
         

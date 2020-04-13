@@ -12,13 +12,16 @@ namespace Beauty.WPF.ViewModels
 
         public ApplicationViews CurrentView { get; private set; }
 
+        public object[] CurrentViewParameters { get; private set; }
+
         public ApplicationViewModel()
         {
             GoToView(ApplicationViews.LoginView);
         }
 
-        public void GoToView(ApplicationViews view)
+        public void GoToView(ApplicationViews view, object[] parameters = null)
         {
+            CurrentViewParameters = parameters;
             CurrentView = view;
         }
     }

@@ -19,6 +19,8 @@ namespace Beauty.WPF.ViewModels
     {
         private static readonly ILog log;
 
+        public override string Title => "Вход в систему";
+
         private readonly ILoginService loginService;
         private readonly IWorkerService workerService;
         private readonly IMessageService messageService;

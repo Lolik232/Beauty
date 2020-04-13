@@ -4,11 +4,13 @@ using Beauty.Data.Interfaces;
 using Beauty.Data.UnitOfWorks;
 using Beauty.WPF.Infrastructure;
 using Beauty.WPF.ViewModels;
+using Beauty.WPF.Views;
 using Beauty.WPF.Windows;
 using Catel.ApiCop;
 using Catel.ApiCop.Listeners;
 using Catel.IoC;
 using Catel.Logging;
+using Catel.MVVM;
 using System.Windows;
 
 namespace Beauty.WPF
@@ -47,6 +49,13 @@ namespace Beauty.WPF
             var applicationViewModel = window.ViewModel as ApplicationViewModel;
             Container.RegisterInstance(applicationViewModel);
             log.Info("Главное окно приложения успешно зарегистрировано");
+
+            Container.RegisterType<LoginViewModel>(RegistrationType.Transient);
+            Container.RegisterType<EnrollmentViewModel>(RegistrationType.Transient);
+
+            var viewModelLocator = Container.Get<IViewModelLocator>();
+            Container.RegisterType<EnrollmentDetailsViewModel>(RegistrationType.Transient);
+            viewModelLocator.Register<EnrollmentDetailsView, EnrollmentDetailsViewModel>();
 
             log.Info("Регистрация зависимостей, связанных с базой данных");
             Container.RegisterType<IUnitOfWork, StandartUnitOfWork>(RegistrationType.Transient);

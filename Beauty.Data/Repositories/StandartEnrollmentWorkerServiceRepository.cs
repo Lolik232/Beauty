@@ -18,7 +18,8 @@ namespace Beauty.Data.Repositories
         {
             var enrollmentWorkerServices = await context.EnrollmentWorkerServices
                                            .Include(EnrollmentWorkerService => EnrollmentWorkerService.Service)
-                                           .Where(EnrollmentService => EnrollmentService.EnrollmentId.Equals(enrollmentId))
+                                           .Include(EnrollmentWorkerService => EnrollmentWorkerService.Worker)
+                                           .Where(EnrollmentWorkerService => EnrollmentWorkerService.EnrollmentId.Equals(enrollmentId))
                                            .ToListAsync();
 
             return enrollmentWorkerServices;

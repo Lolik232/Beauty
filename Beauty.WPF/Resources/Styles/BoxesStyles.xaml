@@ -42,9 +42,11 @@
     <Style x:Key="BaseListBoxStyle"
            TargetType="ListBox">
 
-        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderBrush" 
+                Value="Transparent"/>
 
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderThickness" 
+                Value="0"/>
 
     </Style>
 
@@ -62,7 +64,7 @@
                 <ControlTemplate TargetType="{x:Type PasswordBox}">
 
                     <Grid>
-                        
+
                         <Border x:Name="border" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -83,7 +85,7 @@
                                    Padding="13,0"
                                    Style="{StaticResource AnnotationTextBlockStyle}"
                                    Visibility="{TemplateBinding AttachedProperties:HasTextProperty.Value, Converter={ValueConverters:BooleanToVisibilityValueConverter}}"/>
-                   
+
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -156,7 +158,7 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                    Foreground="{StaticResource LightGrayColor}">
-                            
+
                             <TextBlock.Style>
 
                                 <Style TargetType="{x:Type TextBlock}">
@@ -204,7 +206,8 @@
 
                         </Trigger>
 
-                        <Trigger Property="IsKeyboardFocused" Value="True">
+                        <Trigger Property="IsKeyboardFocused" 
+                                 Value="True">
 
                             <Setter Property="BorderBrush" 
                                     TargetName="border" 
@@ -222,6 +225,12 @@
 
     </Style>
 
+    <ItemsPanelTemplate x:Key="DefaultWrapPanelTemplate">
+
+        <WrapPanel Orientation="Horizontal"/>
+
+    </ItemsPanelTemplate>
+
     <DataTemplate x:Key="DefaultWorkersComboBoxItemTemlate"
                   DataType="{x:Type DTOs:WorkerDTO}">
 
@@ -237,18 +246,66 @@
 
     </DataTemplate>
 
+    <DataTemplate x:Key="DefaultServicesItemTemlate"
+                  DataType="{x:Type DTOs:ServiceDTO}">
+
+        <Border Padding="10,5,10,5"
+                Margin="5"
+                CornerRadius="5"
+                BorderThickness="1"
+                BorderBrush="{StaticResource BlackColor}"
+                Background="Transparent">
+
+            <TextBlock Text="{Binding Title}"
+                       Foreground="{StaticResource BlackColor}" />
+
+        </Border>
+
+    </DataTemplate>
+
     <DataTemplate x:Key="DefaultEnrollmentsListBoxItemTemlate"
                   DataType="{x:Type DTOs:EnrollmentDTO}">
 
         <StackPanel Orientation="Vertical">
 
-            <TextBlock Text="{Binding Id, StringFormat='Заявка №{0}'}"/>
+            <TextBlock Style="{StaticResource LargeTextBlockStyle}"
+                       Margin="5,0,5,0">
 
-            <!--<TextBlock Text="{Binding Description, StringFormat='Примечание к заявке: {0}'}"/>-->
+                <TextBlock.Text>
 
-            <TextBlock Text="{Binding ClientFirstname, StringFormat='Клиент: {0}'}"/>
+                    <MultiBinding StringFormat="Заявка №{0} на {1}">
 
-            <TextBlock Text="{Binding ClientPhoneNumber, StringFormat='Номер телефона клиента: {0}'}"/>
+                        <Binding Path="Id"/>
+
+                        <Binding Path="DateTime" 
+                                 Converter="{ValueConverters:TimeValueConverter}"/>
+
+                    </MultiBinding>
+
+                </TextBlock.Text>
+
+            </TextBlock>
+
+            <TextBlock Text="{Binding ClientFirstname, StringFormat='Имя клиента: {0}'}"
+                       Margin="5,5,5,0"/>
+
+            <TextBlock Text="{Binding ClientPhoneNumber, StringFormat='Номер телефона клиента: {0}'}"
+                       Margin="5,0,5,5"/>
+
+            <ItemsControl ItemsSource="{Binding Services}"
+                          ItemsPanel="{StaticResource DefaultWrapPanelTemplate}"
+                          ItemTemplate="{StaticResource DefaultServicesItemTemlate}"/>
+
+            <TextBlock Style="{StaticResource AnnotationTextBlockStyle}"
+                       Margin="5">
+                
+                <Run Text="Опубликовано"/>
+                
+                <Run Text="{Binding CreationDateTime, Converter={ValueConverters:DateValueConverter}}"/>
+                
+                <Run Text="{Binding EditDateTime, StringFormat='• Последнее редактирование: {0}', TargetNullValue={x:Null}, Converter={ValueConverters:DateValueConverter}}"/>
+
+            </TextBlock>
 
         </StackPanel>
 

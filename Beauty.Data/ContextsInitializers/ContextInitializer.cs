@@ -523,14 +523,27 @@ namespace Beauty.Data.ContextsInitializers
             //});
 
             var dateTimeNow = DateTime.Now;
-            context.Enrollments.Add(new Enrollment()
-            {
-                Id = 1,
-                ClientFirstname = "Никита",
-                ClientPhoneNumber = "124512",
-                Description = "Описание",
-                DateTime = dateTimeNow,
-                CreationDateTime = dateTimeNow
+
+            context.Enrollments.AddRange(new List<Enrollment>()
+            { 
+                new Enrollment()
+                {
+                    Id = 1,
+                    ClientFirstname = "Никита",
+                    ClientPhoneNumber = "+7 (123) 456 78-90",
+                    DateTime = dateTimeNow,
+                    CreationDateTime = dateTimeNow,
+                    EditDateTime = dateTimeNow
+                },
+                new Enrollment()
+                {
+                    Id = 2,
+                    ClientFirstname = "Оксана",
+                    ClientPhoneNumber = "+7 (098) 765 43-21",
+                    Description = "Здесь описание заявки",
+                    DateTime = dateTimeNow,
+                    CreationDateTime = dateTimeNow
+                }
             });
 
             context.EnrollmentWorkerServices.AddRange(new List<EnrollmentWorkerService>()
@@ -557,6 +570,30 @@ namespace Beauty.Data.ContextsInitializers
                 {
                     EnrollmentId = 1,
                     WorkerId = 4,
+                    ServiceId = 6
+                },
+                new EnrollmentWorkerService()
+                {
+                    EnrollmentId = 2,
+                    WorkerId = 5,
+                    ServiceId = 4
+                },
+                new EnrollmentWorkerService()
+                {
+                    EnrollmentId = 2,
+                    WorkerId = 5,
+                    ServiceId = 3
+                },
+                new EnrollmentWorkerService()
+                {
+                    EnrollmentId = 2,
+                    WorkerId = 2,
+                    ServiceId = 17
+                },
+                new EnrollmentWorkerService()
+                {
+                    EnrollmentId = 2,
+                    WorkerId = 5,
                     ServiceId = 6
                 }
             });

@@ -33,6 +33,9 @@
                 <!--Словарь стилей для контейнеров-->
                 <ResourceDictionary Source="Resources/Styles/ContainersStyles.xaml"/>
 
+                <!--Словарь стилей для элементов управления-->
+                <ResourceDictionary Source="Resources/Styles/ContentControlsStyles.xaml"/>
+
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>

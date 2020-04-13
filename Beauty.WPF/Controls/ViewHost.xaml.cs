@@ -17,21 +17,39 @@ namespace Beauty.WPF.Controls
         /// </summary>
         public ApplicationViews View
         {
-            get => (ApplicationViews)GetValue(CurrentViewProperty);
+            get => (ApplicationViews)GetValue(ViewProperty);
+            set => SetValue(ViewProperty, value);
+        }
 
-            set => SetValue(CurrentViewProperty, value);
+        public object[] ViewParameters
+        {
+            get => (object[])GetValue(ViewParametersProperty);
+            set => SetValue(ViewParametersProperty, value);
         }
 
         /// <summary>
         /// Свойство зависимости для <see cref="View"/>
         /// </summary>
-        public static readonly DependencyProperty CurrentViewProperty = DependencyProperty.Register(
+        public static readonly DependencyProperty ViewProperty = DependencyProperty.Register(
            nameof(View),
            typeof(ApplicationViews),
            typeof(ViewHost),
-           new UIPropertyMetadata(default(ApplicationViews),
+           new UIPropertyMetadata
+           (
+               default(ApplicationViews),
                null,
                OnViewChanged
+           )
+        );
+
+        public static readonly DependencyProperty ViewParametersProperty = DependencyProperty.Register(
+           nameof(ViewParameters),
+           typeof(object[]),
+           typeof(ViewHost),
+           new UIPropertyMetadata(
+               default(object[]), 
+               null,
+               OnViewParametersChanged
            )
         );
 
@@ -41,6 +59,17 @@ namespace Beauty.WPF.Controls
         public ViewHost()
         {
             InitializeComponent();
+        }
+
+        private static object OnViewParametersChanged(DependencyObject dependencyObject, object value)
+        {
+            var newValue = (object[])value;
+
+            var viewHost = dependencyObject as ViewHost;
+
+            viewHost.Tag = newValue;
+
+            return value;
         }
 
         /// <summary>
@@ -58,9 +87,9 @@ namespace Beauty.WPF.Controls
                 return value;
             }
 
-            var currentView = newViewValue.ToView();
-
             var viewHost = dependencyObject as ViewHost;
+
+            var currentView = newViewValue.ToView((object[])viewHost.Tag);
 
             var oldViewControl = viewHost.OldView;
             var newViewControl = viewHost.NewView;

@@ -8,6 +8,9 @@
         <Setter Property="FontSize" 
                 Value="{StaticResource DefaultFontSize}"/>
 
+        <Setter Property="TextTrimming"
+                Value="CharacterEllipsis"/>
+
     </Style>
     
     <Style x:Key="LargeTextBlockStyle" 

@@ -160,10 +160,16 @@
       <DependentUpon>StateBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValuesConverters\BooleanToVisibilityValueConverter.cs" />
+    <Compile Include="ValuesConverters\DateValueConverter.cs" />
+    <Compile Include="ValuesConverters\TimeValueConverter.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\EnrollmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\EnrollmentViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Views\BaseView.cs" />
+    <Compile Include="Views\EnrollmentDetailsView.xaml.cs">
+      <DependentUpon>EnrollmentDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EnrollmentView.xaml.cs">
       <DependentUpon>EnrollmentView.xaml</DependentUpon>
     </Compile>
@@ -205,6 +211,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Styles\ContentControlsStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Styles\FontSizes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -222,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles\BoxesStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EnrollmentDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

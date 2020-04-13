@@ -3,81 +3,92 @@
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:local="clr-namespace:Beauty.WPF.Views"
-                xmlns:Catel="http://schemas.catelproject.com">
+                xmlns:Catel="http://schemas.catelproject.com"
+                xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity">
 
-    <StackPanel Orientation="Vertical">
+    <Grid>
 
-        <Button Width="150"
-                Height="32"
-                HorizontalAlignment="Left"
-                Margin="15"
-                Content="Добавить заявку" />
+        <Grid.RowDefinitions>
 
-        <Expander Header="Фильтрация и поиск">
+            <!--0-->
+            <RowDefinition Height="Auto"/>
 
-            <TextBox Height="32" 
-                     Tag="Поиск по имени клиента"
-                     Style="{StaticResource HintedTextBoxStyle}" />
+            <!--1-->
+            <RowDefinition Height="5"/>
+
+            <!--2-->
+            <RowDefinition Height="Auto"/>
+
+            <!--3-->
+            <RowDefinition Height="5"/>
+
+            <!--4-->
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <WrapPanel Grid.Row="0"
+                   Grid.Column="0"
+                   Orientation="Horizontal">
+            
+            <Button Margin="10,10,10,0"
+                    Height="32"
+                    Width="150"
+                    IsDefault="True"
+                    HorizontalAlignment="Left"
+                    Command="{Binding CreateEnrollmentCommand}"
+                    Content="Добавить заявку"/>
+            
+        </WrapPanel>
+
+        <Expander Grid.Row="2"
+                  Grid.Column="0"
+                  Margin="5,0,0,0"
+                  Header="Фильтрация и поиск">
+
+            <WrapPanel Orientation="Horizontal">
+
+                <TextBox Width="200"
+                         Height="32"
+                         Margin="5"
+                         Tag="Поиск по номеру заявки" 
+                         Style="{StaticResource HintedTextBoxStyle}"/>
+
+                <TextBox Width="200"
+                         Height="32"
+                         Margin="5"
+                         Tag="Поиск по имени клиента" 
+                         Style="{StaticResource HintedTextBoxStyle}"/>
+
+            </WrapPanel>
 
         </Expander>
 
-        <ListBox ItemsSource="{Binding Enrollments}"
+        <ListBox Grid.Row="4"
+                 Grid.Column="0"
+                 ItemsSource="{Binding Enrollments}"
+                 SelectedItem="{Binding SelectedEnrollment}"
+                 ItemTemplate="{StaticResource DefaultEnrollmentsListBoxItemTemlate}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
-            <ListBox.ItemTemplate>
+            <interactivity:Interaction.Triggers>
 
-                <DataTemplate>
+                <interactivity:EventTrigger EventName="MouseDoubleClick">
 
-                    <StackPanel Orientation="Vertical">
+                    <Catel:EventToCommand Command="{Binding EditEnrollmentCommand}"/>
 
-                        <TextBlock Text="{Binding Id, StringFormat='Заявка №{0}'}"/>
-
-                        <!--<TextBlock Text="{Binding Description, StringFormat='Примечание к заявке: {0}'}"/>-->
-
-                        <TextBlock Text="{Binding ClientFirstname, StringFormat='Клиент: {0}'}"/>
-
-                        <TextBlock Text="{Binding ClientPhoneNumber, StringFormat='Номер телефона клиента: {0}'}"/>
-
-                        <ItemsControl ItemsSource="{Binding Services}">
-
-                            <ItemsControl.ItemsPanel>
-
-                                <ItemsPanelTemplate>
-
-                                    <WrapPanel Orientation="Horizontal"/>
-
-                                </ItemsPanelTemplate>
-
-                            </ItemsControl.ItemsPanel>
-
-                            <ItemsControl.ItemTemplate>
-
-                                <DataTemplate>
-
-                                    <Border Padding="5"
-                                            Margin="5"
-                                            CornerRadius="5"
-                                            Background="{StaticResource LightSlateGrayColor}">
-
-                                        <TextBlock Text="{Binding}"
-                                                   Foreground="White" />
-
-                                    </Border>
-
-                                </DataTemplate>
-
-                            </ItemsControl.ItemTemplate>
-
-                        </ItemsControl>
-
-                    </StackPanel>
-
-                </DataTemplate>
-
-            </ListBox.ItemTemplate>
-
+                </interactivity:EventTrigger>
+                
+            </interactivity:Interaction.Triggers>
+            
         </ListBox>
 
-    </StackPanel>
+    </Grid>
 
 </local:BaseView>

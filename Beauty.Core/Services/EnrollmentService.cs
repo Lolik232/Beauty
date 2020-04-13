@@ -26,6 +26,7 @@ namespace Beauty.Core.Services
                 Id = Enrollment.Id,
                 ClientFirstname = Enrollment.ClientFirstname,
                 ClientPhoneNumber = Enrollment.ClientPhoneNumber,
+                Description = Enrollment.Description,
                 DateTime = Enrollment.DateTime,
                 CreationDateTime = Enrollment.DateTime,
                 EditDateTime = Enrollment.EditDateTime
@@ -33,17 +34,23 @@ namespace Beauty.Core.Services
 
             foreach (var enrollmentDTO in enrollmentDTOs)
             {
-                var workerServices = await unitOfWork.EnrollmentWorkerServices.FindEnrollmentWorkerServicesAsync(enrollmentDTO.Id);
+                var enrollmentWorkerServices = await unitOfWork.EnrollmentWorkerServices.FindEnrollmentWorkerServicesAsync(enrollmentDTO.Id);
 
-                var services = new List<string>();
-
-                foreach (var workerService in workerServices)
+                var serviceDTOs = enrollmentWorkerServices.Select(EnrollmentWorkerService => new ServiceDTO()
                 {
-                    var workerShortname = await unitOfWork.Workers.FindWorkerShortnameAsync(workerService.WorkerId);
-                    services.Add($"{workerService.Service.Title} ({workerShortname})");
+                    Id = EnrollmentWorkerService.Service.Id,
+                    Title = EnrollmentWorkerService.Service.Title,
+                    WorkerId = EnrollmentWorkerService.WorkerId
+                });
+
+                foreach (var serviceDTO in serviceDTOs)
+                {
+                    var workerShortname = await unitOfWork.Workers.FindWorkerShortnameAsync(serviceDTO.WorkerId);
+
+                    serviceDTO.WorkerShortname = workerShortname;
                 }
 
-                enrollmentDTO.Services = services;
+                enrollmentDTO.Services = serviceDTOs;
             }
 
             return enrollmentDTOs;

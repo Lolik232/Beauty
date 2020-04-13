@@ -8,12 +8,9 @@
                 xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
                 xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
                 xmlns:Catel="http://schemas.catelproject.com"
-                mc:Ignorable="d"
-                Background="{StaticResource WhiteColor}">
+                mc:Ignorable="d">
 
-    <Grid Grid.Row="1" 
-          Grid.Column="0"
-          HorizontalAlignment="Center">
+    <Grid HorizontalAlignment="Center">
 
         <Grid.RowDefinitions>
 
@@ -62,7 +59,7 @@
                    Grid.Column="0" 
                    Style="{StaticResource LargeTextBlockStyle}"
                    VerticalAlignment="Bottom"
-                   Text="Вход в систему"/>
+                   Text="{Binding Title}"/>
 
         <TextBlock Grid.Row="2" 
                    Grid.Column="0"
