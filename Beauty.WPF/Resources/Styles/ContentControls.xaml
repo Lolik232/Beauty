@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles">
+
+    <Style x:Key="BaseContentControlStyle"
+           TargetType="{x:Type ContentControl}">
+
+        <Setter Property="FocusVisualStyle" 
+                Value="{x:Null}"/>
+
+    </Style>
+
+    <Style TargetType="{x:Type ContentControl}"
+           BasedOn="{StaticResource BaseContentControlStyle}"/>
+
+</ResourceDictionary>

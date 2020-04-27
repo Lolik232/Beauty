@@ -8,10 +8,10 @@
 
     <Grid>
 
-        <ContentControl x:Name="OldView"/>
+        <ContentControl x:Name="oldView"/>
 
-        <ContentControl x:Name="NewView"/>
+        <ContentControl x:Name="newView"/>
 
     </Grid>
-    
+
 </UserControl>

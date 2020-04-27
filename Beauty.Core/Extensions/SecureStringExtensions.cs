@@ -12,7 +12,7 @@ namespace Beauty.Core.Extensions
         /// <summary>
         /// Получает расшифрованные данные из <see cref="SecureString"/>
         /// </summary>
-        /// <param name="secureString">Секретная строка</param>
+        /// <param name="secureString">Зашифрованная строка</param>
         public static string Unsecure(this SecureString secureString)
         {
             if (secureString is null)

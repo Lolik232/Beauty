@@ -1,5 +1,4 @@
-﻿<local:BaseView x:Name="View"
-                x:Class="Beauty.WPF.Views.LoginView"
+﻿<local:BaseView x:Class="Beauty.WPF.Views.LoginView"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,99 +7,110 @@
                 xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
                 xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
                 xmlns:Catel="http://schemas.catelproject.com"
+                xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties"
+                xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                 mc:Ignorable="d">
 
-    <Grid HorizontalAlignment="Center">
+    <Grid>
 
         <Grid.RowDefinitions>
-
+            
             <!--0-->
             <RowDefinition Height="*"/>
 
-            <!--1-->
-            <RowDefinition Height="20"/>
+            <!--Заголовок страницы (1)-->
+            <RowDefinition Height="Auto"/>
 
             <!--2-->
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="50"/>
 
-            <!--3-->
+            <!--Список сотрудников (3)-->
             <RowDefinition Height="32"/>
 
             <!--4-->
             <RowDefinition Height="15"/>
 
-            <!--5-->
+            <!--Поле для ввода пароля (5)-->
             <RowDefinition Height="32"/>
 
             <!--6-->
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="15"/>
 
-            <!--7-->
+            <!--Кнопка "Войти" (7)-->
             <RowDefinition Height="32"/>
 
             <!--8-->
-            <RowDefinition Height="15"/>
-
-            <!--9-->
             <RowDefinition Height="*"/>
+
+            <!--Версия приложения (9)-->
+            <RowDefinition Height="Auto"/>
 
             <!--10-->
             <RowDefinition Height="15"/>
-
+            
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
 
+            <!--0-->
+            <ColumnDefinition Width="*"/>
+
+            <!--Ширина страницы-->
             <ColumnDefinition Width="250"/>
+
+            <!--2-->
+            <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0"
-                   Grid.Column="0" 
-                   Style="{StaticResource LargeTextBlockStyle}"
-                   VerticalAlignment="Bottom"
+        <TextBlock Grid.Row="1"
+                   Grid.Column="1"
+                   FontWeight="SemiBold"
+                   Style="{StaticResource HugeTextBlockStyle}"
                    Text="{Binding Title}"/>
 
-        <TextBlock Grid.Row="2" 
-                   Grid.Column="0"
-                   Text="Сотрудник"/>
+        <Controls:WatermarkComboBox x:Name="workersComboBox" 
+                                    Grid.Row="3" 
+                                    Grid.Column="1"
+                                    Watermark="Сотрудник"
+                                    ItemsSource="{Binding Workers}"
+                                    SelectedItem="{Binding SelectedWorker}"
+                                    IsEnabled="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}"
+                                    ItemTemplate="{StaticResource WorkerComboBoxItemTemlate}"/>
 
-        <ComboBox x:Name="WorkersComboBox" 
-                  Grid.Row="3" 
-                  Grid.Column="0"
-                  ItemsSource="{Binding Workers}"
-                  SelectedItem="{Binding SelectedWorker, UpdateSourceTrigger=PropertyChanged}"
-                  IsEnabled="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}"
-                  ItemTemplate="{StaticResource DefaultWorkersComboBoxItemTemlate}"/>
+        <Controls:RotatingIcon Grid.Row="3"
+                               Grid.Column="1"
+                               Width="32"
+                               Height="32"
+                               Icon="{StaticResource LoadingIcon}"
+                               AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding WorkersLoadingTask.IsCompleted, FallbackValue=True}"/>
 
-        <Controls:Spinner Grid.Row="3"
-                          Grid.Column="0"
-                          Width="32"
-                          Height="32"
-                          Visibility="{Binding ElementName=WorkersComboBox, Path=HasItems, Converter={ValueConverters:BooleanToVisibilityValueConverter}}"
-                          Foreground="{StaticResource LightSlateGrayColor}"/>
-
-        <PasswordBox x:Name="PasswordBox"
+        <PasswordBox Grid.Row="5"
+                     Grid.Column="1"
                      Tag="Пароль"
-                     Grid.Row="5"
-                     Grid.Column="0"
-                     IsEnabled="{Binding ElementName=WorkersComboBox, Path=HasItems}"
-                     Style="{StaticResource HintedPasswordBoxStyle}"/>
+                     IsEnabled="{Binding ElementName=workersComboBox, Path=HasItems}"
+                     Style="{StaticResource WatermarkPasswordBoxStyle}">
+
+            <Interactivity:Interaction.Behaviors>
+
+                <Catel:UpdateBindingOnPasswordChanged Password="{Binding Password, Mode=TwoWay}" />
+
+            </Interactivity:Interaction.Behaviors>
+
+        </PasswordBox>
 
         <Button Grid.Row="7"
-                Grid.Column="0" 
+                Grid.Column="1" 
                 IsDefault="True"
-                Command="{Binding LoginCommand}" 
-                CommandParameter="{Binding ElementName=View}"
-                IsEnabled="{Binding ElementName=WorkersComboBox, Path=HasItems}"
+                Command="{Binding LoginCommand}"
                 Content="Войти"/>
 
         <TextBlock Grid.Row="9"
-                   Grid.Column="0"
+                   Grid.Column="1"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Bottom"
-                   Style="{StaticResource AnnotationTextBlockStyle}"
-                   Text="Версия приложения: 1.0.0.0"/>
+                   ToolTip="new EasterEgg(easterText).Show();"
+                   Text="Версия приложения: 1.0.0.0"
+                   Style="{StaticResource AnnotationTextBlockStyle}"/>
     </Grid>
 
 </local:BaseView>

@@ -16,7 +16,7 @@ namespace Beauty.Core.Infrastructure
         /// <summary>
         /// Возвращает экземпляр сессии
         /// </summary>
-        public static Session GetSession()
+        internal static Session GetSession()
         {
             if (session is null)
             {

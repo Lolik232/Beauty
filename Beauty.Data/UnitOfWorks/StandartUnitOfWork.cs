@@ -5,6 +5,7 @@ using Beauty.Data.Repositories;
 using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 
 namespace Beauty.Data.UnitOfWorks
 {

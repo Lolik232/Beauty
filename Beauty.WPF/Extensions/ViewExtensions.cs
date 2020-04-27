@@ -1,5 +1,4 @@
 ﻿using Beauty.WPF.Enums;
-using Beauty.WPF.Infrastructure;
 using Beauty.WPF.ViewModels;
 using Beauty.WPF.Views;
 using Catel.MVVM.Views;
@@ -8,18 +7,15 @@ namespace Beauty.WPF.Extensions
 {
     public static class ViewExtensions
     {
-        public static IView ToView(this ApplicationViews view, params object[] parameters)
+        public static IView ToView(this ApplicationViews view)
         {
             switch (view)
             {
                 case ApplicationViews.LoginView:
-                    return Controller.GetView<LoginView>(parameters);
+                    return new LoginView();
 
                 case ApplicationViews.EnrollmentView:
-                    return Controller.GetView<EnrollmentView>(parameters);
-
-                case ApplicationViews.EnrollmentDetailsView:
-                    return Controller.GetView<EnrollmentDetailsView>(parameters);
+                    return new EnrollmentsView();
 
                 default:
                     return null;

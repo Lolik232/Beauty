@@ -9,6 +9,7 @@ namespace Beauty.Core.DTOs
     public class ServiceDTO
     {
         public int Id { get; set; }
+        public int? EnrollmentWorkerServiceId { get; set; }
         public string Title { get; set; }
         public int WorkerId { get; set; }
         public string WorkerShortname { get; set; }

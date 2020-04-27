@@ -2,6 +2,7 @@
 using Beauty.Core.Interfaces;
 using Beauty.Data.Interfaces;
 using Beauty.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,16 +12,16 @@ namespace Beauty.Core.Services
     public class EnrollmentService : IEnrollmentService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IServiceManager serviceManager;
 
-        public EnrollmentService(IUnitOfWork unitOfWork)
+        public EnrollmentService(IUnitOfWork unitOfWork, IServiceManager serviceManager)
         {
             this.unitOfWork = unitOfWork;
+            this.serviceManager = serviceManager;
         }
 
-        public async Task<IEnumerable<EnrollmentDTO>> GetRelevantEnrollmentsAsync()
+        private async Task<IEnumerable<EnrollmentDTO>> ToDTOsAsync(IEnumerable<Enrollment> enrollments)
         {
-            var enrollments = await unitOfWork.Enrollments.FindRelevantEnrollmentsAsync();
-
             var enrollmentDTOs = enrollments.Select(Enrollment => new EnrollmentDTO()
             {
                 Id = Enrollment.Id,
@@ -34,26 +35,41 @@ namespace Beauty.Core.Services
 
             foreach (var enrollmentDTO in enrollmentDTOs)
             {
-                var enrollmentWorkerServices = await unitOfWork.EnrollmentWorkerServices.FindEnrollmentWorkerServicesAsync(enrollmentDTO.Id);
-
-                var serviceDTOs = enrollmentWorkerServices.Select(EnrollmentWorkerService => new ServiceDTO()
-                {
-                    Id = EnrollmentWorkerService.Service.Id,
-                    Title = EnrollmentWorkerService.Service.Title,
-                    WorkerId = EnrollmentWorkerService.WorkerId
-                });
-
-                foreach (var serviceDTO in serviceDTOs)
-                {
-                    var workerShortname = await unitOfWork.Workers.FindWorkerShortnameAsync(serviceDTO.WorkerId);
-
-                    serviceDTO.WorkerShortname = workerShortname;
-                }
-
-                enrollmentDTO.Services = serviceDTOs;
+                enrollmentDTO.Services = await serviceManager.GetEnrollmentServicesAsync(enrollmentDTO.Id);
             }
 
             return enrollmentDTOs;
+        }
+
+        public async Task<IEnumerable<EnrollmentDTO>> GetRelevantEnrollmentsAsync()
+        {
+            var enrollments = await unitOfWork.Enrollments.FindRelevantEnrollmentsAsync();
+
+            return await ToDTOsAsync(enrollments);
+        }
+
+        public async Task<Enrollment> GetEnrollmentAsync(int enrollmentId)
+        {
+            return await unitOfWork.Enrollments.FindAsync(enrollmentId);
+        }
+
+        public async Task<Enrollment> AddEnrollmentAsync(Enrollment enrollment)
+        {
+            var addedEnrollment = unitOfWork.Enrollments.Add(enrollment);
+            await unitOfWork.SaveAsync();
+
+            return addedEnrollment;
+        }
+
+        public async Task EditEnrollmentAsync(Enrollment enrollment)
+        {
+            await unitOfWork.UpdateAsync(enrollment);
+        }
+
+        public async Task RemoveEnrollmentAsync(int enrollmentId)
+        {
+            await unitOfWork.Enrollments.RemoveAsync(enrollmentId);
+            await unitOfWork.SaveAsync();
         }
     }
 }

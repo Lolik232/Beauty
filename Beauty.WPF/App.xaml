@@ -9,32 +9,39 @@
 
             <ResourceDictionary.MergedDictionaries>
 
-                <!--Словарь цветов-->
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml"/>
-                
-                <!--Словарь размеров-->
+                <ResourceDictionary Source="Resources/Styles/AppColors.xaml"/>
+
                 <ResourceDictionary Source="Resources/Styles/FontSizes.xaml"/>
-                
-                <!--Словарь векторных иконок-->
-                <ResourceDictionary Source="Resources/Styles/PathGeometryIcons.xaml"/>
-                
-                <!--Словарь стилей для кнопок-->
-                <ResourceDictionary Source="Resources/Styles/ButtonsStyles.xaml"/>
-                
-                <!--Словарь стилей для текстовых полей-->
-                <ResourceDictionary Source="Resources/Styles/TextBlocksStyles.xaml"/>
-                
-                <!--Словарь стилей для элементов управления с пользовательским вводом-->
-                <ResourceDictionary Source="Resources/Styles/BoxesStyles.xaml"/>
-                
-                <!--Словарь путей для анимаций-->
-                <ResourceDictionary Source="Resources/Styles/PathsStyles.xaml"/>
 
-                <!--Словарь стилей для контейнеров-->
-                <ResourceDictionary Source="Resources/Styles/ContainersStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/Paths.xaml"/>
 
-                <!--Словарь стилей для элементов управления-->
-                <ResourceDictionary Source="Resources/Styles/ContentControlsStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/PathsGeometry.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/Buttons.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/ContentControls.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/Expanders.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/TextBlocks.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/ComboBoxes.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/ItemsControls.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/ListBoxes.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/PasswordBoxes.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/TextBoxes.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/LoadingBars.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/RotatingIcons.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/ToolTips.xaml"/>
+
+                <ResourceDictionary Source="Resources/Styles/ScrollBars.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
             

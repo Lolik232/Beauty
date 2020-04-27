@@ -13,5 +13,9 @@ namespace Beauty.Core.Interfaces
         /// Возвращает список администраторов
         /// </summary>
         Task<IEnumerable<WorkerDTO>> GetAdministratorsAsync();
+
+        Task<IEnumerable<WorkerDTO>> GetServiceWorkersAsync(int serviceId);
+
+        Task<string> GetWorkerShortnameAsync(int workerId);
     }
 }

@@ -13,13 +13,13 @@ namespace Beauty.Data.Interfaces
         /// Добавляет модель данных в базу данных
         /// </summary>
         /// <param name="modelId">Идентификатор модели данных, которую необходимо добавить в базу данных</param>
-        Task<TModel> AddAsync(int modelId);
+        TModel Add(TModel model);
 
         /// <summary>
         /// Добавляет список моделей данных в базу данных
         /// </summary>
         /// <param name="modelIds">Идентификаторы моделей данных, которые необходимо добавить в базу данных</param>
-        Task AddRangeAsync(IEnumerable<int> modelIds);
+        IEnumerable<TModel> AddRange(IEnumerable<TModel> models);
 
         /// <summary>
         /// Возвращает первую запись модели данных в базе данных
@@ -52,7 +52,12 @@ namespace Beauty.Data.Interfaces
         /// Удаляет список моделей данных из базы данных
         /// </summary>
         /// <param name="modelIds">Идентификаторы моделей данных, которые необходимо удалить</param>
-        /// <returns></returns>
         Task RemoveRangeAsync(IEnumerable<int> modelIds);
+
+        /// <summary>
+        /// Удаляет список моделей данных из базы данных
+        /// </summary>
+        /// <param name="modelIds">Модели данных, которые необходимо удалить</param>
+        void RemoveRange(IEnumerable<TModel> models);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Beauty.WPF.Enums;
 using Beauty.WPF.Extensions;
 using Beauty.WPF.Views;
+using Catel.IoC;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,37 +21,20 @@ namespace Beauty.WPF.Controls
             get => (ApplicationViews)GetValue(ViewProperty);
             set => SetValue(ViewProperty, value);
         }
-
-        public object[] ViewParameters
-        {
-            get => (object[])GetValue(ViewParametersProperty);
-            set => SetValue(ViewParametersProperty, value);
-        }
-
+            
         /// <summary>
         /// Свойство зависимости для <see cref="View"/>
         /// </summary>
         public static readonly DependencyProperty ViewProperty = DependencyProperty.Register(
-           nameof(View),
-           typeof(ApplicationViews),
-           typeof(ViewHost),
-           new UIPropertyMetadata
-           (
-               default(ApplicationViews),
-               null,
-               OnViewChanged
-           )
-        );
-
-        public static readonly DependencyProperty ViewParametersProperty = DependencyProperty.Register(
-           nameof(ViewParameters),
-           typeof(object[]),
-           typeof(ViewHost),
-           new UIPropertyMetadata(
-               default(object[]), 
-               null,
-               OnViewParametersChanged
-           )
+            nameof(View),
+            typeof(ApplicationViews),
+            typeof(ViewHost),
+            new UIPropertyMetadata
+            (
+                default(ApplicationViews),
+                null,
+                OnViewPropertyChanged
+            )
         );
 
         /// <summary>
@@ -61,54 +45,45 @@ namespace Beauty.WPF.Controls
             InitializeComponent();
         }
 
-        private static object OnViewParametersChanged(DependencyObject dependencyObject, object value)
-        {
-            var newValue = (object[])value;
-
-            var viewHost = dependencyObject as ViewHost;
-
-            viewHost.Tag = newValue;
-
-            return value;
-        }
-
         /// <summary>
         /// Событие, возникающее при изменении свойства <see cref="View"/>
         /// </summary>
         /// <param name="dependencyObject">Объект-родитель для дочерних элементов управления</param>
         /// <param name="value">Новое значение для элемента управления</param>
         /// <returns></returns>
-        private static object OnViewChanged(DependencyObject dependencyObject, object value)
+        private static object OnViewPropertyChanged(DependencyObject dependencyObject, object value)
         {
-            var newViewValue = (ApplicationViews)value;
+            var applicationView = (ApplicationViews)value;
 
-            if (newViewValue.Equals(ApplicationViews.None))
+            if (!applicationView.Equals(ApplicationViews.None))
             {
-                return value;
-            }
+                var viewHost = dependencyObject as ViewHost;
 
-            var viewHost = dependencyObject as ViewHost;
+                var currentView = applicationView.ToView();
 
-            var currentView = newViewValue.ToView((object[])viewHost.Tag);
+                var oldViewControl = viewHost.oldView;
+                var newViewControl = viewHost.newView;
 
-            var oldViewControl = viewHost.OldView;
-            var newViewControl = viewHost.NewView;
+                var oldViewContent = newViewControl.Content;
+                newViewControl.Content = null;
+                oldViewControl.Content = oldViewContent;
 
-            var oldViewContent = newViewControl.Content;
-            newViewControl.Content = null;
-            oldViewControl.Content = oldViewContent;
-
-            if (oldViewContent is BaseView oldView)
-            {
-                oldView.ShouldAnimateOut = true;
-
-                Task.Delay((int)(oldView.AnimationTime * 1000)).ContinueWith((t) =>
+                if (oldViewContent is BaseView oldView)
                 {
-                    Application.Current.Dispatcher.Invoke(() => oldViewControl.Content = null);
-                });
-            }
+                    oldView.ShouldAnimateOut = true;
 
-            newViewControl.Content = currentView;
+                    var delay = (int)(oldView.AnimationTime * 1000);
+                    Task.Delay(delay).ContinueWith((task) =>
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            oldViewControl.Content = null;
+                        });
+                    });
+                }
+
+                newViewControl.Content = currentView;
+            }
 
             return value;
         }

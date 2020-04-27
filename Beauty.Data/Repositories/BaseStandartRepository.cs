@@ -18,24 +18,14 @@ namespace Beauty.Data.Repositories
             this.context = context;
         }
 
-        public virtual async Task<TModel> AddAsync(int modelId)
+        public virtual TModel Add(TModel model)
         {
-            var model = await FindAsync(modelId);
-
             return context.Set<TModel>().Add(model);
         }
 
-        public virtual async Task AddRangeAsync(IEnumerable<int> modelIds)
+        public virtual IEnumerable<TModel> AddRange(IEnumerable<TModel> models)
         {
-            var models = new List<TModel>();
-
-            foreach (var modelId in modelIds)
-            {
-                var model = await FindAsync(modelId);
-                models.Add(model);
-            }
-
-            context.Set<TModel>().AddRange(models);
+            return context.Set<TModel>().AddRange(models);
         }
 
         public virtual async Task<TModel> FirstAsync()
@@ -75,6 +65,11 @@ namespace Beauty.Data.Repositories
                 models.Add(model);
             }
 
+            context.Set<TModel>().RemoveRange(models);
+        }
+
+        public virtual void RemoveRange(IEnumerable<TModel> models)
+        {
             context.Set<TModel>().RemoveRange(models);
         }
     }

@@ -4,17 +4,19 @@
               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
               xmlns:local="clr-namespace:Beauty.WPF.Windows"
-              xmlns:Infrastructure="clr-namespace:Beauty.WPF.Infrastructure"
               xmlns:Catel="http://schemas.catelproject.com"
+              xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
               xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
+              xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties"
               mc:Ignorable="d"
               Title="{Binding Title}"
-              MinHeight="405" 
-              Height="720"
               MinWidth="380" 
-              Width="1280" 
+              Width="1280"
+              MinHeight="605" 
+              Height="720"
+              Activated="OnActivated"
+              Deactivated="OnDeactivated"
               WindowStartupLocation="CenterScreen">
-
     <Grid>
 
         <Grid.RowDefinitions>
@@ -25,16 +27,23 @@
 
         </Grid.RowDefinitions>
 
+        <Controls:LoadingBar Grid.Row="0"
+                             Background="{StaticResource App.Orange}"
+                             Foreground="{StaticResource App.White}"
+                             AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding HasServerConnection, Converter={ValueConverters:ReverseBooleanValueConverter}}"
+                             Content="Подключение к серверу отсутствует"/>
 
-        <Controls:StateBar Grid.Row="0"
-                           Background="{StaticResource OrangeColor}"
-                           Foreground="{StaticResource WhiteColor}"
-                           Visibility="Collapsed"
-                           Content="Загрузка данных..."/>
+        <Border Grid.Row="1"
+                Panel.ZIndex="10"
+                Opacity="0.3">
+
+            <Border Background="{StaticResource App.DarkGray}"
+                    AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding IsDimmable}"/>
+
+        </Border>
 
         <Controls:ViewHost Grid.Row="1"
-                           View="{Binding CurrentView}"
-                           ViewParameters="{Binding CurrentViewParameters}"/>
+                           View="{Binding CurrentView}"/>
 
     </Grid>
 

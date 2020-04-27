@@ -24,7 +24,7 @@ namespace Beauty.WPF.Views
                 Visibility = Visibility.Collapsed;
             }
 
-            Loaded += ViewLoaded;
+            Loaded += OnViewLoaded;
         }
 
         public async Task AnimateInAsync()
@@ -55,7 +55,7 @@ namespace Beauty.WPF.Views
             }
         }
 
-        private async void ViewLoaded(object sender, RoutedEventArgs e)
+        private async void OnViewLoaded(object sender, RoutedEventArgs e)
         {
             if (ShouldAnimateOut)
             {

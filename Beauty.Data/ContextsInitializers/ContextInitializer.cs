@@ -523,14 +523,14 @@ namespace Beauty.Data.ContextsInitializers
             //});
 
             var dateTimeNow = DateTime.Now;
-
+            
             context.Enrollments.AddRange(new List<Enrollment>()
             { 
                 new Enrollment()
                 {
                     Id = 1,
                     ClientFirstname = "Никита",
-                    ClientPhoneNumber = "+7 (123) 456 78-90",
+                    ClientPhoneNumber = "+7 (123) 456-78-90",
                     DateTime = dateTimeNow,
                     CreationDateTime = dateTimeNow,
                     EditDateTime = dateTimeNow
@@ -539,7 +539,7 @@ namespace Beauty.Data.ContextsInitializers
                 {
                     Id = 2,
                     ClientFirstname = "Оксана",
-                    ClientPhoneNumber = "+7 (098) 765 43-21",
+                    ClientPhoneNumber = "+7 (098) 765-43-21",
                     Description = "Здесь описание заявки",
                     DateTime = dateTimeNow,
                     CreationDateTime = dateTimeNow

@@ -12,12 +12,12 @@ namespace Beauty.WPF.ValuesConverters
         {
             var condition = (bool)value;
 
-            if (parameter is null)
+            if (parameter != null)
             {
                 condition = !condition;
             }
 
-            return condition ? Visibility.Visible : Visibility.Hidden;
+            return condition ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

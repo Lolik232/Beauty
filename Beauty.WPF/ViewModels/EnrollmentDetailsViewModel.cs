@@ -1,42 +1,313 @@
 ﻿using Beauty.Core.DTOs;
-using Beauty.WPF.Enums;
-using Beauty.WPF.Infrastructure;
+using Beauty.Core.Interfaces;
+using Beauty.Data.Models;
+using Catel;
+using Catel.Collections;
 using Catel.Logging;
 using Catel.MVVM;
+using Catel.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Beauty.WPF.ViewModels
 {
-    public class EnrollmentDetailsViewModel : ViewModelBase
+    public class EnrollmentDetailsViewModel : ViewModelBase, IDataErrorInfo
     {
         private static readonly ILog log;
 
-        public Command CancelCommand { get; set; }
+        private readonly IEnrollmentService enrollmentService;
+        private readonly IServiceManager serviceManager;
+        private readonly IWorkerService workerService;
+        private readonly IMessageService messageService;
+
+        public Enrollment Enrollment { get; set; }
+        public string ClientFirstname { get; set; }
+        public string ClientPhoneNumber { get; set; }
+        public bool IsClientPhoneNumberFilled { get; set; }
+        public ICollection<int> Days { get; set; }
+        public int SelectedDay { get; set; }
+        public ICollection<string> Months { get; set; }
+        public string SelectedMonth { get; set; }
+        public ICollection<int> Years { get; set; }
+        public int SelectedYear { get; set; }
+        public string Time { get; set; }
+        public bool IsTimeFilled { get; set; }
+        public bool IsTimeFilledCorrectly { get; set; }
+        public string Description { get; set; }
+        public ICollection<Service> Services { get; set; }
+        public Service SelectedService { get; set; }
+        public ICollection<WorkerDTO> Workers { get; set; }
+        public WorkerDTO SelectedWorker { get; set; }
+        public ICollection<ServiceDTO> EnrollmentServices { get; set; }
+
+        public Command MonthSelectCommand { get; set; }
+        public TaskCommand ServiceSelectCommand { get; set; }
+        public Command AddEnrollmentServiceCommand { get; set; }
+        public Command<ServiceDTO> RemoveEnrollmentServiceCommand { get; set; }
+        public TaskCommand RemoveCommand { get; set; }
+        public TaskCommand SaveCommand { get; set; }
+        public TaskCommand CloseCommand { get; set; }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                var error = default(string);
+
+                if (string.IsNullOrEmpty(Time))
+                {
+                    return "Время не указано";
+                }
+
+                if (columnName.Equals(nameof(Time)))
+                {
+                    var timeArray = Time.Split(':');
+
+                    if (!int.TryParse(timeArray[0], out int hours) || !int.TryParse(timeArray[1], out int minutes) || hours < 0 || hours >= 24 || minutes < 0 || minutes >= 60)
+                    {
+                        error = "Введено некорректное время";
+                    }
+                }
+
+                IsTimeFilledCorrectly = error is default(string);
+
+                return error;
+            }
+        }
 
         static EnrollmentDetailsViewModel()
         {
             log = LogManager.GetCurrentClassLogger();
         }
 
-        public EnrollmentDetailsViewModel()
+        public EnrollmentDetailsViewModel(IEnrollmentService enrollmentService, IServiceManager serviceManager, IWorkerService workerService, IMessageService messageService)
         {
-            CancelCommand = new Command(OnCancelExecute);
+            Argument.IsNotNull(() => enrollmentService);
+            Argument.IsNotNull(() => serviceManager);
+            Argument.IsNotNull(() => workerService);
+            Argument.IsNotNull(() => messageService);
+
+            this.enrollmentService = enrollmentService;
+            this.serviceManager = serviceManager;
+            this.workerService = workerService;
+            this.messageService = messageService;
+
+            Title = "Новая заявка";
+
+            MonthSelectCommand = new Command(OnMonthSelectCommandExecute);
+            ServiceSelectCommand = new TaskCommand(OnServiceSelectCommandExecuteAsync);
+            AddEnrollmentServiceCommand = new Command(OnAddEnrollmentServiceCommandExecute, OnAddEnrollmentServiceCommandCanExecute);
+            RemoveEnrollmentServiceCommand = new Command<ServiceDTO>(OnRemoveEnrollmentServiceCommandExecute);
+            RemoveCommand = new TaskCommand(OnRemoveCommandExecuteAsync, OnRemoveCommandCanExecute);
+            SaveCommand = new TaskCommand(OnSaveCommandExecuteAsync, OnSaveCommandCanExecute);
+            CloseCommand = new TaskCommand(OnCloseExecuteAsync);
         }
 
-        public EnrollmentDetailsViewModel(EnrollmentDTO enrollment) : this()
+        public EnrollmentDetailsViewModel(Enrollment enrollment, IEnrollmentService enrollmentService, IServiceManager serviceManager, IWorkerService workerService, IMessageService messageService)
+            : this(enrollmentService, serviceManager, workerService, messageService)
         {
-            Title = $"Редактирование заявки №{enrollment.Id}";
+            Argument.IsNotNull(() => enrollment);
+
+            Enrollment = enrollment;
+            Title = $"Заявка №{Enrollment.Id}";
         }
 
         protected override async Task InitializeAsync()
         {
+            await Task.Run(async () =>
+            {
+                var months = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames.ToList();
+                months.RemoveLast();
+
+                Months = new ObservableCollection<string>(months);
+                SelectedMonth = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames[DateTime.Now.Month - 1];
+
+                SelectedDay = DateTime.Now.Day;
+
+                var years = Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1);
+                Years = new ObservableCollection<int>(years);
+                SelectedYear = DateTime.Now.Year;
+
+                Time = DateTime.Now.ToString("HH:mm");
+
+                var services = await serviceManager.GetServicesAsync();
+                Services = new ObservableCollection<Service>(services);
+
+                EnrollmentServices = new ObservableCollection<ServiceDTO>();
+
+                if (Enrollment != null)
+                {
+                    var enrollmentServices = await serviceManager.GetEnrollmentServicesAsync(Enrollment.Id);
+                    EnrollmentServices = new ObservableCollection<ServiceDTO>(enrollmentServices);
+
+                    ClientFirstname = Enrollment.ClientFirstname;
+                    ClientPhoneNumber = Enrollment.ClientPhoneNumber;
+                    SelectedDay = Enrollment.DateTime.Day;
+                    SelectedMonth = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames[Enrollment.DateTime.Month - 1];
+                    SelectedYear = Enrollment.DateTime.Year;
+                    Time = Enrollment.DateTime.ToString("HH:mm");
+                    Description = Enrollment.Description;
+                }
+            });
+
             await base.InitializeAsync();
         }
 
-        public void OnCancelExecute()
+        private void OnMonthSelectCommandExecute()
         {
-            Controller.Application.GoToView(ApplicationViews.EnrollmentView);
+            var months = Months as ObservableCollection<string>;
+            var monthIndex = months.IndexOf(SelectedMonth) + 1;
+
+            var daysCount = DateTime.DaysInMonth(SelectedYear, monthIndex);
+            var days = Enumerable.Range(1, daysCount);
+            Days = new ObservableCollection<int>(days);
+
+            if (daysCount < SelectedDay)
+            {
+                SelectedDay = daysCount;
+            }
+        }
+
+        private async Task OnServiceSelectCommandExecuteAsync()
+        {
+            await Task.Run(async () =>
+            {
+                if (SelectedService is null)
+                {
+                    return;
+                }
+
+                var workers = await workerService.GetServiceWorkersAsync(SelectedService.Id);
+                Workers = new ObservableCollection<WorkerDTO>(workers);
+            });
+        }
+
+        private void OnAddEnrollmentServiceCommandExecute()
+        {
+            var service = new ServiceDTO()
+            {
+                Id = SelectedService.Id,
+                WorkerId = SelectedWorker.Id,
+                Title = SelectedService.Title,
+                WorkerShortname = SelectedWorker.Shortname
+            };
+
+            EnrollmentServices.Add(service);
+
+            SelectedService = null;
+            SelectedWorker = null;
+        }
+
+        private bool OnAddEnrollmentServiceCommandCanExecute()
+        {
+            return SelectedService != null && SelectedWorker != null;
+        }
+
+        private void OnRemoveEnrollmentServiceCommandExecute(ServiceDTO service)
+        {
+            var predicate = default(Func<ServiceDTO, bool>);
+
+            if (service.EnrollmentWorkerServiceId is null)
+            {
+                predicate = EnrollmentService => EnrollmentService.Id.Equals(service.Id);
+            }
+            else
+            {
+                predicate = EnrollmentService => EnrollmentService.EnrollmentWorkerServiceId.Value.Equals(service.EnrollmentWorkerServiceId);
+
+            }
+
+            var enrollmentService = EnrollmentServices.FirstOrDefault(predicate);
+            EnrollmentServices.Remove(enrollmentService);
+        }
+
+        private async Task OnRemoveCommandExecuteAsync()
+        {
+            var caption = "Удаление заявки";
+            var message = $"Вы действительно хотите удалить эту заявку?";
+            var dialogResult = await messageService.ShowAsync(message, caption, MessageButton.OKCancel, MessageImage.Question);
+
+            if (dialogResult.Equals(MessageResult.OK))
+            {
+                await enrollmentService.RemoveEnrollmentAsync(Enrollment.Id);
+                await this.CancelAndCloseViewModelAsync();
+            }
+        }
+
+        private bool OnRemoveCommandCanExecute()
+        {
+            return Enrollment != null;
+        }
+
+        private async Task OnSaveCommandExecuteAsync()
+        {
+            await this.SaveAndCloseViewModelAsync();
+        }
+
+        private bool OnSaveCommandCanExecute()
+        {
+            return !string.IsNullOrWhiteSpace(ClientFirstname) && IsClientPhoneNumberFilled && SelectedDay != 0 && !string.IsNullOrWhiteSpace(SelectedMonth) && SelectedYear != 0 && IsTimeFilled && IsTimeFilledCorrectly;
+        }
+
+        protected override async Task<bool> SaveAsync()
+        {
+            var months = Months as ObservableCollection<string>;
+            var monthIndex = months.IndexOf(SelectedMonth) + 1;
+
+            var timeArray = Time.Split(':');
+            var hours = int.Parse(timeArray[0]);
+            var minutes = int.Parse(timeArray[1]);
+
+            var dateTime = new DateTime(SelectedYear, monthIndex, SelectedDay, hours, minutes, 0);
+
+            if (Enrollment is null)
+            {
+                Enrollment = await enrollmentService.AddEnrollmentAsync(new Enrollment()
+                {
+                    ClientFirstname = ClientFirstname,
+                    ClientPhoneNumber = ClientPhoneNumber,
+                    DateTime = dateTime,
+                    Description = Description,
+                    CreationDateTime = DateTime.Now
+                });
+            }
+            else
+            {
+                Enrollment.ClientFirstname = ClientFirstname;
+                Enrollment.ClientPhoneNumber = ClientPhoneNumber;
+                Enrollment.DateTime = dateTime;
+                Enrollment.Description = Description;
+                Enrollment.EditDateTime = DateTime.Now;
+
+                await enrollmentService.EditEnrollmentAsync(Enrollment);
+                await serviceManager.RemoveAllEnrollmentWorkerServicesAsync(Enrollment.Id);
+            }
+
+            var enrollmentWorkerServices = new List<EnrollmentWorkerService>();
+
+            EnrollmentServices.ForEach(EnrollmentService =>
+            {
+                enrollmentWorkerServices.Add(new EnrollmentWorkerService()
+                {
+                    EnrollmentId = Enrollment.Id,
+                    ServiceId = EnrollmentService.Id,
+                    WorkerId = EnrollmentService.WorkerId
+                });
+            });
+
+            await serviceManager.AddEnrollmentWorkerServicesAsync(enrollmentWorkerServices);
+
+            return await base.SaveAsync();
+        }
+
+        public async Task OnCloseExecuteAsync()
+        {
+            await this.CancelAndCloseViewModelAsync();
         }
     }
 }

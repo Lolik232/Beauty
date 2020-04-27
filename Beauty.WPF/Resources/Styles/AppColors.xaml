@@ -1,0 +1,53 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles">
+
+    <SolidColorBrush x:Key="App.Transparent"
+                     Color="Transparent"/>
+
+    <SolidColorBrush x:Key="App.White" 
+                     Color="White" />
+
+    <SolidColorBrush x:Key="App.DarkGray" 
+                     Color="#FF464646" />
+
+    <SolidColorBrush x:Key="App.ControlGray"
+                     Color="#FFF0F0F0"/>
+
+    <SolidColorBrush x:Key="App.Gray" 
+                     Color="Gray" />
+
+    <SolidColorBrush x:Key="App.LightGray"
+                     Color="#FFD1D1D1" />
+
+    <SolidColorBrush x:Key="App.LightSlateGray"
+                     Color="LightSlateGray"/>
+
+    <SolidColorBrush x:Key="App.Black" 
+                     Color="Black" />
+
+    <SolidColorBrush x:Key="App.Orange" 
+                     Color="Orange" />
+
+    <SolidColorBrush x:Key="App.LightRed" 
+                     Color="#FFFF0000"/>
+
+    <SolidColorBrush x:Key="App.Red"
+                     Color="#FFEF3F3F"/>
+
+    <SolidColorBrush x:Key="App.DarkRed"
+                     Color="#FFBF0000"/>
+
+    <SolidColorBrush x:Key="App.VioletBlue"
+                     Color="#522FFF"/>
+
+    <SolidColorBrush x:Key="App.LightGreen"
+                     Color="#FF5ECD5D"/>
+
+    <SolidColorBrush x:Key="App.Green"
+                     Color="#FF5EB65D"/>
+
+    <SolidColorBrush x:Key="App.DarkGreen"
+                     Color="#FF5E9C5D"/>
+
+</ResourceDictionary>

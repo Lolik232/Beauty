@@ -18,10 +18,8 @@ namespace Beauty.Core.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<WorkerDTO>> GetAdministratorsAsync()
+        private async Task<IEnumerable<WorkerDTO>> ToDTOsAsync(IEnumerable<Worker> workers)
         {
-            var workers = await unitOfWork.WorkerPositions.FindAdministratorsAsync();
-
             var workerDTOs = workers.Select(Worker => new WorkerDTO()
             {
                 Id = Worker.Id
@@ -36,6 +34,25 @@ namespace Beauty.Core.Services
             }
 
             return workerDTOs;
+        }
+
+        public async Task<IEnumerable<WorkerDTO>> GetAdministratorsAsync()
+        {
+            var workers = await unitOfWork.WorkerPositions.FindAdministratorsAsync();
+
+            return await ToDTOsAsync(workers);
+        }
+
+        public async Task<IEnumerable<WorkerDTO>> GetServiceWorkersAsync(int serviceId)
+        {
+            var workers = await unitOfWork.PositionServices.FindServiceWorkersAsync(serviceId);
+
+            return await ToDTOsAsync(workers); 
+        }
+
+        public async Task<string> GetWorkerShortnameAsync(int workerId)
+        {
+            return await unitOfWork.Workers.FindWorkerShortnameAsync(workerId);
         }
     }
 }

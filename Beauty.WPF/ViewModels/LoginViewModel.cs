@@ -1,10 +1,7 @@
 ﻿using Beauty.Core.DTOs;
-using Beauty.Core.Extensions;
 using Beauty.Core.Interfaces;
-using Beauty.Data.Models;
 using Beauty.WPF.Enums;
-using Beauty.WPF.Infrastructure;
-using Beauty.WPF.Interfaces;
+using Catel;
 using Catel.Logging;
 using Catel.MVVM;
 using Catel.Services;
@@ -21,72 +18,70 @@ namespace Beauty.WPF.ViewModels
 
         public override string Title => "Вход в систему";
 
+        private readonly ApplicationViewModel application;
         private readonly ILoginService loginService;
         private readonly IWorkerService workerService;
         private readonly IMessageService messageService;
 
+        public Task<IEnumerable<WorkerDTO>> WorkersLoadingTask { get; set; }
         public ICollection<WorkerDTO> Workers { get; set; }
         public WorkerDTO SelectedWorker { get; set; }
+        
+        public string Password { get; set; }
 
-        public TaskCommand<object> LoginCommand { get; }
+        public TaskCommand LoginCommand { get; }
 
         static LoginViewModel()
         {
             log = LogManager.GetCurrentClassLogger();
         }
 
-        public LoginViewModel(ILoginService loginService, IWorkerService workerService, IMessageService messageService)
+        public LoginViewModel(ApplicationViewModel application, ILoginService loginService, IWorkerService workerService, IMessageService messageService)
         {
-            #if DEBUG
-            {
-                log.Info("Подключение логов Catel'a");
-                LogManager.AddDebugListener();
-                log.Info("Логи Catel'a успешно подключены");
-            }
-            #endif
+            Argument.IsNotNull(() => application);
+            Argument.IsNotNull(() => loginService);
+            Argument.IsNotNull(() => workerService);
+            Argument.IsNotNull(() => messageService);
 
-            log.Info("Инъекция зависимостей");
+            this.application = application;
             this.loginService = loginService;
             this.workerService = workerService;
             this.messageService = messageService;
-            log.Info("Инъекция зависимостей успешно завершена");
 
-            log.Info("Инициализация команд");
-            LoginCommand = new TaskCommand<object>(OnLoginExecuteAsync);
-            log.Info("Команды успешно инициализированы");
+            LoginCommand = new TaskCommand(OnLoginCommandExecuteAsync, OnLoginCommandCanExecute);
         }
 
         protected override async Task InitializeAsync()
         {
-            await Task.Run(async () =>
+            await Task.Run(() =>
             {
-                var workers = await workerService.GetAdministratorsAsync();
-                Workers = new ObservableCollection<WorkerDTO>(workers);
+                WorkersLoadingTask = workerService.GetAdministratorsAsync();
+                WorkersLoadingTask.Wait();
 
-                SelectedWorker = Workers.First();
+                Workers = new ObservableCollection<WorkerDTO>(WorkersLoadingTask.Result);
             });
 
             await base.InitializeAsync();
         }
 
-        public async Task OnLoginExecuteAsync(object parameter)
+        private async Task OnLoginCommandExecuteAsync()
         {
-            if (parameter is null)
-            {
-                return;
-            }
+            var isLoginSuccessful = await loginService.LoginAsync(SelectedWorker.Id, Password);
 
-            var securable = parameter as ISecurable;
-            var password = securable.SecurePassword.Unsecure();
-
-            if (await loginService.LoginAsync(SelectedWorker.Id, password))
+            if (isLoginSuccessful)
             {
-                Controller.Application.GoToView(ApplicationViews.EnrollmentView);
+                application.GoToView(ApplicationViews.EnrollmentView);
             }
             else
             {
-                await messageService.ShowErrorAsync("Вы ввели неверный пароль. Пожалуйста, повторите попытку ввода");
+                var errorMessage = "Вы ввели неверный пароль. Пожалуйста, повторите попытку ввода";
+                await messageService.ShowErrorAsync(errorMessage);
             }
+        }
+
+        private bool OnLoginCommandCanExecute()
+        {
+            return SelectedWorker != null && !string.IsNullOrWhiteSpace(Password);
         }
     }
 }
