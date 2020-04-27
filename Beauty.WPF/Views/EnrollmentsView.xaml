@@ -67,40 +67,54 @@
         <Grid Grid.Row="3"
               Grid.Column="1">
 
+            <Grid.RowDefinitions>
+
+                <!--Поиск (0)-->
+                <RowDefinition Height="Auto" />
+
+                <!--1-->
+                <RowDefinition Height="10"/>
+
+                <!--Флажок "Отображать только сегодняшние записи" (2)-->
+                <RowDefinition Height="Auto" />
+
+            </Grid.RowDefinitions>
+            
             <Grid.ColumnDefinitions>
 
                 <!--0-->
                 <ColumnDefinition Width="5"/>
 
-                <!--Поиск (1)-->
-                <ColumnDefinition Width="*"
-                                  MaxWidth="250"/>
+                <!--Ширина фильтрации и поиска (1)-->
+                <ColumnDefinition Width="*"/>
 
                 <!--2-->
                 <ColumnDefinition Width="5"/>
 
-                <!--Кнопка "Применить" (3)-->
-                <ColumnDefinition Width="Auto"/>
-
-                <!--4-->
-                <ColumnDefinition Width="5"/>
-
-                <!--Кнопка "Очистить" (5)-->
-                <ColumnDefinition Width="Auto"/>
-
-                <!--6-->
-                <ColumnDefinition Width="5"/>
-
             </Grid.ColumnDefinitions>
 
-            <Controls:WatermarkTextBox Grid.Column="1"
-                                       Watermark="Поиск"/>
+            <Controls:WatermarkTextBox Grid.Row="0"
+                                       Grid.Column="1"
+                                       Watermark="Поиск"
+                                       Text="{Binding FilterText, Mode=TwoWay}">
 
-            <Button Grid.Column="3" 
-                    Content="Применить"/>
+                <Interactivity:Interaction.Triggers>
 
-            <Button Grid.Column="5"
-                    Content="Очистить"/>
+                    <Interactivity:EventTrigger EventName="TextChanged">
+
+                        <Catel:EventToCommand Command="{Binding FilterTextChanged}"/>
+
+                    </Interactivity:EventTrigger>
+                    
+                </Interactivity:Interaction.Triggers>
+                
+            </Controls:WatermarkTextBox>
+
+            <CheckBox Grid.Row="2"
+                      Grid.Column="1"
+                      Content="Отображать только сегодняшние записи"
+                      IsChecked="{Binding NeedFindRelevantEnrollments}"
+                      Command="{Binding NeedFindRelevantEnrollmentsCommand}"/>
 
         </Grid>
 

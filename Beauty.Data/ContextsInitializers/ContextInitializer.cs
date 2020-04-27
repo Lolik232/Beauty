@@ -531,7 +531,7 @@ namespace Beauty.Data.ContextsInitializers
                     Id = 1,
                     ClientFirstname = "Никита",
                     ClientPhoneNumber = "+7 (123) 456-78-90",
-                    DateTime = dateTimeNow,
+                    DateTime = dateTimeNow.AddDays(-1.0),
                     CreationDateTime = dateTimeNow,
                     EditDateTime = dateTimeNow
                 },

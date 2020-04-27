@@ -4,6 +4,7 @@ using Catel;
 using Catel.Logging;
 using Catel.MVVM;
 using Catel.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,10 +22,14 @@ namespace Beauty.WPF.ViewModels
         private readonly IUIVisualizerService uiVisualizerService;
         private readonly IMessageService messageService;
 
+        public string FilterText { get; set; }
+        public bool NeedFindRelevantEnrollments { get; set; } = true;
         public Task<IEnumerable<EnrollmentDTO>> EnrollmentsLoadingTask { get; set; }
         public ICollection<EnrollmentDTO> Enrollments { get; set; }
         public EnrollmentDTO SelectedEnrollment { get; set; }
 
+        public TaskCommand FilterTextChanged { get; set; }
+        public TaskCommand NeedFindRelevantEnrollmentsCommand { get; set; }
         public TaskCommand CreateEnrollmentCommand { get; set; }
         public TaskCommand EditEnrollmentCommand { get; set; }
         public TaskCommand RemoveEnrollmentCommand { get; set; }
@@ -44,6 +49,8 @@ namespace Beauty.WPF.ViewModels
             this.uiVisualizerService = uiVisualizerService;
             this.messageService = messageService;
 
+            FilterTextChanged = new TaskCommand(InitializeAsync);
+            NeedFindRelevantEnrollmentsCommand = new TaskCommand(InitializeAsync);
             CreateEnrollmentCommand = new TaskCommand(OnCreateEnrollmentCommandExecuteAsync);
             EditEnrollmentCommand = new TaskCommand(OnEditEnrollmentCommandExecuteAsync);
             RemoveEnrollmentCommand = new TaskCommand(OnRemoveEnrollmentCommandExecuteAsync, OnRemoveEnrollmentCommandCanExecute);
@@ -53,7 +60,7 @@ namespace Beauty.WPF.ViewModels
         {
             await Task.Run(() =>
             {
-                EnrollmentsLoadingTask = enrollmentService.GetRelevantEnrollmentsAsync();
+                EnrollmentsLoadingTask = (NeedFindRelevantEnrollments) ? enrollmentService.GetRelevantEnrollmentsAsync(FilterText) : enrollmentService.GetEnrollmentsAsync(FilterText);
                 EnrollmentsLoadingTask.Wait();
 
                 Enrollments = new ObservableCollection<EnrollmentDTO>(EnrollmentsLoadingTask.Result);
