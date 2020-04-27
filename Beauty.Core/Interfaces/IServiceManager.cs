@@ -15,5 +15,6 @@ namespace Beauty.Core.Interfaces
         Task RemoveAllEnrollmentWorkerServicesAsync(int enrollmentId);
         Task RemoveEnrollmentWorkerServiceAsync(int enrollmentWorkerServiceId);
         Task<IEnumerable<Service>> GetServicesAsync();
+        Task<Service> GetServiceAsync(int serviceId);
     }
 }

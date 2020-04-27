@@ -97,9 +97,12 @@
                 
                 <Setter Property="ToolTip"
                         Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
-                
+
+                <Setter Property="BorderBrush"
+                        Value="{StaticResource App.Red}"/>
+
                 <Setter Property="Foreground" 
-                        Value="Red" />
+                        Value="{StaticResource App.Red}" />
                 
             </Trigger>
 

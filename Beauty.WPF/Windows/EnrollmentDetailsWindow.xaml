@@ -320,22 +320,8 @@
                                           Mask="00:00"
                                           Validation.ErrorTemplate="{x:Null}"
                                           Style="{StaticResource BaseTextBoxStyle}"
+                                          Text="{Binding Time, Mode=TwoWay, ValidatesOnDataErrors=True}"
                                           TextChanged="OnTimeChanged">
-
-                    <TextBox.Text>
-
-                        <Binding Path="Time"
-                                 Mode="TwoWay">
-
-                            <Binding.ValidationRules>
-
-                                <DataErrorValidationRule />
-
-                            </Binding.ValidationRules>
-                            
-                        </Binding>
-                        
-                    </TextBox.Text>
 
                     <Interactivity:Interaction.Behaviors>
 

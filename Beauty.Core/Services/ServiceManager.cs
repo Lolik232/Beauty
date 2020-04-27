@@ -88,5 +88,10 @@ namespace Beauty.Core.Services
         {
             return await unitOfWork.Services.FindAllAsync();
         }
+
+        public async Task<Service> GetServiceAsync(int serviceId)
+        {
+            return await unitOfWork.Services.FindAsync(serviceId);
+        }
     }
 }

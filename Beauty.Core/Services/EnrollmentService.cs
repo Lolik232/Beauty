@@ -29,7 +29,7 @@ namespace Beauty.Core.Services
                 ClientPhoneNumber = Enrollment.ClientPhoneNumber,
                 Description = Enrollment.Description,
                 DateTime = Enrollment.DateTime,
-                CreationDateTime = Enrollment.DateTime,
+                CreationDateTime = Enrollment.CreationDateTime,
                 EditDateTime = Enrollment.EditDateTime
             }).ToList();
 

@@ -48,7 +48,7 @@ namespace Beauty.WPF.ViewModels
         public Command MonthSelectCommand { get; set; }
         public TaskCommand ServiceSelectCommand { get; set; }
         public Command AddEnrollmentServiceCommand { get; set; }
-        public Command<ServiceDTO> RemoveEnrollmentServiceCommand { get; set; }
+        public TaskCommand<ServiceDTO> RemoveEnrollmentServiceCommand { get; set; }
         public TaskCommand RemoveCommand { get; set; }
         public TaskCommand SaveCommand { get; set; }
         public TaskCommand CloseCommand { get; set; }
@@ -57,16 +57,18 @@ namespace Beauty.WPF.ViewModels
         {
             get
             {
-                var error = default(string);
-
-                if (string.IsNullOrEmpty(Time))
-                {
-                    return "Время не указано";
-                }
+                var error = string.Empty;
 
                 if (columnName.Equals(nameof(Time)))
                 {
-                    var timeArray = Time.Split(':');
+                    var timeArray = Time?.Split(':');
+
+                    if (timeArray is null)
+                    {
+                        error = "Время не указано";
+
+                        return error;
+                    }
 
                     if (!int.TryParse(timeArray[0], out int hours) || !int.TryParse(timeArray[1], out int minutes) || hours < 0 || hours >= 24 || minutes < 0 || minutes >= 60)
                     {
@@ -74,7 +76,7 @@ namespace Beauty.WPF.ViewModels
                     }
                 }
 
-                IsTimeFilledCorrectly = error is default(string);
+                IsTimeFilledCorrectly = error.Equals(string.Empty);
 
                 return error;
             }
@@ -102,7 +104,7 @@ namespace Beauty.WPF.ViewModels
             MonthSelectCommand = new Command(OnMonthSelectCommandExecute);
             ServiceSelectCommand = new TaskCommand(OnServiceSelectCommandExecuteAsync);
             AddEnrollmentServiceCommand = new Command(OnAddEnrollmentServiceCommandExecute, OnAddEnrollmentServiceCommandCanExecute);
-            RemoveEnrollmentServiceCommand = new Command<ServiceDTO>(OnRemoveEnrollmentServiceCommandExecute);
+            RemoveEnrollmentServiceCommand = new TaskCommand<ServiceDTO>(OnRemoveEnrollmentServiceCommandExecuteAsync);
             RemoveCommand = new TaskCommand(OnRemoveCommandExecuteAsync, OnRemoveCommandCanExecute);
             SaveCommand = new TaskCommand(OnSaveCommandExecuteAsync, OnSaveCommandCanExecute);
             CloseCommand = new TaskCommand(OnCloseExecuteAsync);
@@ -143,6 +145,18 @@ namespace Beauty.WPF.ViewModels
                 if (Enrollment != null)
                 {
                     var enrollmentServices = await serviceManager.GetEnrollmentServicesAsync(Enrollment.Id);
+
+                    enrollmentServices.ForEach(ServiceDTO =>
+                    {
+                        services.ForEach(Service =>
+                        {
+                            if (ServiceDTO.Id.Equals(Service.Id))
+                            {
+                                Services.Remove(Service);
+                            }
+                        });
+                    });
+
                     EnrollmentServices = new ObservableCollection<ServiceDTO>(enrollmentServices);
 
                     ClientFirstname = Enrollment.ClientFirstname;
@@ -160,7 +174,7 @@ namespace Beauty.WPF.ViewModels
 
         private void OnMonthSelectCommandExecute()
         {
-            var months = Months as ObservableCollection<string>;
+            var months = Months as IList<string>;
             var monthIndex = months.IndexOf(SelectedMonth) + 1;
 
             var daysCount = DateTime.DaysInMonth(SelectedYear, monthIndex);
@@ -189,7 +203,7 @@ namespace Beauty.WPF.ViewModels
 
         private void OnAddEnrollmentServiceCommandExecute()
         {
-            var service = new ServiceDTO()
+            var serviceDTO = new ServiceDTO()
             {
                 Id = SelectedService.Id,
                 WorkerId = SelectedWorker.Id,
@@ -197,9 +211,11 @@ namespace Beauty.WPF.ViewModels
                 WorkerShortname = SelectedWorker.Shortname
             };
 
-            EnrollmentServices.Add(service);
+            EnrollmentServices.Add(serviceDTO);
 
-            SelectedService = null;
+            var service = Services.FirstOrDefault(Service => Service.Id.Equals(SelectedService.Id));
+            Services.Remove(service);
+
             SelectedWorker = null;
         }
 
@@ -208,22 +224,21 @@ namespace Beauty.WPF.ViewModels
             return SelectedService != null && SelectedWorker != null;
         }
 
-        private void OnRemoveEnrollmentServiceCommandExecute(ServiceDTO service)
+        private async Task OnRemoveEnrollmentServiceCommandExecuteAsync(ServiceDTO serviceDTO)
         {
-            var predicate = default(Func<ServiceDTO, bool>);
+            var service = await serviceManager.GetServiceAsync(serviceDTO.Id);
 
-            if (service.EnrollmentWorkerServiceId is null)
+            if (service.Id <= Services.Count)
             {
-                predicate = EnrollmentService => EnrollmentService.Id.Equals(service.Id);
+                var services = Services as IList<Service>;
+                services.Insert(service.Id - 1, service);
             }
             else
             {
-                predicate = EnrollmentService => EnrollmentService.EnrollmentWorkerServiceId.Value.Equals(service.EnrollmentWorkerServiceId);
-
+                Services.Add(service);
             }
 
-            var enrollmentService = EnrollmentServices.FirstOrDefault(predicate);
-            EnrollmentServices.Remove(enrollmentService);
+            EnrollmentServices.Remove(serviceDTO);
         }
 
         private async Task OnRemoveCommandExecuteAsync()
@@ -256,7 +271,7 @@ namespace Beauty.WPF.ViewModels
 
         protected override async Task<bool> SaveAsync()
         {
-            var months = Months as ObservableCollection<string>;
+            var months = Months as IList<string>;
             var monthIndex = months.IndexOf(SelectedMonth) + 1;
 
             var timeArray = Time.Split(':');
