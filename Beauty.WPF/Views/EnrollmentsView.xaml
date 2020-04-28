@@ -75,11 +75,11 @@
                 <!--1-->
                 <RowDefinition Height="10"/>
 
-                <!--Флажок "Отображать только сегодняшние записи" (2)-->
+                <!--Флажок "Отображать только сегодняшние заявки" (2)-->
                 <RowDefinition Height="Auto" />
 
             </Grid.RowDefinitions>
-            
+
             <Grid.ColumnDefinitions>
 
                 <!--0-->
@@ -93,28 +93,29 @@
 
             </Grid.ColumnDefinitions>
 
-            <Controls:WatermarkTextBox Grid.Row="0"
+            <Controls:WatermarkTextBox x:Name="filterTextBox" 
+                                       Grid.Row="0"
                                        Grid.Column="1"
-                                       Watermark="Поиск"
-                                       Text="{Binding FilterText, Mode=TwoWay}">
+                                       Watermark="Поиск">
 
                 <Interactivity:Interaction.Triggers>
 
                     <Interactivity:EventTrigger EventName="TextChanged">
 
-                        <Catel:EventToCommand Command="{Binding FilterTextChanged}"/>
+                        <Catel:EventToCommand Command="{Binding FilterTextChangedCommand}"
+                                              CommandParameter="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
 
                     </Interactivity:EventTrigger>
-                    
+
                 </Interactivity:Interaction.Triggers>
-                
+
             </Controls:WatermarkTextBox>
 
             <CheckBox Grid.Row="2"
                       Grid.Column="1"
-                      Content="Отображать только сегодняшние записи"
-                      IsChecked="{Binding NeedFindRelevantEnrollments}"
-                      Command="{Binding NeedFindRelevantEnrollmentsCommand}"/>
+                      Content="Отображать только сегодняшние заявки"
+                      Command="{Binding NeedFindRelevantEnrollmentsCommand}"
+                      CommandParameter="{Binding IsChecked, RelativeSource={x:Static RelativeSource.Self}}"/>
 
         </Grid>
 
@@ -146,7 +147,7 @@
                 <ColumnDefinition Width="5"/>
 
             </Grid.ColumnDefinitions>
-            
+
             <Controls:IconButton Grid.Column="1" 
                                  Style="{StaticResource AddButtonStyle}"
                                  Content="Добавить заявку"
@@ -159,27 +160,41 @@
 
         </Grid>
 
+        <ListBox x:Name="enrollmentsListBox"
+                 Grid.Row="9"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="3"
+                 ItemsSource="{Binding Enrollments}"
+                 SelectedItem="{Binding SelectedEnrollment}"
+                 ItemTemplate="{StaticResource EnrollmentsListBoxItemTemlate}"
+                 AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}">
+
+            <Interactivity:Interaction.Triggers>
+
+                <Interactivity:EventTrigger EventName="MouseDoubleClick">
+
+                    <Catel:EventToCommand Command="{Binding EditEnrollmentCommand}"/>
+
+                </Interactivity:EventTrigger>
+
+            </Interactivity:Interaction.Triggers>
+
+        </ListBox>
+
+        <Controls:RotatingIcon Grid.Row="9"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="3"
+                               Width="128"
+                               Height="128"
+                               Icon="{StaticResource LoadingIcon}"
+                               AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding IsEnrollmentsLoaded, Converter={ValueConverters:ReverseBooleanValueConverter}}"/>
+
         <Grid Grid.Row="9"
               Grid.Column="0"
               Grid.ColumnSpan="3"
               HorizontalAlignment="Center"
-              VerticalAlignment="Center">
-
-            <AttachedProperties:AnimateFadeAttachedProperty.Value>
-
-                <MultiBinding Converter="{ValueConverters:BooleanIntersectionMultiValueConverter}"
-                              ConverterParameter="Reverse">
-
-                    <Binding Path="HasItems"
-                             ElementName="enrollmentsListBox"/>
-
-                    <Binding Path="EnrollmentsLoadingTask.IsCompleted"
-                             FallbackValue="True"
-                             Converter="{ValueConverters:ReverseBooleanValueConverter}"/>
-
-                </MultiBinding>
-
-            </AttachedProperties:AnimateFadeAttachedProperty.Value>
+              VerticalAlignment="Center"
+              AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding ElementName=enrollmentsListBox, Path=HasItems, Converter={ValueConverters:ReverseBooleanValueConverter}}">
 
             <Grid.RowDefinitions>
 
@@ -214,52 +229,6 @@
                        Style="{StaticResource HugeTextBlockStyle}"/>
 
         </Grid>
-
-        <Controls:RotatingIcon Grid.Row="9"
-                               Grid.Column="0"
-                               Grid.ColumnSpan="3"
-                               Width="128"
-                               Height="128"
-                               Icon="{StaticResource LoadingIcon}">
-
-            <AttachedProperties:AnimateFadeAttachedProperty.Value>
-
-                <MultiBinding Converter="{ValueConverters:BooleanIntersectionMultiValueConverter}"
-                              ConverterParameter="Reverse">
-
-                    <Binding Path="HasItems"
-                             ElementName="enrollmentsListBox"
-                             Converter="{ValueConverters:ReverseBooleanValueConverter}"/>
-
-                    <Binding Path="EnrollmentsLoadingTask.IsCompleted"
-                             FallbackValue="True"/>
-
-                </MultiBinding>
-
-            </AttachedProperties:AnimateFadeAttachedProperty.Value>
-
-        </Controls:RotatingIcon>
-
-        <ListBox x:Name="enrollmentsListBox"
-                 Grid.Row="9"
-                 Grid.Column="0"
-                 Grid.ColumnSpan="3"
-                 ItemsSource="{Binding Enrollments}"
-                 SelectedItem="{Binding SelectedEnrollment}"
-                 ItemTemplate="{StaticResource EnrollmentsListBoxItemTemlate}"
-                 AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}">
-
-            <Interactivity:Interaction.Triggers>
-
-                <Interactivity:EventTrigger EventName="MouseDoubleClick">
-
-                    <Catel:EventToCommand Command="{Binding EditEnrollmentCommand}"/>
-
-                </Interactivity:EventTrigger>
-
-            </Interactivity:Interaction.Triggers>
-
-        </ListBox>
 
     </Grid>
 

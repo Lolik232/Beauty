@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Beauty.Core.Extensions;
 
 namespace Beauty.WPF.ViewModels
 {
@@ -22,14 +23,14 @@ namespace Beauty.WPF.ViewModels
         private readonly IUIVisualizerService uiVisualizerService;
         private readonly IMessageService messageService;
 
+        public bool IsEnrollmentsLoaded { get; set; }
         public string FilterText { get; set; }
-        public bool NeedFindRelevantEnrollments { get; set; } = true;
-        public Task<IEnumerable<EnrollmentDTO>> EnrollmentsLoadingTask { get; set; }
+        public bool NeedFindRelevantEnrollments { get; set; }
         public ICollection<EnrollmentDTO> Enrollments { get; set; }
         public EnrollmentDTO SelectedEnrollment { get; set; }
 
-        public TaskCommand FilterTextChanged { get; set; }
-        public TaskCommand NeedFindRelevantEnrollmentsCommand { get; set; }
+        public TaskCommand<string> FilterTextChangedCommand { get; set; }
+        public TaskCommand<bool> NeedFindRelevantEnrollmentsCommand { get; set; }
         public TaskCommand CreateEnrollmentCommand { get; set; }
         public TaskCommand EditEnrollmentCommand { get; set; }
         public TaskCommand RemoveEnrollmentCommand { get; set; }
@@ -49,24 +50,41 @@ namespace Beauty.WPF.ViewModels
             this.uiVisualizerService = uiVisualizerService;
             this.messageService = messageService;
 
-            FilterTextChanged = new TaskCommand(InitializeAsync);
-            NeedFindRelevantEnrollmentsCommand = new TaskCommand(InitializeAsync);
+            FilterTextChangedCommand = new TaskCommand<string>(OnFilterTextChangedCommandExecuteAsync);
+            NeedFindRelevantEnrollmentsCommand = new TaskCommand<bool>(OnNeedFindRelevantEnrollmentsCommandExecuteAsync);
             CreateEnrollmentCommand = new TaskCommand(OnCreateEnrollmentCommandExecuteAsync);
             EditEnrollmentCommand = new TaskCommand(OnEditEnrollmentCommandExecuteAsync);
             RemoveEnrollmentCommand = new TaskCommand(OnRemoveEnrollmentCommandExecuteAsync, OnRemoveEnrollmentCommandCanExecute);
         }
 
+        private async Task LoadAsync()
+        {
+            IsEnrollmentsLoaded = false;
+
+            var enrollments = (NeedFindRelevantEnrollments) ? await enrollmentService.GetRelevantEnrollmentsAsync() : await enrollmentService.GetEnrollmentsAsync();
+            enrollments = enrollments.FilterBy(FilterText);
+
+            Enrollments = new ObservableCollection<EnrollmentDTO>(enrollments);
+
+            IsEnrollmentsLoaded = true;
+        }
+
         protected override async Task InitializeAsync()
         {
-            await Task.Run(() =>
-            {
-                EnrollmentsLoadingTask = (NeedFindRelevantEnrollments) ? enrollmentService.GetRelevantEnrollmentsAsync(FilterText) : enrollmentService.GetEnrollmentsAsync(FilterText);
-                EnrollmentsLoadingTask.Wait();
-
-                Enrollments = new ObservableCollection<EnrollmentDTO>(EnrollmentsLoadingTask.Result);
-            });
-
+            await Task.Run(LoadAsync);
             await base.InitializeAsync();
+        }
+
+        private async Task OnFilterTextChangedCommandExecuteAsync(string filterText)
+        {
+            FilterText = filterText;
+            await LoadAsync();
+        }
+
+        private async Task OnNeedFindRelevantEnrollmentsCommandExecuteAsync(bool needFindRelevantEnrollments)
+        {
+            NeedFindRelevantEnrollments = needFindRelevantEnrollments;
+            await LoadAsync();
         }
 
         private async Task OnCreateEnrollmentCommandExecuteAsync()

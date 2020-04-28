@@ -10,12 +10,12 @@ namespace Beauty.Core.Interfaces
     /// </summary>
     public interface IEnrollmentService
     {
-        Task<IEnumerable<EnrollmentDTO>> GetEnrollmentsAsync(string filterText = null);
+        Task<IEnumerable<EnrollmentDTO>> GetEnrollmentsAsync();
 
         /// <summary>
         /// Возвращает список актуальных записей
         /// </summary>
-        Task<IEnumerable<EnrollmentDTO>> GetRelevantEnrollmentsAsync(string filterText = null);
+        Task<IEnumerable<EnrollmentDTO>> GetRelevantEnrollmentsAsync();
 
         Task<Enrollment> GetEnrollmentAsync(int enrollmentId);
 

@@ -83,7 +83,7 @@
                                Width="32"
                                Height="32"
                                Icon="{StaticResource LoadingIcon}"
-                               AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding WorkersLoadingTask.IsCompleted, FallbackValue=True}"/>
+                               AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding IsWorkersLoaded, Converter={ValueConverters:ReverseBooleanValueConverter}}"/>
 
         <PasswordBox Grid.Row="5"
                      Grid.Column="1"

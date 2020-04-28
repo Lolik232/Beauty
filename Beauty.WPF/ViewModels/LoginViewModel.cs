@@ -23,10 +23,10 @@ namespace Beauty.WPF.ViewModels
         private readonly IWorkerService workerService;
         private readonly IMessageService messageService;
 
-        public Task<IEnumerable<WorkerDTO>> WorkersLoadingTask { get; set; }
+        public bool IsWorkersLoaded { get; set; }
         public ICollection<WorkerDTO> Workers { get; set; }
         public WorkerDTO SelectedWorker { get; set; }
-        
+
         public string Password { get; set; }
 
         public TaskCommand LoginCommand { get; }
@@ -51,16 +51,19 @@ namespace Beauty.WPF.ViewModels
             LoginCommand = new TaskCommand(OnLoginCommandExecuteAsync, OnLoginCommandCanExecute);
         }
 
+        private async Task LoadAsync()
+        {
+            IsWorkersLoaded = false;
+
+            var workers = await workerService.GetAdministratorsAsync();
+            Workers = new ObservableCollection<WorkerDTO>(workers);
+
+            IsWorkersLoaded = true;
+        }
+
         protected override async Task InitializeAsync()
         {
-            await Task.Run(() =>
-            {
-                WorkersLoadingTask = workerService.GetAdministratorsAsync();
-                WorkersLoadingTask.Wait();
-
-                Workers = new ObservableCollection<WorkerDTO>(WorkersLoadingTask.Result);
-            });
-
+            await Task.Run(LoadAsync);
             await base.InitializeAsync();
         }
 

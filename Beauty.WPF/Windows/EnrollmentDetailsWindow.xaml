@@ -92,50 +92,14 @@
                                Grid.ColumnSpan="2"
                                Width="128"
                                Height="128"
-                               Icon="{StaticResource LoadingIcon}">
-
-            <AttachedProperties:AnimateFadeAttachedProperty.Value>
-
-                <MultiBinding Converter="{ValueConverters:BooleanIntersectionMultiValueConverter}">
-
-                    <Binding Path="HasItems"
-                             ElementName="enrollmentServicesItemsControl"
-                             Converter="{ValueConverters:ReverseBooleanValueConverter}"/>
-
-                    <Binding Path="HasItems"
-                             ElementName="servicesComboBox"
-                             FallbackValue="False"
-                             Converter="{ValueConverters:ReverseBooleanValueConverter}"/>
-
-                </MultiBinding>
-
-            </AttachedProperties:AnimateFadeAttachedProperty.Value>
-
-        </Controls:RotatingIcon>
-
+                               Icon="{StaticResource LoadingIcon}" 
+                               AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding IsServicesLoaded, Converter={ValueConverters:ReverseBooleanValueConverter}}"/>
+        
         <ScrollViewer Grid.Row="3"
                       Grid.Column="1"
                       Grid.ColumnSpan="2">
 
-            <Grid>
-
-                <AttachedProperties:AnimateFadeAttachedProperty.Value>
-
-                    <MultiBinding Converter="{ValueConverters:BooleanIntersectionMultiValueConverter}"
-                                  ConverterParameter="Reverse">
-
-                        <Binding Path="HasItems"
-                                 ElementName="enrollmentServicesItemsControl"
-                                 Converter="{ValueConverters:ReverseBooleanValueConverter}"/>
-
-                        <Binding Path="HasItems"
-                                 ElementName="servicesComboBox"
-                                 FallbackValue="False"
-                                 Converter="{ValueConverters:ReverseBooleanValueConverter}"/>
-
-                    </MultiBinding>
-
-                </AttachedProperties:AnimateFadeAttachedProperty.Value>
+            <Grid AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding IsServicesLoaded}">
 
                 <Grid.RowDefinitions>
 
@@ -389,7 +353,7 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Style="{StaticResource AnnotationTextBlockStyle}"
-                           AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding ElementName=enrollmentServicesItemsControl, Path=HasItems, FallbackValue=True, Converter={ValueConverters:ReverseBooleanValueConverter}}"/>
+                           AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding ElementName=enrollmentServicesItemsControl, Path=HasItems, Converter={ValueConverters:ReverseBooleanValueConverter}}"/>
 
                 <Controls:RemovableItemsControl x:Name="enrollmentServicesItemsControl"
                                                 Grid.Row="15"
@@ -398,7 +362,7 @@
                                                 ItemsSource="{Binding EnrollmentServices}"
                                                 Command="{Binding RemoveEnrollmentServiceCommand}"
                                                 Style="{StaticResource RemovableServiceItemsControlStyle}"
-                                                AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}"/>
+                                                AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding Path=HasItems, RelativeSource={x:Static RelativeSource.Self}}"/>
 
             </Grid>
 

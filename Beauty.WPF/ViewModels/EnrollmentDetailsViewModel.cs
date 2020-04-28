@@ -25,6 +25,7 @@ namespace Beauty.WPF.ViewModels
         private readonly IWorkerService workerService;
         private readonly IMessageService messageService;
 
+        public bool IsServicesLoaded { get; set; }
         public Enrollment Enrollment { get; set; }
         public string ClientFirstname { get; set; }
         public string ClientPhoneNumber { get; set; }
@@ -119,56 +120,61 @@ namespace Beauty.WPF.ViewModels
             Title = $"Заявка №{Enrollment.Id}";
         }
 
+        private async Task LoadAsync()
+        {
+            var months = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames.ToList();
+            months.RemoveLast();
+
+            Months = new ObservableCollection<string>(months);
+            SelectedMonth = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames[DateTime.Now.Month - 1];
+
+            SelectedDay = DateTime.Now.Day;
+
+            var years = Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1);
+            Years = new ObservableCollection<int>(years);
+            SelectedYear = DateTime.Now.Year;
+
+            Time = DateTime.Now.ToString("HH:mm");
+
+            IsServicesLoaded = false;
+
+            var services = await serviceManager.GetServicesAsync();
+            Services = new ObservableCollection<Service>(services);
+
+            IsServicesLoaded = true;
+
+            EnrollmentServices = new ObservableCollection<ServiceDTO>();
+
+            if (Enrollment != null)
+            {
+                var enrollmentServices = await serviceManager.GetEnrollmentServicesAsync(Enrollment.Id);
+
+                enrollmentServices.ForEach(ServiceDTO =>
+                {
+                    services.ForEach(Service =>
+                    {
+                        if (ServiceDTO.Id.Equals(Service.Id))
+                        {
+                            Services.Remove(Service);
+                        }
+                    });
+                });
+
+                EnrollmentServices = new ObservableCollection<ServiceDTO>(enrollmentServices);
+
+                ClientFirstname = Enrollment.ClientFirstname;
+                ClientPhoneNumber = Enrollment.ClientPhoneNumber;
+                SelectedDay = Enrollment.DateTime.Day;
+                SelectedMonth = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames[Enrollment.DateTime.Month - 1];
+                SelectedYear = Enrollment.DateTime.Year;
+                Time = Enrollment.DateTime.ToString("HH:mm");
+                Description = Enrollment.Description;
+            }
+        }
+
         protected override async Task InitializeAsync()
         {
-            await Task.Run(async () =>
-            {
-                var months = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames.ToList();
-                months.RemoveLast();
-
-                Months = new ObservableCollection<string>(months);
-                SelectedMonth = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames[DateTime.Now.Month - 1];
-
-                SelectedDay = DateTime.Now.Day;
-
-                var years = Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1);
-                Years = new ObservableCollection<int>(years);
-                SelectedYear = DateTime.Now.Year;
-
-                Time = DateTime.Now.ToString("HH:mm");
-
-                var services = await serviceManager.GetServicesAsync();
-                Services = new ObservableCollection<Service>(services);
-
-                EnrollmentServices = new ObservableCollection<ServiceDTO>();
-
-                if (Enrollment != null)
-                {
-                    var enrollmentServices = await serviceManager.GetEnrollmentServicesAsync(Enrollment.Id);
-
-                    enrollmentServices.ForEach(ServiceDTO =>
-                    {
-                        services.ForEach(Service =>
-                        {
-                            if (ServiceDTO.Id.Equals(Service.Id))
-                            {
-                                Services.Remove(Service);
-                            }
-                        });
-                    });
-
-                    EnrollmentServices = new ObservableCollection<ServiceDTO>(enrollmentServices);
-
-                    ClientFirstname = Enrollment.ClientFirstname;
-                    ClientPhoneNumber = Enrollment.ClientPhoneNumber;
-                    SelectedDay = Enrollment.DateTime.Day;
-                    SelectedMonth = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames[Enrollment.DateTime.Month - 1];
-                    SelectedYear = Enrollment.DateTime.Year;
-                    Time = Enrollment.DateTime.ToString("HH:mm");
-                    Description = Enrollment.Description;
-                }
-            });
-
+            await Task.Run(LoadAsync);
             await base.InitializeAsync();
         }
 
@@ -189,16 +195,13 @@ namespace Beauty.WPF.ViewModels
 
         private async Task OnServiceSelectCommandExecuteAsync()
         {
-            await Task.Run(async () =>
+            if (SelectedService is null)
             {
-                if (SelectedService is null)
-                {
-                    return;
-                }
+                return;
+            }
 
-                var workers = await workerService.GetServiceWorkersAsync(SelectedService.Id);
-                Workers = new ObservableCollection<WorkerDTO>(workers);
-            });
+            var workers = await workerService.GetServiceWorkersAsync(SelectedService.Id);
+            Workers = new ObservableCollection<WorkerDTO>(workers);
         }
 
         private void OnAddEnrollmentServiceCommandExecute()
