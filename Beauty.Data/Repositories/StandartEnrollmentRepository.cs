@@ -15,6 +15,23 @@ namespace Beauty.Data.Repositories
             : base(context)
         { }
 
+        public async Task<IEnumerable<Enrollment>> FindAllAsync(string filterText)
+        {
+            var enrollments = await FindAllAsync();
+
+            if (string.IsNullOrWhiteSpace(filterText))
+            {
+                return enrollments;
+            }
+
+            enrollments = enrollments.Where(Enrollment => Enrollment.ClientFirstname.Contains(filterText)
+                                            || Enrollment.ClientPhoneNumber.Contains(filterText)
+                                            || Enrollment.DateTime.ToString("HH:mm").Contains(filterText)
+                                            || Enrollment.DateTime.ToString("HH mm").Contains(filterText));
+
+            return enrollments;
+        }
+
         public async Task<IEnumerable<Enrollment>> FindRelevantEnrollmentsAsync()
         {
             var currentDate = DateTime.Now;
@@ -24,6 +41,23 @@ namespace Beauty.Data.Repositories
                                      && Enrollment.DateTime.Month.Equals(currentDate.Month)
                                      && Enrollment.DateTime.Year.Equals(currentDate.Year))
                               .ToListAsync();
+
+            return enrollments;
+        }
+
+        public async Task<IEnumerable<Enrollment>> FindRelevantEnrollmentsAsync(string filterText)
+        {
+            var enrollments = await FindRelevantEnrollmentsAsync();
+
+            if (string.IsNullOrWhiteSpace(filterText))
+            {
+                return enrollments;
+            }
+
+            enrollments = enrollments.Where(Enrollment => Enrollment.ClientFirstname.Contains(filterText)
+                                            || Enrollment.ClientPhoneNumber.Contains(filterText)
+                                            || Enrollment.DateTime.ToString("HH:mm").Contains(filterText)
+                                            || Enrollment.DateTime.ToString("HH mm").Contains(filterText));
 
             return enrollments;
         }

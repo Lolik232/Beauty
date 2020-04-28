@@ -48,9 +48,23 @@ namespace Beauty.Core.Services
             return await ToDTOsAsync(enrollments);
         }
 
+        public async Task<IEnumerable<EnrollmentDTO>> GetEnrollmentsAsync(string filterText)
+        {
+            var enrollments = await unitOfWork.Enrollments.FindAllAsync(filterText);
+
+            return await ToDTOsAsync(enrollments);
+        }
+
         public async Task<IEnumerable<EnrollmentDTO>> GetRelevantEnrollmentsAsync()
         {
             var enrollments = await unitOfWork.Enrollments.FindRelevantEnrollmentsAsync();
+
+            return await ToDTOsAsync(enrollments);
+        }
+
+        public async Task<IEnumerable<EnrollmentDTO>> GetRelevantEnrollmentsAsync(string filterText)
+        {
+            var enrollments = await unitOfWork.Enrollments.FindRelevantEnrollmentsAsync(filterText);
 
             return await ToDTOsAsync(enrollments);
         }

@@ -23,6 +23,7 @@ namespace Beauty.WPF.ViewModels
         private readonly IEnrollmentService enrollmentService;
         private readonly IServiceManager serviceManager;
         private readonly IWorkerService workerService;
+        private readonly IDateService dateTimeService;
         private readonly IMessageService messageService;
 
         public bool IsServicesLoaded { get; set; }
@@ -88,16 +89,18 @@ namespace Beauty.WPF.ViewModels
             log = LogManager.GetCurrentClassLogger();
         }
 
-        public EnrollmentDetailsViewModel(IEnrollmentService enrollmentService, IServiceManager serviceManager, IWorkerService workerService, IMessageService messageService)
+        public EnrollmentDetailsViewModel(IEnrollmentService enrollmentService, IServiceManager serviceManager, IWorkerService workerService, IDateService dateTimeService, IMessageService messageService)
         {
             Argument.IsNotNull(() => enrollmentService);
             Argument.IsNotNull(() => serviceManager);
             Argument.IsNotNull(() => workerService);
+            Argument.IsNotNull(() => dateTimeService);
             Argument.IsNotNull(() => messageService);
 
             this.enrollmentService = enrollmentService;
             this.serviceManager = serviceManager;
             this.workerService = workerService;
+            this.dateTimeService = dateTimeService;
             this.messageService = messageService;
 
             Title = "Новая заявка";
@@ -111,8 +114,8 @@ namespace Beauty.WPF.ViewModels
             CloseCommand = new TaskCommand(OnCloseExecuteAsync);
         }
 
-        public EnrollmentDetailsViewModel(Enrollment enrollment, IEnrollmentService enrollmentService, IServiceManager serviceManager, IWorkerService workerService, IMessageService messageService)
-            : this(enrollmentService, serviceManager, workerService, messageService)
+        public EnrollmentDetailsViewModel(Enrollment enrollment, IEnrollmentService enrollmentService, IServiceManager serviceManager, IWorkerService workerService, IDateService dateTimeService, IMessageService messageService)
+            : this(enrollmentService, serviceManager, workerService, dateTimeService, messageService)
         {
             Argument.IsNotNull(() => enrollment);
 
@@ -122,15 +125,13 @@ namespace Beauty.WPF.ViewModels
 
         private async Task LoadAsync()
         {
-            var months = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames.ToList();
-            months.RemoveLast();
-
+            var months = dateTimeService.GetGenitiveMonthNames();
             Months = new ObservableCollection<string>(months);
-            SelectedMonth = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames[DateTime.Now.Month - 1];
+            SelectedMonth = dateTimeService.GetGenitiveMonthName(DateTime.Now.Month - 1);
 
             SelectedDay = DateTime.Now.Day;
 
-            var years = Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1);
+            var years = dateTimeService.GetYearsInRange(1970, DateTime.Now.Year);
             Years = new ObservableCollection<int>(years);
             SelectedYear = DateTime.Now.Year;
 
@@ -165,7 +166,7 @@ namespace Beauty.WPF.ViewModels
                 ClientFirstname = Enrollment.ClientFirstname;
                 ClientPhoneNumber = Enrollment.ClientPhoneNumber;
                 SelectedDay = Enrollment.DateTime.Day;
-                SelectedMonth = DateTimeFormatInfo.CurrentInfo.MonthGenitiveNames[Enrollment.DateTime.Month - 1];
+                SelectedMonth = dateTimeService.GetGenitiveMonthName(Enrollment.DateTime.Month - 1);
                 SelectedYear = Enrollment.DateTime.Year;
                 Time = Enrollment.DateTime.ToString("HH:mm");
                 Description = Enrollment.Description;
@@ -180,16 +181,13 @@ namespace Beauty.WPF.ViewModels
 
         private void OnMonthSelectCommandExecute()
         {
-            var months = Months as IList<string>;
-            var monthIndex = months.IndexOf(SelectedMonth) + 1;
-
-            var daysCount = DateTime.DaysInMonth(SelectedYear, monthIndex);
-            var days = Enumerable.Range(1, daysCount);
+            var days = dateTimeService.GetDaysFromMonth(SelectedYear, SelectedMonth);
             Days = new ObservableCollection<int>(days);
+            var daysCountInMonth = Days.Count();
 
-            if (daysCount < SelectedDay)
+            if (daysCountInMonth < SelectedDay)
             {
-                SelectedDay = daysCount;
+                SelectedDay = daysCountInMonth;
             }
         }
 
@@ -274,8 +272,7 @@ namespace Beauty.WPF.ViewModels
 
         protected override async Task<bool> SaveAsync()
         {
-            var months = Months as IList<string>;
-            var monthIndex = months.IndexOf(SelectedMonth) + 1;
+            var monthIndex = dateTimeService.GetGenitiveMonthIndex(SelectedMonth) + 1;
 
             var timeArray = Time.Split(':');
             var hours = int.Parse(timeArray[0]);
