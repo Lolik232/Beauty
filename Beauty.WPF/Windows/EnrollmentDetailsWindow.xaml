@@ -13,6 +13,7 @@
               WindowStartupLocation="CenterOwner"
               ResizeMode="NoResize"
               WindowStyle="None"
+              ShowInTaskbar="false"
               Width="605"
               MinWidth="605"
               MaxWidth="605"

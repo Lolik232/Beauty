@@ -70,13 +70,13 @@
             <Grid.RowDefinitions>
 
                 <!--Поиск (0)-->
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="32"/>
 
                 <!--1-->
                 <RowDefinition Height="10"/>
 
                 <!--Флажок "Отображать только сегодняшние заявки" (2)-->
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="32" />
 
             </Grid.RowDefinitions>
 
@@ -86,7 +86,8 @@
                 <ColumnDefinition Width="5"/>
 
                 <!--Ширина фильтрации и поиска (1)-->
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"
+                                  MaxWidth="340"/>
 
                 <!--2-->
                 <ColumnDefinition Width="5"/>
@@ -181,20 +182,12 @@
 
         </ListBox>
 
-        <Controls:RotatingIcon Grid.Row="9"
-                               Grid.Column="0"
-                               Grid.ColumnSpan="3"
-                               Width="128"
-                               Height="128"
-                               Icon="{StaticResource LoadingIcon}"
-                               AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding IsEnrollmentsLoaded, Converter={ValueConverters:ReverseBooleanValueConverter}}"/>
-
         <Grid Grid.Row="9"
               Grid.Column="0"
               Grid.ColumnSpan="3"
               HorizontalAlignment="Center"
               VerticalAlignment="Center"
-              AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding ElementName=enrollmentsListBox, Path=HasItems, Converter={ValueConverters:ReverseBooleanValueConverter}}">
+              AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding HasItems, ElementName=enrollmentsListBox, Converter={ValueConverters:ReverseBooleanValueConverter}}">
 
             <Grid.RowDefinitions>
 

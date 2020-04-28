@@ -4,6 +4,7 @@
                     xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
                     xmlns:DTOs="clr-namespace:Beauty.Core.DTOs;assembly=Beauty.Core"
                     xmlns:Models="clr-namespace:Beauty.Data.Models;assembly=Beauty.Data"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:Controls="clr-namespace:Beauty.WPF.Controls">
 
     <SolidColorBrush x:Key="ComboBox.Static.Border" 
@@ -87,6 +88,17 @@
         <StackPanel Margin="5,4,5,4">
 
             <TextBlock Text="{Binding Title}"/>
+
+        </StackPanel>
+
+    </DataTemplate>
+
+    <DataTemplate x:Key="DateComboBoxItemTemplate"
+                  DataType="{x:Type System:DateTime}">
+
+        <StackPanel Margin="5,4,5,4">
+
+            <TextBlock Text="{Binding Path=Date, Converter={ValueConverters:DateValueConverter}}"/>
 
         </StackPanel>
 

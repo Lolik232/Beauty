@@ -41,6 +41,11 @@ namespace Beauty.Core.Services
             return enrollmentDTOs;
         }
 
+        public async Task<IEnumerable<DateTime>> GetEnrollmentDateTimesAsync()
+        {
+            return await unitOfWork.Enrollments.FindEnrollmentDateTimesAsync();
+        }
+
         public async Task<IEnumerable<EnrollmentDTO>> GetEnrollmentsAsync()
         {
             var enrollments = await unitOfWork.Enrollments.FindAllAsync();

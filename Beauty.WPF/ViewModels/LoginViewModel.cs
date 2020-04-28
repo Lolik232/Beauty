@@ -51,7 +51,7 @@ namespace Beauty.WPF.ViewModels
             LoginCommand = new TaskCommand(OnLoginCommandExecuteAsync, OnLoginCommandCanExecute);
         }
 
-        private async Task LoadAsync()
+        protected override async Task InitializeAsync()
         {
             IsWorkersLoaded = false;
 
@@ -59,11 +59,7 @@ namespace Beauty.WPF.ViewModels
             Workers = new ObservableCollection<WorkerDTO>(workers);
 
             IsWorkersLoaded = true;
-        }
 
-        protected override async Task InitializeAsync()
-        {
-            await Task.Run(LoadAsync);
             await base.InitializeAsync();
         }
 

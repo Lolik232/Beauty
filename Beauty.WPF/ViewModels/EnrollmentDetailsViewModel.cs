@@ -129,12 +129,11 @@ namespace Beauty.WPF.ViewModels
             Months = new ObservableCollection<string>(months);
             SelectedMonth = dateTimeService.GetGenitiveMonthName(DateTime.Now.Month - 1);
 
-            SelectedDay = DateTime.Now.Day;
-
             var years = dateTimeService.GetYearsInRange(1970, DateTime.Now.Year);
             Years = new ObservableCollection<int>(years);
             SelectedYear = DateTime.Now.Year;
 
+            SelectedDay = DateTime.Now.Day;
             Time = DateTime.Now.ToString("HH:mm");
 
             IsServicesLoaded = false;

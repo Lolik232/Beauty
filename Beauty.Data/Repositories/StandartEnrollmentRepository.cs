@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Beauty.Data.Repositories
@@ -15,6 +16,16 @@ namespace Beauty.Data.Repositories
             : base(context)
         { }
 
+        public async Task<IEnumerable<DateTime>> FindEnrollmentDateTimesAsync()
+        {
+            var dateTimes = await context.Enrollments
+                            .Select(Enrollment => Enrollment.DateTime)
+                            .Distinct()
+                            .ToListAsync();
+
+            return dateTimes;
+        }
+
         public async Task<IEnumerable<Enrollment>> FindAllAsync(string filterText)
         {
             var enrollments = await FindAllAsync();
@@ -24,8 +35,11 @@ namespace Beauty.Data.Repositories
                 return enrollments;
             }
 
+            var regex = new Regex("[\\s()+-]");
+            var phoneNumber = regex.Replace(filterText, string.Empty);
+
             enrollments = enrollments.Where(Enrollment => Enrollment.ClientFirstname.Contains(filterText)
-                                            || Enrollment.ClientPhoneNumber.Contains(filterText)
+                                            || regex.Replace(Enrollment.ClientPhoneNumber, string.Empty).Contains(phoneNumber)
                                             || Enrollment.DateTime.ToString("HH:mm").Contains(filterText)
                                             || Enrollment.DateTime.ToString("HH mm").Contains(filterText));
 
@@ -54,8 +68,11 @@ namespace Beauty.Data.Repositories
                 return enrollments;
             }
 
+            var regex = new Regex("[\\s()+-]");
+            var phoneNumber = regex.Replace(filterText, string.Empty);
+
             enrollments = enrollments.Where(Enrollment => Enrollment.ClientFirstname.Contains(filterText)
-                                            || Enrollment.ClientPhoneNumber.Contains(filterText)
+                                            || regex.Replace(Enrollment.ClientPhoneNumber, string.Empty).Contains(phoneNumber)
                                             || Enrollment.DateTime.ToString("HH:mm").Contains(filterText)
                                             || Enrollment.DateTime.ToString("HH mm").Contains(filterText));
 

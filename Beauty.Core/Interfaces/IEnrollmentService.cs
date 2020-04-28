@@ -1,5 +1,6 @@
 ﻿using Beauty.Core.DTOs;
 using Beauty.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,6 +11,8 @@ namespace Beauty.Core.Interfaces
     /// </summary>
     public interface IEnrollmentService
     {
+        Task<IEnumerable<DateTime>> GetEnrollmentDateTimesAsync();
+
         Task<IEnumerable<EnrollmentDTO>> GetEnrollmentsAsync();
 
         Task<IEnumerable<EnrollmentDTO>> GetEnrollmentsAsync(string filterText);

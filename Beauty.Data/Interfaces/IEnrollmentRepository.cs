@@ -1,4 +1,5 @@
 ﻿using Beauty.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace Beauty.Data.Interfaces
     /// </summary>
     public interface IEnrollmentRepository : IRepository<Enrollment>
     {
+        Task<IEnumerable<DateTime>> FindEnrollmentDateTimesAsync();
+
         Task<IEnumerable<Enrollment>> FindAllAsync(string filterText);
 
         /// <summary>
