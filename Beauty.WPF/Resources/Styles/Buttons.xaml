@@ -629,6 +629,95 @@
 
     </Style>
 
+    <ControlTemplate x:Key="FlatIconButtonTemplate"
+                     TargetType="{x:Type Controls:IconButton}">
+
+        <Border x:Name="border"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Background="{TemplateBinding Background}" 
+                SnapsToDevicePixels="True">
+
+            <Grid>
+
+                <Viewbox Width="72"
+                         Height="72">
+
+                    <Path Fill="{TemplateBinding Foreground}"
+                          Focusable="False" 
+                          Data="{TemplateBinding Icon}"
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                          Margin="{TemplateBinding Padding}" 
+                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                </Viewbox>
+
+            </Grid>
+
+        </Border>
+
+        <ControlTemplate.Triggers>
+
+            <Trigger Property="IsMouseOver" 
+                     Value="true">
+
+                <Setter Property="Foreground" 
+                        Value="{StaticResource App.White}"/>
+
+            </Trigger>
+
+            <Trigger Property="IsEnabled" 
+                     Value="False">
+
+                <Setter Property="Background"
+                        TargetName="border"
+                        Value="{StaticResource App.DarkGray}"/>
+
+                <Setter Property="Foreground" 
+                        Value="{StaticResource App.White}"/>
+
+            </Trigger>
+
+            <Trigger Property="IsPressed"
+                     Value="True">
+
+                <Setter Property="Background"
+                        TargetName="border"
+                        Value="{StaticResource App.DarkGray}"/>
+
+            </Trigger>
+
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+    <Style x:Key="FlatIconButtonStyle" 
+           TargetType="{x:Type Controls:IconButton}" >
+
+        <Setter Property="Background" 
+                Value="{StaticResource App.Transparent}" />
+
+        <Setter Property="Foreground" 
+                Value="{StaticResource App.LightSlateGray}" />
+
+        <Setter Property="BorderThickness" 
+                Value="0" />
+
+        <Setter Property="Padding" 
+                Value="30" />
+
+        <Setter Property="Margin" 
+                Value="0" />
+
+        <Setter Property="Width" 
+                Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+
+        <Setter Property="Template"
+                Value="{StaticResource FlatIconButtonTemplate}"/>
+
+    </Style>
+
     <ControlTemplate x:Key="FlatRemoveButtonTemplate"
                      TargetType="{x:Type Button}">
 

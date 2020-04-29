@@ -11,6 +11,9 @@
     <SolidColorBrush x:Key="App.DarkGray" 
                      Color="#FF464646" />
 
+    <SolidColorBrush x:Key="App.VeryDarkGray"
+                     Color="#FF323232"/>
+
     <SolidColorBrush x:Key="App.ControlGray"
                      Color="#FFF0F0F0"/>
 

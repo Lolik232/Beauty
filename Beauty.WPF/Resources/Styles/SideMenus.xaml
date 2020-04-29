@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles"
+                    xmlns:Controls="clr-namespace:Beauty.WPF.Controls">
+
+    <ControlTemplate x:Key="BaseSideMenuTemplate"
+                     TargetType="{x:Type UserControl}">
+
+        <Border Background="{TemplateBinding Background}">
+
+            <ContentPresenter />
+
+        </Border>
+
+    </ControlTemplate>
+
+    <Style x:Key="BaseSideMenuStyle"
+           TargetType="{x:Type UserControl}">
+
+        <Setter Property="Background"
+                Value="{StaticResource App.VeryDarkGray}"/>
+
+        <Setter Property="Template"
+                Value="{StaticResource BaseSideMenuTemplate}"/>
+
+    </Style>
+
+    <Style TargetType="{x:Type Controls:SideMenu}"
+           BasedOn="{StaticResource BaseSideMenuStyle}"/>
+
+</ResourceDictionary>

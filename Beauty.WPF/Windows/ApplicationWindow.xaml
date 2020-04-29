@@ -10,7 +10,7 @@
               xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties"
               mc:Ignorable="d"
               Title="{Binding Title}"
-              MinWidth="380" 
+              MinWidth="420" 
               Width="1280"
               MinHeight="605" 
               Height="720"
@@ -27,13 +27,17 @@
 
         </Grid.RowDefinitions>
 
-        <Controls:LoadingBar Grid.Row="0"
-                             Background="{StaticResource App.Orange}"
-                             Foreground="{StaticResource App.White}"
-                             AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding HasServerConnection, Converter={ValueConverters:ReverseBooleanValueConverter}}"
-                             Content="Подключение к серверу отсутствует"/>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="Auto" />
+
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
 
         <Border Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
                 Panel.ZIndex="10"
                 Opacity="0.3">
 
@@ -42,8 +46,39 @@
 
         </Border>
 
+        <Controls:LoadingBar Grid.Row="0"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="2"
+                             Background="{StaticResource App.Orange}"
+                             Foreground="{StaticResource App.White}"
+                             AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding HasServerConnection, Converter={ValueConverters:ReverseBooleanValueConverter}}"
+                             Content="Подключение к серверу отсутствует"/>
+
         <Controls:ViewHost Grid.Row="1"
+                           Grid.Column="1"
                            View="{Binding CurrentView}"/>
+
+        <Controls:SideMenu Grid.Row="1" 
+                           Grid.Column="0"
+                           AttachedProperties:AnimateSlideInFromLeftAttachedProperty.Value="{Binding IsMenuShown}">
+
+            <StackPanel Orientation="Vertical">
+                
+                <Controls:IconButton Icon="{StaticResource EnrollmentsIcon}"
+                                     Command="{Binding OpenEnrollmentsViewCommand}"
+                                     Style="{StaticResource FlatIconButtonStyle}"/>
+
+                <Controls:IconButton Icon="{StaticResource SettingsIcon}"
+                                     Command="{Binding OpenSettingsViewCommand}"
+                                     Style="{StaticResource FlatIconButtonStyle}"/>
+
+                <Controls:IconButton Icon="{StaticResource LogoutIcon}"
+                                     Command="{Binding LogoutCommand}"
+                                     Style="{StaticResource FlatIconButtonStyle}"/>
+
+            </StackPanel>
+
+        </Controls:SideMenu>
 
     </Grid>
 

@@ -4,6 +4,7 @@
     {
         None = 0,
         LoginView = 1,
-        EnrollmentView = 2
+        EnrollmentView = 2,
+        SettingsView = 3
     }
 }
