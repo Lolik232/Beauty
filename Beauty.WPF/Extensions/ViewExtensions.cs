@@ -17,6 +17,12 @@ namespace Beauty.WPF.Extensions
                 case ApplicationViews.EnrollmentView:
                     return new EnrollmentsView();
 
+                case ApplicationViews.ProfileView:
+                    return new ProfileView();
+
+                case ApplicationViews.SettingsView:
+                    return new SettingsView();
+
                 default:
                     return null;
             }

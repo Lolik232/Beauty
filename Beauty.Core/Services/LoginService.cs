@@ -42,12 +42,7 @@ namespace Beauty.Core.Services
         public void Logout()
         {
             var session = Session.GetSession();
-            
-            if (session.Worker != null)
-            {
-                session.Worker = null;
-                session.LogoutDateTime = DateTime.Now;
-            }
+            session.Worker = null;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Beauty.Core.DTOs;
+using Beauty.Data.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,5 +18,7 @@ namespace Beauty.Core.Interfaces
         Task<IEnumerable<WorkerDTO>> GetServiceWorkersAsync(int serviceId);
 
         Task<string> GetWorkerShortnameAsync(int workerId);
+
+        Task<IEnumerable<Position>> GetWorkerPositionsAsync(int workerId);
     }
 }

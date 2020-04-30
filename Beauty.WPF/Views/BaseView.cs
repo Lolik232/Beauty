@@ -1,6 +1,7 @@
 ﻿using Beauty.WPF.Enums;
 using Beauty.WPF.Extensions;
 using Catel.Windows.Controls;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -10,8 +11,27 @@ namespace Beauty.WPF.Views
     {
         public ViewAnimations ViewLoadAnimation { get; set; }
         public ViewAnimations ViewUnloadAnimation { get; set; }
-        public bool ShouldAnimateOut { get; set; }
         public float AnimationTime { get; set; }
+
+        public bool ShouldAnimateOut
+        {
+            get => (bool)GetValue(ShouldAnimateOutProperty);
+            set => SetValue(ShouldAnimateOutProperty, value);
+        }
+
+        public static readonly DependencyProperty ShouldAnimateOutProperty = DependencyProperty.Register(
+            nameof(ShouldAnimateOut),
+            typeof(bool),
+            typeof(BaseView),
+            new UIPropertyMetadata
+            (
+                default(bool),
+                null,
+                OnShouldAnimateOutPropertyChanged
+            )
+        );
+
+        public event RoutedEventHandler AnimateOutHandler;
 
         public BaseView()
         {
@@ -25,9 +45,10 @@ namespace Beauty.WPF.Views
             }
 
             Loaded += OnViewLoaded;
+            AnimateOutHandler += OnAnimateOutExecuteAsync;
         }
 
-        public async Task AnimateInAsync()
+        private async Task AnimateInAsync()
         {
             switch (ViewLoadAnimation)
             {
@@ -41,7 +62,7 @@ namespace Beauty.WPF.Views
             }
         }
 
-        public async Task AnimateOutAsync()
+        private async Task AnimateOutAsync()
         {
             switch (ViewUnloadAnimation)
             {
@@ -57,14 +78,25 @@ namespace Beauty.WPF.Views
 
         private async void OnViewLoaded(object sender, RoutedEventArgs e)
         {
-            if (ShouldAnimateOut)
+            await AnimateInAsync();
+        }
+
+        private async void OnAnimateOutExecuteAsync(object sender, RoutedEventArgs e)
+        {
+            await AnimateOutAsync();
+        }
+
+        private static object OnShouldAnimateOutPropertyChanged(DependencyObject dependencyObject, object value)
+        {
+            var view = dependencyObject as BaseView;
+
+            if ((bool)value)
             {
-                await AnimateOutAsync();
+                var eventArgs = EventArgs.Empty as RoutedEventArgs;
+                view.AnimateOutHandler?.Invoke(view, eventArgs);
             }
-            else
-            {
-                await AnimateInAsync();
-            }
+
+            return value;
         }
     }
 }

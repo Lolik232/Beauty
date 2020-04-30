@@ -16,7 +16,7 @@ namespace Beauty.Core.Infrastructure
         /// <summary>
         /// Возвращает экземпляр сессии
         /// </summary>
-        internal static Session GetSession()
+        public static Session GetSession()
         {
             if (session is null)
             {
@@ -35,10 +35,5 @@ namespace Beauty.Core.Infrastructure
         /// Дата и время входа в систему
         /// </summary>
         public DateTime? LoginDateTime { get; internal set; }
-        
-        /// <summary>
-        /// Дата и время выхода из системы
-        /// </summary>
-        public DateTime? LogoutDateTime { get; internal set; }
     }
 }

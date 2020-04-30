@@ -161,27 +161,6 @@
 
         </Grid>
 
-        <ListBox x:Name="enrollmentsListBox"
-                 Grid.Row="9"
-                 Grid.Column="0"
-                 Grid.ColumnSpan="3"
-                 ItemsSource="{Binding Enrollments}"
-                 SelectedItem="{Binding SelectedEnrollment}"
-                 ItemTemplate="{StaticResource EnrollmentsListBoxItemTemlate}"
-                 AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}">
-
-            <Interactivity:Interaction.Triggers>
-
-                <Interactivity:EventTrigger EventName="MouseDoubleClick">
-
-                    <Catel:EventToCommand Command="{Binding EditEnrollmentCommand}"/>
-
-                </Interactivity:EventTrigger>
-
-            </Interactivity:Interaction.Triggers>
-
-        </ListBox>
-
         <Grid Grid.Row="9"
               Grid.Column="0"
               Grid.ColumnSpan="3"
@@ -222,6 +201,27 @@
                        Style="{StaticResource HugeTextBlockStyle}"/>
 
         </Grid>
+
+        <ListBox x:Name="enrollmentsListBox"
+                 Grid.Row="9"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="3"
+                 ItemsSource="{Binding Enrollments}"
+                 SelectedItem="{Binding SelectedEnrollment}"
+                 ItemTemplate="{StaticResource EnrollmentsListBoxItemTemlate}"
+                 AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=HasItems}">
+
+            <Interactivity:Interaction.Triggers>
+
+                <Interactivity:EventTrigger EventName="MouseDoubleClick">
+
+                    <Catel:EventToCommand Command="{Binding EditEnrollmentCommand}"/>
+
+                </Interactivity:EventTrigger>
+
+            </Interactivity:Interaction.Triggers>
+
+        </ListBox>
 
     </Grid>
 

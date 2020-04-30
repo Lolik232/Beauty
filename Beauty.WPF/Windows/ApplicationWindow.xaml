@@ -62,21 +62,48 @@
                            Grid.Column="0"
                            AttachedProperties:AnimateSlideInFromLeftAttachedProperty.Value="{Binding IsMenuShown}">
 
-            <StackPanel Orientation="Vertical">
-                
-                <Controls:IconButton Icon="{StaticResource EnrollmentsIcon}"
+            <Grid>
+
+                <Grid.RowDefinitions>
+
+                    <!--0-->
+                    <RowDefinition Height="Auto"/>
+
+                    <!--1-->
+                    <RowDefinition Height="Auto"/>
+
+                    <!--2-->
+                    <RowDefinition Height="*"/>
+
+                    <!--3-->
+                    <RowDefinition Height="Auto"/>
+
+                    <!--4-->
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+
+                <Controls:IconButton Grid.Row="0" 
+                                     Icon="{StaticResource ProfileIcon}"
+                                     Command="{Binding OpenProfileViewCommand}"
+                                     Style="{StaticResource FlatIconButtonStyle}"/>
+
+                <Controls:IconButton Grid.Row="1" 
+                                     Icon="{StaticResource EnrollmentsIcon}"
                                      Command="{Binding OpenEnrollmentsViewCommand}"
                                      Style="{StaticResource FlatIconButtonStyle}"/>
 
-                <Controls:IconButton Icon="{StaticResource SettingsIcon}"
+                <Controls:IconButton Grid.Row="3"
+                                     Icon="{StaticResource SettingsIcon}"
                                      Command="{Binding OpenSettingsViewCommand}"
                                      Style="{StaticResource FlatIconButtonStyle}"/>
 
-                <Controls:IconButton Icon="{StaticResource LogoutIcon}"
+                <Controls:IconButton Grid.Row="4" 
+                                     Icon="{StaticResource LogoutIcon}"
                                      Command="{Binding LogoutCommand}"
                                      Style="{StaticResource FlatIconButtonStyle}"/>
 
-            </StackPanel>
+            </Grid>
 
         </Controls:SideMenu>
 

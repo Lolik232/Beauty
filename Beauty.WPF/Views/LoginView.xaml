@@ -111,6 +111,7 @@
                    ToolTip="new EasterEgg(easterText).Show();"
                    Text="Версия приложения: 1.0.0.0"
                    Style="{StaticResource AnnotationTextBlockStyle}"/>
+        
     </Grid>
 
 </local:BaseView>

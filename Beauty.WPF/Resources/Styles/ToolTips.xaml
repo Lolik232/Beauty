@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles">
+                    xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles"
+                    xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties">
 
     <ControlTemplate x:Key="BaseToolTipTemplate" 
                      TargetType="{x:Type ToolTip}">

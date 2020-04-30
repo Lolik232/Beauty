@@ -2,9 +2,14 @@
 using Beauty.WPF.Extensions;
 using Beauty.WPF.Views;
 using Catel.IoC;
+using Catel.MVVM;
+using Catel.MVVM.Views;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace Beauty.WPF.Controls
 {
@@ -21,7 +26,7 @@ namespace Beauty.WPF.Controls
             get => (ApplicationViews)GetValue(ViewProperty);
             set => SetValue(ViewProperty, value);
         }
-            
+
         /// <summary>
         /// Свойство зависимости для <see cref="View"/>
         /// </summary>
@@ -64,24 +69,25 @@ namespace Beauty.WPF.Controls
                 var oldViewControl = viewHost.oldView;
                 var newViewControl = viewHost.newView;
 
-                var oldViewContent = newViewControl.Content;
-                newViewControl.Content = null;
-                oldViewControl.Content = oldViewContent;
+                // Помечаем текущую View'шку, как старую
+                oldViewControl.Content = newViewControl.Content;
 
-                if (oldViewContent is BaseView oldView)
+                if (oldViewControl.Content is BaseView oldView)
                 {
-                    oldView.ShouldAnimateOut = true;
+                    oldView.ShouldAnimateOut = true; // Уведомляем View'шку, что необходимо проиграть анимацию закрытия
 
                     var delay = (int)(oldView.AnimationTime * 1000);
-                    Task.Delay(delay).ContinueWith((task) =>
+                    Task.Delay(delay).ContinueWith(Task => // Ждем, пока анимация проигрывается и затем...
                     {
                         Application.Current.Dispatcher.Invoke(() =>
                         {
+                            // ... заставляем сборщик мусора удалить старую страницу после проигрывания ее анимации
                             oldViewControl.Content = null;
                         });
                     });
                 }
 
+                // Устанавливаем новую View'шку в качестве текущей
                 newViewControl.Content = currentView;
             }
 

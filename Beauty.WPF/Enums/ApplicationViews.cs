@@ -5,6 +5,7 @@
         None = 0,
         LoginView = 1,
         EnrollmentView = 2,
-        SettingsView = 3
+        ProfileView = 3,
+        SettingsView = 4
     }
 }

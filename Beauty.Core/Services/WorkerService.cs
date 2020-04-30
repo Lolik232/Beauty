@@ -5,6 +5,7 @@ using Beauty.Data.Interfaces;
 using Beauty.Data.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Beauty.Core.Services
@@ -29,7 +30,7 @@ namespace Beauty.Core.Services
             {
                 workerDTO.Shortname = await unitOfWork.Workers.FindWorkerShortnameAsync(workerDTO.Id);
 
-                var positions = await unitOfWork.WorkerPositions.FindWorkerPositionsAsync(workerDTO.Id);
+                var positions = await GetWorkerPositionsAsync(workerDTO.Id);
                 workerDTO.Positions = positions.ToLine();
             }
 
@@ -53,6 +54,11 @@ namespace Beauty.Core.Services
         public async Task<string> GetWorkerShortnameAsync(int workerId)
         {
             return await unitOfWork.Workers.FindWorkerShortnameAsync(workerId);
+        }
+
+        public async Task<IEnumerable<Position>> GetWorkerPositionsAsync(int workerId)
+        {
+            return await unitOfWork.WorkerPositions.FindWorkerPositionsAsync(workerId);
         }
     }
 }

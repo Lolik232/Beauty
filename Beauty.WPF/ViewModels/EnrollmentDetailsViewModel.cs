@@ -18,8 +18,6 @@ namespace Beauty.WPF.ViewModels
 {
     public class EnrollmentDetailsViewModel : ViewModelBase, IDataErrorInfo
     {
-        private static readonly ILog log;
-
         private readonly IEnrollmentService enrollmentService;
         private readonly IServiceManager serviceManager;
         private readonly IWorkerService workerService;
@@ -82,11 +80,6 @@ namespace Beauty.WPF.ViewModels
 
                 return error;
             }
-        }
-
-        static EnrollmentDetailsViewModel()
-        {
-            log = LogManager.GetCurrentClassLogger();
         }
 
         public EnrollmentDetailsViewModel(IEnrollmentService enrollmentService, IServiceManager serviceManager, IWorkerService workerService, IDateService dateTimeService, IMessageService messageService)

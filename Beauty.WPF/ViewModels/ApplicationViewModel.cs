@@ -23,6 +23,7 @@ namespace Beauty.WPF.ViewModels
         public bool HasServerConnection { get; set; }
         public bool IsMenuShown { get; set; }
 
+        public Command OpenProfileViewCommand { get; set; }
         public Command OpenEnrollmentsViewCommand { get; set; }
         public Command OpenSettingsViewCommand { get; set; }
         public Command LogoutCommand { get; set; }
@@ -34,6 +35,7 @@ namespace Beauty.WPF.ViewModels
             this.loginService = loginService;
 
             OpenEnrollmentsViewCommand = new Command(OnOpenEnrollmentsViewCommandExecute, OnOpenEnrollmentsViewCommandCanExecute);
+            OpenProfileViewCommand = new Command(OnOpenProfileViewCommandExecute, OnOpenProfileViewCommandCanExecute);
             OpenSettingsViewCommand = new Command(OnOpenSettingsViewCommandExecute, OnOpenSettingsViewCommandCanExecute);
             LogoutCommand = new Command(OnLogoutCommandExecute);
 
@@ -54,25 +56,14 @@ namespace Beauty.WPF.ViewModels
             await base.InitializeAsync();
         }
 
-        private void OnOpenEnrollmentsViewCommandExecute()
-        {
-            GoToView(ApplicationViews.EnrollmentView);
-        }
+        private void OnOpenEnrollmentsViewCommandExecute() => GoToView(ApplicationViews.EnrollmentView);
+        private bool OnOpenEnrollmentsViewCommandCanExecute() => !CurrentView.Equals(ApplicationViews.EnrollmentView);
 
-        private bool OnOpenEnrollmentsViewCommandCanExecute()
-        {
-            return !CurrentView.Equals(ApplicationViews.EnrollmentView);
-        }
+        private void OnOpenProfileViewCommandExecute() => GoToView(ApplicationViews.ProfileView);
+        private bool OnOpenProfileViewCommandCanExecute() => !CurrentView.Equals(ApplicationViews.ProfileView);
 
-        private void OnOpenSettingsViewCommandExecute()
-        {
-            GoToView(ApplicationViews.SettingsView);
-        }
-
-        private bool OnOpenSettingsViewCommandCanExecute()
-        {
-            return !CurrentView.Equals(ApplicationViews.SettingsView);
-        }
+        private void OnOpenSettingsViewCommandExecute() => GoToView(ApplicationViews.SettingsView);
+        private bool OnOpenSettingsViewCommandCanExecute() => !CurrentView.Equals(ApplicationViews.SettingsView);
 
         private void OnLogoutCommandExecute()
         {
