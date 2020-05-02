@@ -48,10 +48,5 @@ namespace Beauty.WPF.ViewModels
 
             await base.InitializeAsync();
         }
-
-        protected override Task CloseAsync()
-        {
-            return Task.CompletedTask;
-        }
     }
 }

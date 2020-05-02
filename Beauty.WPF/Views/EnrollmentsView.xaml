@@ -6,7 +6,8 @@
                 xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
                 xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
                 xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties"
-                xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity">
+                xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+                xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <Grid>
 
@@ -75,8 +76,8 @@
                 <!--1-->
                 <RowDefinition Height="10"/>
 
-                <!--Флажок "Отображать только сегодняшние заявки" (2)-->
-                <RowDefinition Height="32" />
+                <!--Фильтр по дате (2)-->
+                <RowDefinition Height="32"/>
 
             </Grid.RowDefinitions>
 
@@ -87,7 +88,7 @@
 
                 <!--Ширина фильтрации и поиска (1)-->
                 <ColumnDefinition Width="*"
-                                  MaxWidth="340"/>
+                                  MaxWidth="350"/>
 
                 <!--2-->
                 <ColumnDefinition Width="5"/>
@@ -112,11 +113,45 @@
 
             </Controls:WatermarkTextBox>
 
-            <CheckBox Grid.Row="2"
-                      Grid.Column="1"
-                      Content="Отображать только сегодняшние заявки"
-                      Command="{Binding NeedFindRelevantEnrollmentsCommand}"
-                      CommandParameter="{Binding IsChecked, RelativeSource={x:Static RelativeSource.Self}}"/>
+            <Grid Grid.Row="2"
+                  Grid.Column="1">
+
+                <Grid.ColumnDefinitions>
+
+                    <!--0-->
+                    <ColumnDefinition Width="Auto"/>
+
+                    <!--1-->
+                    <ColumnDefinition Width="5"/>
+
+                    <!--2-->
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Отображать заявки за: "
+                           VerticalAlignment="Center"
+                           Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+                <ComboBox Grid.Column="2"
+                          ItemsSource="{Binding Dates}"
+                          SelectedItem="{Binding SelectedDate}"
+                          ItemTemplate="{StaticResource DateComboBoxItemTemplate}">
+
+                    <Interactivity:Interaction.Triggers>
+
+                        <Interactivity:EventTrigger EventName="SelectionChanged">
+
+                            <Catel:EventToCommand Command="{Binding DateSelectCommand}"/>
+
+                        </Interactivity:EventTrigger>
+
+                    </Interactivity:Interaction.Triggers>
+
+                </ComboBox>
+
+            </Grid>
 
         </Grid>
 

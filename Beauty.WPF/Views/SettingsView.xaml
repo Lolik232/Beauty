@@ -40,6 +40,8 @@
                    Text="{Binding Title}"
                    FontWeight="SemiBold"
                    Style="{StaticResource HugeTextBlockStyle}"/>
+        
+        
 
     </Grid>
     

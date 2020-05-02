@@ -10,15 +10,10 @@ namespace Beauty.Data.Interfaces
     /// </summary>
     public interface IEnrollmentRepository : IRepository<Enrollment>
     {
-        Task<IEnumerable<DateTime>> FindEnrollmentDateTimesAsync();
+        Task<IEnumerable<DateTime>> FindEnrollmentDatesAsync();
 
         Task<IEnumerable<Enrollment>> FindAllAsync(string filterText);
 
-        /// <summary>
-        /// Возвращает актуальные записи из базы данных
-        /// </summary>
-        Task<IEnumerable<Enrollment>> FindRelevantEnrollmentsAsync();
-
-        Task<IEnumerable<Enrollment>> FindRelevantEnrollmentsAsync(string filterText);
+        Task<IEnumerable<Enrollment>> FindAllAsync(string filterText, DateTime filterDate);
     }
 }

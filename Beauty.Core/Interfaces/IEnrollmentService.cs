@@ -11,15 +11,13 @@ namespace Beauty.Core.Interfaces
     /// </summary>
     public interface IEnrollmentService
     {
-        Task<IEnumerable<DateTime>> GetEnrollmentDateTimesAsync();
+        Task<IEnumerable<DateTime>> GetEnrollmentDatesAsync();
 
         Task<IEnumerable<EnrollmentDTO>> GetEnrollmentsAsync();
 
         Task<IEnumerable<EnrollmentDTO>> GetEnrollmentsAsync(string filterText);
 
-        Task<IEnumerable<EnrollmentDTO>> GetRelevantEnrollmentsAsync();
-
-        Task<IEnumerable<EnrollmentDTO>> GetRelevantEnrollmentsAsync(string filterText);
+        Task<IEnumerable<EnrollmentDTO>> GetEnrollmentsAsync(string filterText, DateTime date);
 
         Task<Enrollment> GetEnrollmentAsync(int enrollmentId);
 

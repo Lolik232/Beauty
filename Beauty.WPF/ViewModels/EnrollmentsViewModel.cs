@@ -24,12 +24,13 @@ namespace Beauty.WPF.ViewModels
         private readonly IMessageService messageService;
 
         public string FilterText { get; set; }
-        public bool NeedFindRelevantEnrollments { get; set; }
+        public ICollection<DateTime> Dates { get; set; }
+        public DateTime SelectedDate { get; set; }
         public ICollection<EnrollmentDTO> Enrollments { get; set; }
         public EnrollmentDTO SelectedEnrollment { get; set; }
 
         public TaskCommand<string> FilterTextChangedCommand { get; set; }
-        public TaskCommand<bool> NeedFindRelevantEnrollmentsCommand { get; set; }
+        public TaskCommand DateSelectCommand { get; set; }
         public TaskCommand CreateEnrollmentCommand { get; set; }
         public TaskCommand EditEnrollmentCommand { get; set; }
         public TaskCommand RemoveEnrollmentCommand { get; set; }
@@ -50,34 +51,54 @@ namespace Beauty.WPF.ViewModels
             this.messageService = messageService;
 
             FilterTextChangedCommand = new TaskCommand<string>(OnFilterTextChangedCommandExecuteAsync);
-            NeedFindRelevantEnrollmentsCommand = new TaskCommand<bool>(OnNeedFindRelevantEnrollmentsCommandExecuteAsync);
+            DateSelectCommand = new TaskCommand(UpdateEnrollmentsAsync, OnDateSelectCommandCanExecute);
             CreateEnrollmentCommand = new TaskCommand(OnCreateEnrollmentCommandExecuteAsync);
             EditEnrollmentCommand = new TaskCommand(OnEditEnrollmentCommandExecuteAsync);
             RemoveEnrollmentCommand = new TaskCommand(OnRemoveEnrollmentCommandExecuteAsync, OnRemoveEnrollmentCommandCanExecute);
         }
 
-        private async Task UpdateEnrollmentsAndDateTimesAsync()
+        private async Task UpdateDatesAsync()
         {
-            var enrollments = (NeedFindRelevantEnrollments) ? await enrollmentService.GetRelevantEnrollmentsAsync(FilterText) : await enrollmentService.GetEnrollmentsAsync(FilterText);
+            var dates = await enrollmentService.GetEnrollmentDatesAsync();
+            Dates = new ObservableCollection<DateTime>(dates);
+
+            var comparer = new DateTime();
+            var isDateExists = !Dates.FirstOrDefault(Date => Date.Equals(SelectedDate)).Equals(comparer);
+
+            if (!isDateExists)
+            {
+                var date = Dates.FirstOrDefault(Date => Date.Equals(DateTime.Now.Date));
+
+                if (date.Equals(comparer))
+                {
+                    date = Dates.FirstOrDefault();
+                }
+
+                SelectedDate = date;
+            }
+        }
+
+        private async Task UpdateEnrollmentsAsync()
+        {
+            var enrollments = await enrollmentService.GetEnrollmentsAsync(FilterText, SelectedDate);
             Enrollments = new ObservableCollection<EnrollmentDTO>(enrollments);
         }
 
         protected override async Task InitializeAsync()
         {
-            await UpdateEnrollmentsAndDateTimesAsync();
+            await UpdateDatesAsync();
             await base.InitializeAsync();
         }
 
         private async Task OnFilterTextChangedCommandExecuteAsync(string filterText)
         {
             FilterText = filterText;
-            await UpdateEnrollmentsAndDateTimesAsync();
+            await UpdateEnrollmentsAsync();
         }
 
-        private async Task OnNeedFindRelevantEnrollmentsCommandExecuteAsync(bool needFindRelevantEnrollments)
+        private bool OnDateSelectCommandCanExecute()
         {
-            NeedFindRelevantEnrollments = needFindRelevantEnrollments;
-            await UpdateEnrollmentsAndDateTimesAsync();
+            return Dates != null && !Dates.Count().Equals(0);
         }
 
         private async Task OnCreateEnrollmentCommandExecuteAsync()
@@ -86,7 +107,8 @@ namespace Beauty.WPF.ViewModels
 
             if (isCancel)
             {
-                await UpdateEnrollmentsAndDateTimesAsync();
+                await UpdateDatesAsync();
+                await UpdateEnrollmentsAsync();
                 SelectedEnrollment = Enrollments.LastOrDefault();
             }
         }
@@ -97,7 +119,8 @@ namespace Beauty.WPF.ViewModels
 
             var enrollment = await enrollmentService.GetEnrollmentAsync(selectedEnrollmentId);
             await uiVisualizerService.ShowDialogAsync<EnrollmentDetailsViewModel>(enrollment);
-            await UpdateEnrollmentsAndDateTimesAsync();
+            await UpdateDatesAsync();
+            await UpdateEnrollmentsAsync();
 
             SelectedEnrollment = Enrollments.FirstOrDefault(Enrollment => Enrollment.Id.Equals(selectedEnrollmentId));
         }
@@ -111,7 +134,8 @@ namespace Beauty.WPF.ViewModels
             if (dialogResult.Equals(MessageResult.OK))
             {
                 await enrollmentService.RemoveEnrollmentAsync(SelectedEnrollment.Id);
-                await UpdateEnrollmentsAndDateTimesAsync();
+                await UpdateDatesAsync();
+                await UpdateEnrollmentsAsync();
             }
         }
 

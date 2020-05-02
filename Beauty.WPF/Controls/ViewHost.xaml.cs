@@ -77,11 +77,11 @@ namespace Beauty.WPF.Controls
                     oldView.ShouldAnimateOut = true; // Уведомляем View'шку, что необходимо проиграть анимацию закрытия
 
                     var delay = (int)(oldView.AnimationTime * 1000);
-                    Task.Delay(delay).ContinueWith(Task => // Ждем, пока анимация проигрывается и затем...
+                    Task.Delay(delay).ContinueWith(Task => // Ждем, пока анимация закончится и затем...
                     {
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            // ... заставляем сборщик мусора удалить старую страницу после проигрывания ее анимации
+                            // ... заставляем сборщик мусора удалить старую страницу
                             oldViewControl.Content = null;
                         });
                     });

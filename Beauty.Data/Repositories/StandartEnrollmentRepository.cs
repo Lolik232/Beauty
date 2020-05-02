@@ -16,14 +16,19 @@ namespace Beauty.Data.Repositories
             : base(context)
         { }
 
-        public async Task<IEnumerable<DateTime>> FindEnrollmentDateTimesAsync()
+        public async Task<IEnumerable<DateTime>> FindEnrollmentDatesAsync()
         {
             var dateTimes = await context.Enrollments
                             .Select(Enrollment => Enrollment.DateTime)
-                            .Distinct()
                             .ToListAsync();
 
-            return dateTimes;
+            var dates = dateTimes
+                        .Select(DateTime => DateTime.Date)
+                        .Distinct()
+                        .OrderByDescending(DateTime => DateTime.Day)
+                        .ToList();
+
+            return dates;
         }
 
         public async Task<IEnumerable<Enrollment>> FindAllAsync(string filterText)
@@ -46,22 +51,11 @@ namespace Beauty.Data.Repositories
             return enrollments;
         }
 
-        public async Task<IEnumerable<Enrollment>> FindRelevantEnrollmentsAsync()
+        public async Task<IEnumerable<Enrollment>> FindAllAsync(string filterText, DateTime filterDate)
         {
-            var currentDate = DateTime.Now;
+            var enrollments = await FindAllAsync();
 
-            var enrollments = await context.Enrollments
-                              .Where(Enrollment => Enrollment.DateTime.Day.Equals(currentDate.Day)
-                                     && Enrollment.DateTime.Month.Equals(currentDate.Month)
-                                     && Enrollment.DateTime.Year.Equals(currentDate.Year))
-                              .ToListAsync();
-
-            return enrollments;
-        }
-
-        public async Task<IEnumerable<Enrollment>> FindRelevantEnrollmentsAsync(string filterText)
-        {
-            var enrollments = await FindRelevantEnrollmentsAsync();
+            enrollments = enrollments.Where(Enrollment => Enrollment.DateTime.Date.Equals(filterDate.Date));
 
             if (string.IsNullOrWhiteSpace(filterText))
             {
