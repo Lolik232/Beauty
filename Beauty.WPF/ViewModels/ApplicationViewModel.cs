@@ -42,7 +42,7 @@ namespace Beauty.WPF.ViewModels
 
             endpointCheckerService = new DatabaseEndpointCheckerService
             (
-                endpoint: ConnectionManager.GetInstance().ConnectionStrings["BeautyDatabase"],
+                endpoint: ConnectionManager.GetConnectionManager().ConnectionStrings["BeautyDatabase"],
                 delay: 10000,
                 OnServerConnectionStateChanged
             );

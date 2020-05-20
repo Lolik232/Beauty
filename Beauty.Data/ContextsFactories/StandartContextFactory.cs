@@ -10,7 +10,7 @@ namespace Beauty.Data.ContextsFactories
         public StandartContext Create()
         {
             var contextInitializer = new ContextInitializer();
-            var connectionName = ConnectionManager.GetInstance().ConnectionStrings["BeautyDatabase"];
+            var connectionName = ConnectionManager.GetConnectionManager().ConnectionStrings["BeautyDatabase"];
 
             return new StandartContext(contextInitializer, connectionName);
         }

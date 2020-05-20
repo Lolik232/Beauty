@@ -8,21 +8,21 @@ namespace Beauty.Data.Infrastructure
 {
     public class ConnectionManager
     {
-        private static ConnectionManager instance;
+        private static ConnectionManager connectionManager;
 
         public IDictionary<string, string> ConnectionStrings { get; set; }
 
-        public static ConnectionManager GetInstance()
+        public static ConnectionManager GetConnectionManager()
         {
-            if (instance is null)
+            if (connectionManager is null)
             {
                 var connectionStrings = new Dictionary<string, string>();
                 connectionStrings.Add("BeautyDatabase", "Data Source=DESKTOP-4107QQI\\SQLEXPRESS;Initial Catalog=Beauty;Integrated Security=True");
 
-                instance = new ConnectionManager(connectionStrings);
+                connectionManager = new ConnectionManager(connectionStrings);
             }
 
-            return instance;
+            return connectionManager;
         }
 
         public ConnectionManager(IDictionary<string, string> connectionStrings)
