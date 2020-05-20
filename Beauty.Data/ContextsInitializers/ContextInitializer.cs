@@ -6,8 +6,8 @@ using System.Data.Entity;
 
 namespace Beauty.Data.ContextsInitializers
 {
-    //public class ContextInitializer : DropCreateDatabaseIfModelChanges<StandartContext>
-    public class ContextInitializer : DropCreateDatabaseAlways<StandartContext>
+    public class ContextInitializer : DropCreateDatabaseIfModelChanges<StandartContext>
+    //public class ContextInitializer : DropCreateDatabaseAlways<StandartContext>
     {
         protected override void Seed(StandartContext context)
         {

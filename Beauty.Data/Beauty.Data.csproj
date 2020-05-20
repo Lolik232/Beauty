@@ -54,6 +54,7 @@
     <Compile Include="Contexts\StandartContext.cs" />
     <Compile Include="ContextsFactories\StandartContextFactory.cs" />
     <Compile Include="ContextsInitializers\ContextInitializer.cs" />
+    <Compile Include="Infrastructure\ConnectionManager.cs" />
     <Compile Include="Interfaces\IContext.cs" />
     <Compile Include="Interfaces\IEnrollmentRepository.cs" />
     <Compile Include="Interfaces\IEnrollmentWorkerServiceRepository.cs" />

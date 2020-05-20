@@ -1,5 +1,6 @@
 ﻿using Beauty.Core.Interfaces;
 using Beauty.Core.Services;
+using Beauty.Data.Infrastructure;
 using Beauty.WPF.Enums;
 using Catel;
 using Catel.Logging;
@@ -41,7 +42,7 @@ namespace Beauty.WPF.ViewModels
 
             endpointCheckerService = new DatabaseEndpointCheckerService
             (
-                endpoint: ConfigurationManager.ConnectionStrings["BeautyDatabase"].ConnectionString,
+                endpoint: ConnectionManager.GetInstance().ConnectionStrings["BeautyDatabase"],
                 delay: 10000,
                 OnServerConnectionStateChanged
             );

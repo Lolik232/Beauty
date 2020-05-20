@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles"
                     xmlns:DTOs="clr-namespace:Beauty.Core.DTOs;assembly=Beauty.Core"
+                    xmlns:Models="clr-namespace:Beauty.Data.Models;assembly=Beauty.Data"
                     xmlns:Controls="clr-namespace:Beauty.WPF.Controls">
 
     <ItemsPanelTemplate x:Key="WrapItemsPanelTemplate">
@@ -89,6 +90,82 @@
 
     </DataTemplate>
 
+    <DataTemplate x:Key="RemovableServiceWithoutWorkersItemsControlTemlate"
+                  DataType="{x:Type Models:Service}">
+
+        <Border Padding="10,5,10,5"
+                Margin="0,5,10,5"
+                CornerRadius="4"
+                BorderThickness="1"
+                BorderBrush="{StaticResource App.Black}"
+                Background="{StaticResource App.Transparent}">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*"/>
+
+                    <ColumnDefinition Width="6"/>
+
+                    <ColumnDefinition Width="Auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Foreground="{StaticResource App.Black}"
+                           Text="{Binding Title}"/>
+
+                <Button Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:RemovableItemsControl}}, Path=Command}"
+                        CommandParameter="{Binding}"
+                        Style="{StaticResource FlatRemoveButtonStyle}"/>
+
+            </Grid>
+
+        </Border>
+
+    </DataTemplate>
+
+    <DataTemplate x:Key="RemovablePositionItemsControlTemlate"
+                  DataType="{x:Type Models:Position}">
+
+        <Border Padding="10,5,10,5"
+                Margin="0,5,10,5"
+                CornerRadius="4"
+                BorderThickness="1"
+                BorderBrush="{StaticResource App.Black}"
+                Background="{StaticResource App.Transparent}">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*"/>
+
+                    <ColumnDefinition Width="6"/>
+
+                    <ColumnDefinition Width="Auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Foreground="{StaticResource App.Black}"
+                           Text="{Binding Title}"/>
+
+                <Button Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:RemovableItemsControl}}, Path=Command}"
+                        CommandParameter="{Binding}"
+                        Style="{StaticResource FlatRemoveButtonStyle}"/>
+
+            </Grid>
+
+        </Border>
+
+    </DataTemplate>
+
     <Style x:Key="RemovableServiceItemsControlStyle"
            TargetType="{x:Type Controls:RemovableItemsControl}">
 
@@ -97,6 +174,28 @@
 
         <Setter Property="ItemTemplate"
                 Value="{StaticResource RemovableServiceItemsControlTemlate}"/>
+
+    </Style>
+
+    <Style x:Key="RemovableServiceWithoutWorkersItemsControlStyle"
+           TargetType="{x:Type Controls:RemovableItemsControl}">
+
+        <Setter Property="ItemsPanel"
+                Value="{StaticResource WrapItemsPanelTemplate}"/>
+
+        <Setter Property="ItemTemplate"
+                Value="{StaticResource RemovableServiceWithoutWorkersItemsControlTemlate}"/>
+
+    </Style>
+
+    <Style x:Key="RemovablePositionItemsControlStyle"
+           TargetType="{x:Type Controls:RemovableItemsControl}">
+
+        <Setter Property="ItemsPanel"
+                Value="{StaticResource WrapItemsPanelTemplate}"/>
+
+        <Setter Property="ItemTemplate"
+                Value="{StaticResource RemovablePositionItemsControlTemlate}"/>
 
     </Style>
 

@@ -1,6 +1,7 @@
 ﻿using Beauty.Data.ContextsInitializers;
 using Beauty.Data.Contexts;
 using System.Data.Entity.Infrastructure;
+using Beauty.Data.Infrastructure;
 
 namespace Beauty.Data.ContextsFactories
 {
@@ -9,7 +10,7 @@ namespace Beauty.Data.ContextsFactories
         public StandartContext Create()
         {
             var contextInitializer = new ContextInitializer();
-            var connectionName = "BeautyDatabase";
+            var connectionName = ConnectionManager.GetInstance().ConnectionStrings["BeautyDatabase"];
 
             return new StandartContext(contextInitializer, connectionName);
         }

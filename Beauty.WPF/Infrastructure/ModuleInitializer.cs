@@ -22,6 +22,7 @@ namespace Beauty.WPF.Infrastructure
             serviceLocator.RegisterType<IWorkerService, WorkerService>(RegistrationType.Transient);
             serviceLocator.RegisterType<IEnrollmentService, EnrollmentService>(RegistrationType.Transient);
             serviceLocator.RegisterType<IServiceManager, ServiceManager>(RegistrationType.Transient);
+            serviceLocator.RegisterType<IPositionService, PositionService>(RegistrationType.Transient);
         }
     }
 }

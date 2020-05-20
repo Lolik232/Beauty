@@ -70,8 +70,10 @@
     <Compile Include="Services\DateService.cs" />
     <Compile Include="Services\EnrollmentService.cs" />
     <Compile Include="Services\HttpEndpointCheckerService.cs" />
+    <Compile Include="Interfaces\IPositionService.cs" />
     <Compile Include="Services\MD5CryptographyService.cs" />
     <Compile Include="Services\LoginService.cs" />
+    <Compile Include="Services\PositionService.cs" />
     <Compile Include="Services\ServiceManager.cs" />
     <Compile Include="Services\WorkerService.cs" />
   </ItemGroup>
