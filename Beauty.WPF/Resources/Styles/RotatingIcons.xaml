@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles"
+                    xmlns:Controls="clr-namespace:Beauty.WPF.Controls">
+
+    <ControlTemplate x:Key="BaseRotatingIconTemplate"
+                     TargetType="{x:Type Controls:RotatingIcon}">
+
+        <Viewbox Width="{TemplateBinding Width}"
+                 Height="{TemplateBinding Height}">
+
+            <Canvas Width="24"
+                    Height="24">
+
+                <Path Fill="{TemplateBinding Foreground}" 
+                      HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                      VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                      Data="{TemplateBinding Icon}"
+                      Style="{StaticResource RotatingPathStyle}"/>
+
+            </Canvas>
+
+        </Viewbox>
+
+    </ControlTemplate>
+
+    <Style x:Key="BaseRotatingIconStyle"
+           TargetType="{x:Type Controls:RotatingIcon}">
+
+        <Setter Property="Template"
+                Value="{StaticResource BaseRotatingIconTemplate}"/>
+
+    </Style>
+
+    <Style TargetType="{x:Type Controls:RotatingIcon}"
+           BasedOn="{StaticResource BaseRotatingIconStyle}"/>
+
+</ResourceDictionary>

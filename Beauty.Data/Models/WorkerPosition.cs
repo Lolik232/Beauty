@@ -1,11 +1,4 @@
-﻿using Beauty.Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Beauty.Data.Models
+﻿namespace Beauty.Data.Models
 {
     /// <summary>
     /// Модель данных конкретного сотрудника и конкретной должности

@@ -1,9 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Beauty.WPF.Styles">
-    <SolidColorBrush x:Key="TextBlock.Static.Foreground" Color="#FF5181B8"/>
-    <Style x:Key="PrimaryTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlockStyle}">
-        <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Foreground" Value="{StaticResource TextBlock.Static.Foreground}"/>
-    </Style>
-</ResourceDictionary>

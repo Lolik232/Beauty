@@ -1,0 +1,69 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles"
+                    xmlns:Controls="clr-namespace:Beauty.WPF.Controls">
+
+    <ControlTemplate x:Key="BaseLoadingBarTemplate"
+                     TargetType="{x:Type Controls:LoadingBar}">
+
+        <Border Background="{TemplateBinding Background}"
+                Height="25">
+
+            <Grid HorizontalAlignment="Center" 
+                  VerticalAlignment="Center">
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="21"/>
+
+                    <ColumnDefinition Width="4"/>
+
+                    <ColumnDefinition Width="Auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Controls:RotatingIcon Grid.Column="0"
+                                       Width="21" 
+                                       Height="21" 
+                                       Icon="{StaticResource LoadingIcon}"
+                                       Foreground="{TemplateBinding Foreground}"/>
+
+                <Border Grid.Column="2">
+
+                    <ContentPresenter Content="{TemplateBinding Content}" 
+                                      VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                      TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                      TextElement.Foreground="{TemplateBinding Foreground}"/>
+
+                </Border>
+
+            </Grid>
+
+        </Border>
+
+    </ControlTemplate>
+
+    <Style x:Key="BaseLoadingBarStyle"
+           TargetType="{x:Type Controls:LoadingBar}">
+
+        <Setter Property="VerticalAlignment"
+                Value="Center"/>
+
+        <Setter Property="FontWeight"
+                Value="SemiBold"/>
+
+        <Setter Property="Template"
+                Value="{StaticResource BaseLoadingBarTemplate}"/>
+
+    </Style>
+
+    <Style TargetType="{x:Type Controls:LoadingBar}"
+           BasedOn="{StaticResource BaseLoadingBarStyle}"/>
+
+</ResourceDictionary>

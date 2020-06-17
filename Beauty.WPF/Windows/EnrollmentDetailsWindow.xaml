@@ -1,0 +1,416 @@
+﻿<Catel:Window x:Class="Beauty.WPF.Windows.EnrollmentDetailsWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:local="clr-namespace:Beauty.WPF.Windows"
+              xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters"
+              xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+              xmlns:AttachedProperties="clr-namespace:Beauty.WPF.AttachedProperties"
+              xmlns:Catel="http://schemas.catelproject.com"
+              xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
+              xmlns:WPFToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+              WindowStartupLocation="CenterOwner"
+              ResizeMode="NoResize"
+              WindowStyle="None"
+              ShowInTaskbar="false"
+              Width="605"
+              MinWidth="605"
+              MaxWidth="605"
+              Height="620"
+              MinHeight="620"
+              MaxHeight="620">
+
+    <WindowChrome.WindowChrome>
+
+        <WindowChrome CornerRadius="25"
+                      CaptionHeight="0"
+                      GlassFrameThickness="0"
+                      RenderOptions.EdgeMode="Aliased"/>
+
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+
+            <!--0-->
+            <RowDefinition Height="15"/>
+
+            <!--Заголовок окна (1)-->
+            <RowDefinition Height="Auto"/>
+
+            <!--2-->
+            <RowDefinition Height="15"/>
+
+            <!--Содержимое страницы (3)-->
+            <RowDefinition Height="*"/>
+
+            <!--4-->
+            <RowDefinition Height="15"/>
+
+            <!--Кнопки (5)-->
+            <RowDefinition Height="Auto"/>
+
+            <!--6-->
+            <RowDefinition Height="15"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+
+            <!--0-->
+            <ColumnDefinition Width="15"/>
+
+            <!--Ширина страницы (1)-->
+            <ColumnDefinition Width="*"/>
+
+            <!--2-->
+            <ColumnDefinition Width="15"/>
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="1"
+                   Text="{Binding Title}"
+                   FontWeight="SemiBold"
+                   Style="{StaticResource HugeTextBlockStyle}"/>
+
+        <Button Grid.Row="1"
+                Grid.Column="1" 
+                Width="25"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Command="{Binding CloseCommand}"
+                Style="{StaticResource FlatRemoveButtonStyle}"/>
+
+        <Separator Grid.Row="2"
+                   Grid.ColumnSpan="3"
+                   VerticalAlignment="Bottom"/>
+
+        <Controls:RotatingIcon Grid.Row="3"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="2"
+                               Width="128"
+                               Height="128"
+                               Icon="{StaticResource LoadingIcon}" 
+                               AttachedProperties:AnimateSlideInFromTopAttachedProperty.Value="{Binding IsServicesLoaded, Converter={ValueConverters:ReverseBooleanValueConverter}}"/>
+        
+        <ScrollViewer Grid.Row="3"
+                      Grid.Column="1"
+                      Grid.ColumnSpan="2">
+
+            <Grid AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding IsServicesLoaded}">
+
+                <Grid.RowDefinitions>
+
+                    <!--0-->
+                    <RowDefinition Height="15"/>
+
+                    <!--Имя клиента (1)-->
+                    <RowDefinition Height="32"/>
+
+                    <!--2-->
+                    <RowDefinition Height="10"/>
+
+                    <!--Номер телефона клиента (3)-->
+                    <RowDefinition Height="32" />
+
+                    <!--4-->
+                    <RowDefinition Height="10"/>
+
+                    <!--Дата записи (5)-->
+                    <RowDefinition Height="32"/>
+
+                    <!--6-->
+                    <RowDefinition Height="10"/>
+                    
+                    <!--Время записи (7)-->
+                    <RowDefinition Height="32"/>
+
+                    <!--8-->
+                    <RowDefinition Height="10"/>
+
+                    <!--Описание заявки (9)-->
+                    <RowDefinition Height="160" />
+
+                    <!--10-->
+                    <RowDefinition Height="10"/>
+
+                    <!--Надпись "Услуги" (11)-->
+                    <RowDefinition Height="Auto"/>
+
+                    <!--12-->
+                    <RowDefinition Height="10"/>
+
+                    <!--Панель добавления новых услуг (13)-->
+                    <RowDefinition Height="32"/>
+
+                    <!--14-->
+                    <RowDefinition Height="10"/>
+
+                    <!--Выбранные услуги (15)-->
+                    <RowDefinition Height="*"/>
+
+                    <!--16-->
+                    <RowDefinition Height="10"/>
+
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+
+                    <!--0-->
+                    <ColumnDefinition Width="15"/>
+
+                    <!--Половина ширины страницы (1)-->
+                    <ColumnDefinition Width="*"/>
+
+                    <!--2-->
+                    <ColumnDefinition Width="15"/>
+
+                    <!--Половина ширины страницы (3)-->
+                    <ColumnDefinition Width="*"/>
+
+                    <!--4-->
+                    <ColumnDefinition Width="15"/>
+
+                    <!--Кнопка "+" (5)-->
+                    <ColumnDefinition Width="Auto"/>
+
+                    <!--Полоса прокрутки (6)-->
+                    <ColumnDefinition Width="30"/>
+
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="1" 
+                           Grid.Column="1"
+                           Text="Имя клиента:"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+                <TextBox Grid.Row="1"
+                         Grid.Column="3"
+                         Grid.ColumnSpan="3"
+                         Text="{Binding ClientFirstname, Mode=TwoWay}">
+
+                    <Interactivity:Interaction.Behaviors>
+
+                        <Catel:UpdateBindingOnTextChanged UpdateDelay="100" />
+
+                    </Interactivity:Interaction.Behaviors>
+
+                </TextBox>
+
+                <TextBlock Grid.Row="3"
+                           Grid.Column="1" 
+                           Text="Номер телефона клиента:"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+                <WPFToolkit:MaskedTextBox Grid.Row="3"
+                                          Grid.Column="3"
+                                          Grid.ColumnSpan="3"
+                                          Mask="+0 (000) 000-00-00"
+                                          Text="{Binding ClientPhoneNumber, Mode=TwoWay}"
+                                          Style="{StaticResource BaseTextBoxStyle}"
+                                          TextChanged="OnClientPhoneNumberChanged"/>
+
+                <TextBlock Grid.Row="5"
+                           Grid.Column="1" 
+                           Text="Дата записи:"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+                <Grid Grid.Row="5"
+                      Grid.Column="3"
+                      Grid.ColumnSpan="3">
+
+                    <Grid.ColumnDefinitions>
+
+                        <!--0-->
+                        <ColumnDefinition Width="*"/>
+
+                        <!--1-->
+                        <ColumnDefinition Width="5"/>
+
+                        <!--2-->
+                        <ColumnDefinition Width="*"/>
+
+                        <!--3-->
+                        <ColumnDefinition Width="5"/>
+
+                        <!--4-->
+                        <ColumnDefinition Width="*"/>
+
+                    </Grid.ColumnDefinitions>
+
+                    <Controls:WatermarkComboBox Grid.Column="0"
+                                                Watermark="День"
+                                                ItemsSource="{Binding Days}"
+                                                SelectedItem="{Binding SelectedDay}"/>
+
+                    <Controls:WatermarkComboBox Grid.Column="2"
+                                                Watermark="Месяц"
+                                                ItemsSource="{Binding Months}"
+                                                SelectedItem="{Binding SelectedMonth}">
+
+                        <Interactivity:Interaction.Triggers>
+
+                            <Interactivity:EventTrigger EventName="SelectionChanged">
+
+                                <Catel:EventToCommand Command="{Binding MonthSelectCommand}" />
+
+                            </Interactivity:EventTrigger>
+
+                        </Interactivity:Interaction.Triggers>
+
+                    </Controls:WatermarkComboBox>
+
+                    <Controls:WatermarkComboBox Grid.Column="4"
+                                                Watermark="Год"
+                                                ItemsSource="{Binding Years}"
+                                                SelectedItem="{Binding SelectedYear}"/>
+
+                </Grid>
+
+                <TextBlock Grid.Row="7"
+                           Grid.Column="1" 
+                           Text="Время записи:"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+                <WPFToolkit:MaskedTextBox Grid.Row="7"
+                                          Grid.Column="3"
+                                          Grid.ColumnSpan="3"
+                                          Mask="00:00"
+                                          Validation.ErrorTemplate="{x:Null}"
+                                          Style="{StaticResource BaseTextBoxStyle}"
+                                          Text="{Binding Time, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                                          TextChanged="OnTimeChanged">
+
+                    <Interactivity:Interaction.Behaviors>
+
+                        <Catel:UpdateBindingOnTextChanged UpdateDelay="100" />
+
+                    </Interactivity:Interaction.Behaviors>
+
+                </WPFToolkit:MaskedTextBox>
+
+                <TextBlock Grid.Row="9"
+                           Grid.Column="1" 
+                           Text="Описание заявки:"
+                           Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+                <TextBox Grid.Row="9"
+                         Grid.Column="3"
+                         Grid.ColumnSpan="3"
+                         TextWrapping="Wrap"
+                         Text="{Binding Description}"/>
+
+                <TextBlock Grid.Row="11"
+                           Grid.Column="1" 
+                           Grid.ColumnSpan="5"
+                           Text="Привязанные услуги:"
+                           Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+                <Controls:WatermarkComboBox x:Name="servicesComboBox"
+                                            Grid.Row="13"
+                                            Grid.Column="1"
+                                            Watermark="Выберите услугу"
+                                            ItemsSource="{Binding Services}"
+                                            SelectedItem="{Binding SelectedService}"
+                                            ItemTemplate="{StaticResource ServiceComboBoxItemTemlate}">
+
+                    <Interactivity:Interaction.Triggers>
+
+                        <Interactivity:EventTrigger EventName="SelectionChanged">
+
+                            <Catel:EventToCommand Command="{Binding ServiceSelectCommand}" />
+
+                        </Interactivity:EventTrigger>
+
+                    </Interactivity:Interaction.Triggers>
+
+                </Controls:WatermarkComboBox>
+
+                <Controls:WatermarkComboBox x:Name="workersComboBox"
+                                            Grid.Row="13"
+                                            Grid.Column="3"
+                                            Watermark="Выберите сотрудника"
+                                            ItemsSource="{Binding Workers}"
+                                            SelectedItem="{Binding SelectedWorker}"
+                                            IsEnabled="{Binding ElementName=servicesComboBox, Path=SelectedValue, Converter={ValueConverters:NullToBooleanValueConverter}}"
+                                            ItemTemplate="{StaticResource WorkerComboBoxItemTemlate}"/>
+
+                <Controls:IconButton Grid.Row="13"
+                                     Grid.Column="5"
+                                     Command="{Binding AddEnrollmentServiceCommand}"
+                                     Style="{StaticResource AddButtonStyle}"/>
+
+                <TextBlock Grid.Row="15"
+                           Grid.Column="1" 
+                           Grid.ColumnSpan="5"
+                           Text="Список услуг пуст"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource AnnotationTextBlockStyle}"
+                           AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding ElementName=enrollmentServicesItemsControl, Path=HasItems, Converter={ValueConverters:ReverseBooleanValueConverter}}"/>
+
+                <Controls:RemovableItemsControl x:Name="enrollmentServicesItemsControl"
+                                                Grid.Row="15"
+                                                Grid.Column="1" 
+                                                Grid.ColumnSpan="5"
+                                                ItemsSource="{Binding EnrollmentServices}"
+                                                Command="{Binding RemoveEnrollmentServiceCommand}"
+                                                Style="{StaticResource RemovableServiceItemsControlStyle}"
+                                                AttachedProperties:AnimateFadeAttachedProperty.Value="{Binding Path=HasItems, RelativeSource={x:Static RelativeSource.Self}}"/>
+
+            </Grid>
+
+        </ScrollViewer>
+
+        <Separator Grid.Row="4"
+                   Grid.ColumnSpan="3"
+                   VerticalAlignment="Top"/>
+
+        <Grid Grid.Row="5" 
+              Grid.Column="1">
+
+            <Grid.ColumnDefinitions>
+
+                <!--0-->
+                <ColumnDefinition Width="*"/>
+
+                <!--1-->
+                <ColumnDefinition Width="Auto"/>
+
+                <!--2-->
+                <ColumnDefinition Width="5"/>
+
+                <!--3-->
+                <ColumnDefinition Width="Auto"/>
+
+            </Grid.ColumnDefinitions>
+
+            <Controls:IconButton Grid.Column="0" 
+                                 Content="Удалить"
+                                 HorizontalAlignment="Left"
+                                 Visibility="{Binding Enrollment, Converter={ValueConverters:NullToVisibilityValueConverter}}"
+                                 Command="{Binding RemoveCommand}"
+                                 Style="{StaticResource RemoveButtonStyle}"/>
+
+            <Controls:IconButton Grid.Column="1"
+                                 Content="Сохранить"
+                                 Command="{Binding SaveCommand}"
+                                 Icon="{StaticResource SaveIcon}"
+                                 Style="{StaticResource AddButtonStyle}"/>
+
+            <Button Grid.Column="3" 
+                    Content="Отмена"
+                    Command="{Binding CloseCommand}"/>
+
+        </Grid>
+
+    </Grid>
+
+</Catel:Window>

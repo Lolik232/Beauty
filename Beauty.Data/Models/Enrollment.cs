@@ -1,9 +1,5 @@
-﻿using Beauty.Data.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beauty.Data.Models
 {
@@ -23,29 +19,41 @@ namespace Beauty.Data.Models
         public string ClientFirstname { get; set; }
 
         /// <summary>
-        /// Возвращает или задает фамилию клиента
-        /// </summary>
-        public string ClientLastname { get; set; }
-
-        /// <summary>
         /// Возвращает или задает номер телефона клиента
         /// </summary>
         public string ClientPhoneNumber { get; set; }
 
         /// <summary>
-        /// Возвращает или задает примечение
+        /// Возвращает или задает примечание
         /// </summary>
         public string Description { get; set; }
-        
-        /// <summary>
-        /// Возвращает или задает идентификатор сотрудника, связанного с текущей записью
-        /// </summary>
-        public int WorkerId { get; set; }
 
         /// <summary>
-        /// Возвращает или задает модель данных сотрудника, связанного с текущей записью
-        /// Данное свойство не обязательно для заполнения
+        /// Возвращает или задает дату и время на которое записан клиент
         /// </summary>
-        public Worker Worker { get; set; }
+        public DateTime DateTime { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает дату и время создания заявки
+        /// </summary>
+        public DateTime CreationDateTime { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает дату редактирования заявки
+        /// </summary>
+        public DateTime? EditDateTime { get; set; }
+
+        /// <summary>
+        /// Возвращает или задает список моделей данных записей, связанных с услугами
+        /// </summary>
+        public IEnumerable<EnrollmentWorkerService> EnrollmentWorkerServices { get; set; }
+
+        /// <summary>
+        /// Базовый конструктор
+        /// </summary>
+        public Enrollment()
+        {
+            EnrollmentWorkerServices = new List<EnrollmentWorkerService>();
+        }
     }
 }

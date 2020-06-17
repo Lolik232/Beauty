@@ -1,11 +1,24 @@
-﻿using System;
+﻿using Beauty.Core.DTOs;
+using Beauty.Data.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Beauty.Core.Interfaces
 {
+    /// <summary>
+    /// Интерфейс сервиса для работы с пользователями
+    /// </summary>
     public interface IWorkerService
-    { }
+    {
+        /// <summary>
+        /// Возвращает список администраторов
+        /// </summary>
+        Task<IEnumerable<WorkerDTO>> GetAdministratorsAsync();
+
+        Task<IEnumerable<WorkerDTO>> GetServiceWorkersAsync(int serviceId);
+
+        Task<string> GetWorkerShortnameAsync(int workerId);
+
+        Task<IEnumerable<Position>> GetWorkerPositionsAsync(int workerId);
+    }
 }

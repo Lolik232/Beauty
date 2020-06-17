@@ -52,12 +52,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\EnrollmentDTO.cs" />
+    <Compile Include="DTOs\ServiceDTO.cs" />
+    <Compile Include="DTOs\WorkerDTO.cs" />
+    <Compile Include="Extensions\PositionsEnumerableExtensions.cs" />
+    <Compile Include="Extensions\SecureStringExtensions.cs" />
+    <Compile Include="Infrastructure\Session.cs" />
     <Compile Include="Interfaces\ICryptographyService.cs" />
-    <Compile Include="Interfaces\IMessageService.cs" />
+    <Compile Include="Interfaces\IDateService.cs" />
+    <Compile Include="Interfaces\IEnrollmentService.cs" />
+    <Compile Include="Interfaces\IEndpointCheckerService.cs" />
+    <Compile Include="Interfaces\ILoginService.cs" />
+    <Compile Include="Interfaces\IServiceManager.cs" />
     <Compile Include="Interfaces\IWorkerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CryptographyService.cs" />
-    <Compile Include="Services\MessageService.cs" />
+    <Compile Include="Services\DatabaseEndpointCheckerService.cs" />
+    <Compile Include="Services\DateService.cs" />
+    <Compile Include="Services\EnrollmentService.cs" />
+    <Compile Include="Services\HttpEndpointCheckerService.cs" />
+    <Compile Include="Interfaces\IPositionService.cs" />
+    <Compile Include="Services\MD5CryptographyService.cs" />
+    <Compile Include="Services\LoginService.cs" />
+    <Compile Include="Services\PositionService.cs" />
+    <Compile Include="Services\ServiceManager.cs" />
     <Compile Include="Services\WorkerService.cs" />
   </ItemGroup>
   <ItemGroup>

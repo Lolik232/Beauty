@@ -1,0 +1,46 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles">
+
+    <Style x:Key="BaseTextBlockStyle" 
+           TargetType="{x:Type TextBlock}">
+
+        <Setter Property="FontSize" 
+                Value="{StaticResource NormalFontSize}"/>
+
+        <Setter Property="TextTrimming"
+                Value="CharacterEllipsis"/>
+
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" 
+           BasedOn="{StaticResource BaseTextBlockStyle}"/>
+
+    <Style x:Key="AnnotationTextBlockStyle" 
+           TargetType="{x:Type TextBlock}"
+           BasedOn="{StaticResource BaseTextBlockStyle}">
+
+        <Setter Property="Foreground"
+                Value="{StaticResource App.LightSlateGray}"/>
+
+    </Style>
+
+    <Style x:Key="LargeTextBlockStyle" 
+           TargetType="{x:Type TextBlock}"
+           BasedOn="{StaticResource BaseTextBlockStyle}">
+
+        <Setter Property="FontSize"
+                Value="{StaticResource LargeFontSize}"/>
+
+    </Style>
+
+    <Style x:Key="HugeTextBlockStyle" 
+           TargetType="{x:Type TextBlock}"
+           BasedOn="{StaticResource BaseTextBlockStyle}">
+
+        <Setter Property="FontSize"
+                Value="{StaticResource HugeFontSize}"/>
+
+    </Style>
+
+</ResourceDictionary>

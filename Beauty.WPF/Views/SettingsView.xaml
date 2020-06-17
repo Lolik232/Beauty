@@ -1,0 +1,188 @@
+﻿<local:BaseView x:Class="Beauty.WPF.Views.SettingsView"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:local="clr-namespace:Beauty.WPF.Views"
+                xmlns:Controls="clr-namespace:Beauty.WPF.Controls"
+                mc:Ignorable="d">
+
+    <ScrollViewer>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+
+                <!--0-->
+                <RowDefinition Height="15"/>
+
+                <!--1-->
+                <RowDefinition Height="Auto" />
+
+                <!--2-->
+                <RowDefinition Height="5"/>
+
+                <!--3-->
+                <RowDefinition Height="Auto" />
+
+                <!--4-->
+                <RowDefinition Height="5"/>
+
+                <!--5-->
+                <RowDefinition Height="Auto" />
+
+                <!--6-->
+                <RowDefinition Height="5"/>
+
+                <!--7-->
+                <RowDefinition Height="Auto" />
+
+                <!--8-->
+                <RowDefinition Height="5"/>
+
+                <!--9-->
+                <RowDefinition Height="Auto" />
+
+                <!--10-->
+                <RowDefinition Height="Auto"/>
+
+                <!--11-->
+                <RowDefinition Height="Auto"/>
+
+                <!--12-->
+                <RowDefinition Height="5"/>
+
+                <!--13-->
+                <RowDefinition Height="Auto" />
+
+                <!--14-->
+                <RowDefinition Height="Auto"/>
+
+                <!--15-->
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+
+                <!--0-->
+                <ColumnDefinition Width="15"/>
+
+                <!--Ширина страницы (1)-->
+                <ColumnDefinition Width="*"/>
+
+                <!--2-->
+                <ColumnDefinition Width="15"/>
+
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Margin="5"
+                       Text="{Binding Title}"
+                       FontWeight="SemiBold"
+                       Style="{StaticResource HugeTextBlockStyle}"/>
+
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Margin="5"
+                       Text="Внешний вид"
+                       FontWeight="SemiBold"
+                       Style="{StaticResource HugeTextBlockStyle}"/>
+
+            <TextBlock Grid.Row="5"
+                       Grid.Column="1"
+                       Margin="5"
+                       Text="В данной версии приложения внешний вид изменять нельзя :("
+                       Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+            <TextBlock Grid.Row="7"
+                       Grid.Column="1"
+                       Margin="5"
+                       Text="Администрирование"
+                       FontWeight="SemiBold"
+                       Style="{StaticResource HugeTextBlockStyle}"/>
+
+            <TextBlock Grid.Row="9"
+                       Grid.Column="1"
+                       Margin="5"
+                       Text="Должности сотрудников:"
+                       Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+            <Grid Grid.Row="10"
+                  Grid.Column="1"
+                  Margin="5">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*"
+                                      MaxWidth="350"/>
+
+                    <ColumnDefinition Width="5"/>
+
+                    <ColumnDefinition Width="Auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Controls:WatermarkTextBox Grid.Column="0"
+                                           Watermark="Введите название новой должности"/>
+
+                <Controls:IconButton Grid.Column="2"
+                                     VerticalAlignment="Center"
+                                     Style="{StaticResource AddButtonStyle}"/>
+
+            </Grid>
+
+            <Expander Grid.Row="11"
+                      Grid.Column="1"
+                      Header="Список существующих должностей">
+
+                <Controls:RemovableItemsControl ItemsSource="{Binding Positions}"
+                                                Style="{StaticResource RemovablePositionItemsControlStyle}"/>
+
+            </Expander>
+
+            <TextBlock Grid.Row="13"
+                       Grid.Column="1"
+                       Margin="5"
+                       Text="Предоставляемые услуги:"
+                       Style="{StaticResource AnnotationTextBlockStyle}"/>
+
+            <Grid Grid.Row="14"
+                  Grid.Column="1"
+                  Margin="5">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*"
+                                      MaxWidth="350"/>
+
+                    <ColumnDefinition Width="5"/>
+
+                    <ColumnDefinition Width="Auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Controls:WatermarkTextBox Grid.Column="0"
+                                           Watermark="Введите название новой услуги"/>
+
+                <Controls:IconButton Grid.Column="2"
+                                     VerticalAlignment="Center"
+                                     Style="{StaticResource AddButtonStyle}"/>
+
+            </Grid>
+
+            <Expander Grid.Row="15"
+                      Grid.Column="1"
+                      Header="Список существующих услуг">
+
+                <Controls:RemovableItemsControl ItemsSource="{Binding Services}"
+                                                Style="{StaticResource RemovableServiceWithoutWorkersItemsControlStyle}"/>
+
+            </Expander>
+
+        </Grid>
+
+    </ScrollViewer>
+
+</local:BaseView>

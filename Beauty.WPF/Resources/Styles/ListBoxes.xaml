@@ -1,0 +1,114 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Beauty.WPF.Resources.Styles"
+                    xmlns:DTOs="clr-namespace:Beauty.Core.DTOs;assembly=Beauty.Core"
+                    xmlns:ValueConverters="clr-namespace:Beauty.WPF.ValuesConverters">
+
+    <DataTemplate x:Key="EnrollmentsListBoxItemTemlate"
+                  DataType="{x:Type DTOs:EnrollmentDTO}">
+
+        <StackPanel Orientation="Vertical"
+                    Margin="10">
+
+            <TextBlock Style="{StaticResource LargeTextBlockStyle}"
+                       FontWeight="SemiBold"
+                       Margin="5,0,5,0">
+
+                <TextBlock.Text>
+
+                    <MultiBinding StringFormat="Заявка №{0} на {1}">
+
+                        <Binding Path="Id"/>
+
+                        <Binding Path="DateTime" 
+                                 Converter="{ValueConverters:DateTimeValueConverter}"/>
+
+                    </MultiBinding>
+
+                </TextBlock.Text>
+
+            </TextBlock>
+
+            <TextBlock Margin="5,5,5,0">
+                
+                <Run Text="Имя клиента:"
+                     FontWeight="SemiBold"/>
+
+                <Run Text="{Binding ClientFirstname}"/>
+
+            </TextBlock>
+
+            <TextBlock Margin="5,0,5,5">
+                
+                <Run Text="Номер телефона клиента:"
+                     FontWeight="SemiBold"/>
+
+                <Run Text="{Binding ClientPhoneNumber}"/>
+
+            </TextBlock>
+
+            <ItemsControl ItemsSource="{Binding Services}"
+                          Style="{StaticResource BaseServiceItemsControlStyle}"/>
+
+            <TextBlock Style="{StaticResource AnnotationTextBlockStyle}"
+                       Margin="5">
+                
+                <Run Text="Дата создания:"/>
+                
+                <Run Text="{Binding CreationDateTime, Converter={ValueConverters:DateTimeValueConverter}}"/>
+                
+                <Run Text="{Binding EditDateTime, StringFormat='• Последнее редактирование: {0}', TargetNullValue={x:Null}, Converter={ValueConverters:DateTimeValueConverter}}"/>
+
+            </TextBlock>
+
+        </StackPanel>
+
+    </DataTemplate>
+
+    <Style x:Key="BaseListBoxItemContainerStyle" 
+           TargetType="{x:Type ListBoxItem}">
+
+        <Setter Property="SnapsToDevicePixels" 
+                Value="True"/>
+
+        <Setter Property="Padding" 
+                Value="4,1"/>
+
+        <Setter Property="HorizontalContentAlignment" 
+                Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+
+        <Setter Property="VerticalContentAlignment" 
+                Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+
+        <Setter Property="BorderBrush"
+                Value="{x:Null}"/>
+
+        <Setter Property="BorderThickness" 
+                Value="0"/>
+
+        <Setter Property="Background" 
+                Value="{StaticResource App.Transparent}"/>
+
+    </Style>
+
+    <Style x:Key="BaseListBoxStyle"
+           TargetType="{x:Type ListBox}">
+
+        <Setter Property="BorderBrush" 
+                Value="{StaticResource App.Transparent}"/>
+
+        <Setter Property="BorderThickness" 
+                Value="0"/>
+
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+                Value="Disabled"/>
+
+        <Setter Property="ItemContainerStyle"
+                Value="{StaticResource BaseListBoxItemContainerStyle}"/>
+
+    </Style>
+
+    <Style TargetType="{x:Type ListBox}"
+           BasedOn="{StaticResource BaseListBoxStyle}"/>
+
+</ResourceDictionary>

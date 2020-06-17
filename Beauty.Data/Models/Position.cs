@@ -1,9 +1,4 @@
-﻿using Beauty.Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Beauty.Data.Models
 {
@@ -25,11 +20,17 @@ namespace Beauty.Data.Models
         /// <summary>
         /// Возвращает или задает список моделей данных сотрудников, связанных с должностью
         /// </summary>
-        public ICollection<WorkerPosition> WorkerPositions { get; set; }
+        public IEnumerable<WorkerPosition> WorkerPositions { get; set; }
 
+        public IEnumerable<PositionService> PositionServices { get; set; }
+
+        /// <summary>
+        /// Базовый конструктор
+        /// </summary>
         public Position()
         {
             WorkerPositions = new List<WorkerPosition>();
+            PositionServices = new List<PositionService>();
         }
     }
 }
